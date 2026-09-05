@@ -1,1 +1,372 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>İzra</title>
 
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:#080607;
+  color:#fff;
+  font-family:Arial,sans-serif;
+}
+header{
+  padding:18px;
+  text-align:center;
+  background:linear-gradient(135deg,#160509,#4b0718);
+  border-bottom:1px solid #6d1830;
+}
+.logo{
+  font-size:23px;
+  font-weight:bold;
+  color:#fff;
+}
+.logo span{color:#e22b61}
+
+.login{
+  max-width:430px;
+  margin:60px auto;
+  padding:25px;
+}
+.login h1{text-align:center;font-size:30px}
+.login h2{
+  text-align:center;
+  color:#d51d50;
+  margin-bottom:35px;
+}
+input{
+  width:100%;
+  padding:15px;
+  margin:7px 0;
+  border-radius:10px;
+  border:1px solid #4b2630;
+  background:#130c0f;
+  color:white;
+  font-size:16px;
+}
+button{
+  border:0;
+  border-radius:10px;
+  padding:14px;
+  background:#8e1234;
+  color:white;
+  font-weight:bold;
+  font-size:15px;
+}
+.full{width:100%;margin-top:12px}
+.rules{
+  margin-top:18px;
+  padding:14px;
+  background:#120b0e;
+  border:1px solid #43232c;
+  border-radius:10px;
+  font-size:12px;
+  color:#bbb;
+  line-height:1.5;
+}
+.register{display:none}
+
+.app{display:none;padding-bottom:75px}
+
+.top{
+  position:sticky;
+  top:0;
+  z-index:5;
+  padding:15px;
+  background:#090607;
+  border-bottom:1px solid #32151e;
+  display:flex;
+  justify-content:space-between;
+}
+.top b{color:#e02a5d}
+
+.content{padding:15px}
+
+.story{
+  display:flex;
+  gap:15px;
+  overflow:auto;
+  padding:10px 0 20px;
+}
+.story div{
+  min-width:65px;
+  text-align:center;
+  font-size:12px;
+}
+.avatar{
+  width:58px;height:58px;
+  border-radius:50%;
+  margin:auto;
+  border:3px solid #9e1740;
+  background:#241017;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:bold;
+}
+
+.post{
+  background:#110a0d;
+  border:1px solid #351721;
+  border-radius:12px;
+  margin:15px 0;
+  overflow:hidden;
+}
+.posthead{padding:12px;font-weight:bold}
+.postimg{
+  height:260px;
+  background:linear-gradient(135deg,#3d091a,#090607,#6c102f);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:35px;
+  font-weight:bold;
+}
+.actions{padding:12px;font-size:25px}
+.caption{padding:0 12px 15px}
+
+.nav{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  height:65px;
+  background:#10090c;
+  border-top:1px solid #391621;
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+  z-index:10;
+}
+.nav button{
+  background:none;
+  padding:8px;
+  font-size:21px;
+}
+.nav small{display:block;font-size:10px}
+
+.page{display:none}
+.page.active{display:block}
+
+.rank{
+  background:#12090d;
+  padding:15px;
+  border-radius:12px;
+  margin:8px 0;
+  border:1px solid #3b1822;
+}
+.rank.first{
+  font-size:22px;
+  border:2px solid #d3265b;
+}
+.owner{color:#ff4778;font-weight:bold}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">#İzra(cc)HerYerde</div>
+</header>
+
+<!-- GİRİŞ -->
+<section class="login" id="login">
+  <h1>İzra</h1>
+  <h2>#İzra(cc)HerYerde</h2>
+
+  <input id="user" placeholder="Kullanıcı adı">
+  <input id="pass" type="password" placeholder="Şifre">
+
+  <button class="full" onclick="login()">Giriş Yap</button>
+  <button class="full" onclick="showRegister()">Kaydol</button>
+</section>
+
+<!-- KAYIT -->
+<section class="login register" id="register">
+  <h1>Yeni Kul Hesabı</h1>
+
+  <input placeholder="Gmail veya telefon">
+  <input placeholder="Kullanıcı adı">
+  <input type="password" placeholder="Şifre">
+
+  <div class="rules">
+    <b>Kurallar</b><br><br>
+    • Şifre, kullanıcı adı ve iletişim bilgileri güvenli şekilde
+    işlenebilir.<br>
+    • Bilgi yayılımı yapılmamalıdır.<br>
+    • Mesajlar ve içerikler platform kuralları kapsamında
+    incelenebilir.<br>
+    • Gerçek kişilerin özel bilgileri izinsiz paylaşılmamalıdır.
+  </div>
+
+  <button class="full" onclick="login()">Hesap Oluştur</button>
+</section>
+
+<!-- UYGULAMA -->
+<section class="app" id="app">
+
+  <div class="top">
+    <b>#İzra(cc)HerYerde</b>
+    <span>♡　✉</span>
+  </div>
+
+  <div class="content">
+
+    <!-- ANA SAYFA -->
+    <div class="page active" id="home">
+
+      <div class="story">
+        <div>
+          <div class="avatar owner">İA</div>
+          İzra Adel
+        </div>
+        <div>
+          <div class="avatar">TB</div>
+          Tolga
+        </div>
+        <div>
+          <div class="avatar">AK</div>
+          Karyan
+        </div>
+        <div>
+          <div class="avatar">M</div>
+          Mehmet
+        </div>
+      </div>
+
+      <div class="post">
+        <div class="posthead owner">
+          İzra Adel Karyan-Allah ✓
+        </div>
+        <div class="postimg">#İzra(cc)HerYerde</div>
+        <div class="actions">♡　💬　↗</div>
+        <div class="caption">
+          <b>İzra Adel Karyan-Allah</b><br>
+          İzra topluluğuna hoş geldiniz.
+        </div>
+      </div>
+
+      <div class="post">
+        <div class="posthead">Tolga Barın <small>kul</small></div>
+        <div class="postimg">REELS</div>
+        <div class="actions">♡　💬　↗</div>
+      </div>
+
+    </div>
+
+    <!-- KEŞFET -->
+    <div class="page" id="explore">
+      <h2>Keşfet</h2>
+      <input placeholder="Ara...">
+      <div class="post"><div class="postimg">KEŞFET</div></div>
+      <div class="post"><div class="postimg">REELS</div></div>
+    </div>
+
+    <!-- LİG -->
+    <div class="page" id="league">
+      <h2>🏆 Lig</h2>
+
+      <div class="rank first">
+        🥇 <span class="owner">İzra Adel Karyan-Allah ✓</span><br>
+        <small>Kurucu • 999999 puan</small>
+      </div>
+
+      <div class="rank">🥈 Tolga Barın <small>kul</small> — 8500</div>
+      <div class="rank">🥉 Mehmet <small>kul</small> — 7200</div>
+      <div class="rank">4. Ayşe <small>kul</small> — 6500</div>
+      <div class="rank">5. Ali <small>kul</small> — 5900</div>
+
+      <p>İlk 20 kullanıcı burada gösterilecek.</p>
+    </div>
+
+    <!-- DM -->
+    <div class="page" id="dm">
+      <h2>Mesajlar</h2>
+
+      <div class="post">
+        <div class="caption">
+          📢 <b>Duyuru</b><br>
+          Bu alan yalnızca yetkili duyuruları için.
+        </div>
+      </div>
+
+      <div class="post">
+        <div class="caption">
+          💬 <b>Genel Sohbet</b><br>
+          Topluluk sohbet alanı.
+        </div>
+      </div>
+
+      <div class="post">
+        <div class="caption">
+          👤 Tolga Barın <small>kul</small><br>
+          Mesajlaşmaya başla →
+        </div>
+      </div>
+    </div>
+
+    <!-- PROFİL -->
+    <div class="page" id="profile">
+      <div style="text-align:center">
+        <div class="avatar owner" style="width:90px;height:90px;font-size:25px">
+          İA
+        </div>
+
+        <h2 class="owner">
+          İzra Adel Karyan-Allah ✓
+        </h2>
+
+        <p>@ll.sxtm.ll</p>
+        <p>⭐ 999999 puan</p>
+
+        <button>Profili Düzenle</button>
+        <button>Ayarlar</button>
+      </div>
+
+      <hr>
+
+      <h3>Paylaşımlar</h3>
+      <div class="post">
+        <div class="postimg">#İzra(cc)HerYerde</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ALT MENÜ -->
+  <div class="nav">
+    <button onclick="page('home')">⌂<small>Ana</small></button>
+    <button onclick="page('explore')">⌕<small>Keşfet</small></button>
+    <button onclick="alert('Yeni paylaşım alanı')">＋<small>Paylaş</small></button>
+    <button onclick="page('dm')">✉<small>DM</small></button>
+    <button onclick="page('league')">🏆<small>Lig</small></button>
+    <button onclick="page('profile')">●<small>Profil</small></button>
+  </div>
+
+</section>
+
+<script>
+function showRegister(){
+  document.getElementById("login").style.display="none";
+  document.getElementById("register").style.display="block";
+}
+
+function login(){
+  document.getElementById("login").style.display="none";
+  document.getElementById("register").style.display="none";
+  document.getElementById("app").style.display="block";
+}
+
+function page(name){
+  document.querySelectorAll(".page").forEach(x=>{
+    x.classList.remove("active");
+  });
+  document.getElementById(name).classList.add("active");
+}
+</script>
+
+</body>
+  </html>
