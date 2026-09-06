@@ -2,1054 +2,144 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
-<meta name="theme-color" content="#080608">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#070509">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-
 <title>İNFAZ</title>
-
 <style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,Helvetica,sans-serif;
-}
-
 :root{
---bg:#080608;
---panel:#11090d;
---panel2:#160b10;
---line:#32141f;
---red:#8d1e3e;
---red2:#b62b51;
---text:#fff;
---muted:#9c818b;
-}
-
-body{
-background:var(--bg);
-color:var(--text);
-min-height:100vh;
-}
-
-button,input,textarea{
-font:inherit;
-}
-
-button{
-cursor:pointer;
-}
-
-.hidden{
-display:none!important;
-}
-
-/* AUTH */
-
-#auth{
-min-height:100vh;
-display:flex;
-align-items:center;
-justify-content:center;
-padding:20px;
-background:
-radial-gradient(circle at 50% 0,#3a0c1c 0%,#16070d 30%,#080608 72%);
-}
-
-.authBox{
-width:100%;
-max-width:410px;
-background:rgba(14,7,10,.97);
-border:1px solid #4a1928;
-border-radius:22px;
-padding:30px 23px;
-box-shadow:0 25px 80px #000;
-}
-
-.logo{
-font-size:39px;
-font-weight:1000;
-letter-spacing:6px;
-text-align:center;
-}
-
-.tag{
-text-align:center;
-color:#bd8997;
-margin:7px 0 28px;
-}
-
-.authInput{
-width:100%;
-background:#0b0709;
-border:1px solid #3a1520;
-color:#fff;
-padding:14px;
-border-radius:12px;
-margin-bottom:11px;
-outline:none;
-}
-
-.authInput:focus{
-border-color:#9f2949;
-}
-
-.primary{
-width:100%;
-padding:14px;
-border:0;
-border-radius:12px;
-background:#821b3a;
-color:white;
-font-weight:800;
-}
-
-.primary:hover{
-background:#a72348;
-}
-
-.secondary{
-width:100%;
-padding:13px;
-margin-top:9px;
-border:1px solid #431725;
-border-radius:12px;
-background:#10080c;
-color:#fff;
-}
-
-.switch{
-text-align:center;
-margin-top:18px;
-color:#96838a;
-}
-
-.switch span{
-color:#dc4168;
-font-weight:bold;
-cursor:pointer;
-}
-
-.authMsg{
-text-align:center;
-min-height:20px;
-margin-top:12px;
-color:#e35b7b;
-}
-
-/* APP */
-
-#app{
-min-height:100vh;
-padding-bottom:72px;
-}
-
-.top{
-height:61px;
-position:sticky;
-top:0;
-z-index:50;
-background:rgba(8,6,8,.96);
-backdrop-filter:blur(15px);
-border-bottom:1px solid #271019;
-display:flex;
-align-items:center;
-justify-content:space-between;
-padding:0 15px;
-}
-
-.topLogo{
-font-weight:1000;
-font-size:24px;
-letter-spacing:3px;
-}
-
-.topRight{
-display:flex;
-gap:14px;
-}
-
-.topButton{
-border:0;
-background:none;
-color:#fff;
-font-size:23px;
-}
-
-.page{
-max-width:720px;
-margin:auto;
-padding:13px;
-}
-
-/* NAV */
-
-.nav{
-position:fixed;
-bottom:0;
-left:0;
-right:0;
-height:68px;
-z-index:100;
-display:flex;
-align-items:center;
-justify-content:space-around;
-background:rgba(11,6,9,.98);
-border-top:1px solid #30121d;
-padding-bottom:env(safe-area-inset-bottom);
-}
-
-.navBtn{
-background:none;
-border:0;
-color:#806f76;
-font-size:21px;
-display:flex;
-flex-direction:column;
-align-items:center;
-gap:3px;
-}
-
-.navBtn span{
-font-size:10px;
-}
-
-.navBtn.active{
-color:#fff;
-}
-
-/* CARD */
-
-.card{
-background:var(--panel);
-border:1px solid #291019;
-border-radius:17px;
-overflow:hidden;
-margin-bottom:14px;
-}
-
-/* STORIES */
-
-.stories{
-display:flex;
-gap:14px;
-padding:15px;
-overflow-x:auto;
-}
-
-.story{
-min-width:65px;
-text-align:center;
-}
-
-.storyRing{
-width:62px;
-height:62px;
-border-radius:50%;
-padding:2px;
-margin:auto;
-background:linear-gradient(135deg,#bd2752,#5e1029,#e04c73);
-}
-
-.storyAvatar{
-height:100%;
-width:100%;
-border-radius:50%;
-background:#160a10;
-display:flex;
-align-items:center;
-justify-content:center;
-font-weight:900;
-}
-
-.storyName{
-font-size:11px;
-color:#ad939c;
-margin-top:6px;
-white-space:nowrap;
-overflow:hidden;
-text-overflow:ellipsis;
-}
-
-/* CREATE */
-
-.create{
-padding:13px;
-display:flex;
-gap:10px;
-align-items:center;
-}
-
-.createAvatar{
-width:43px;
-height:43px;
-border-radius:50%;
-background:#64152e;
-display:flex;
-align-items:center;
-justify-content:center;
-font-weight:900;
-}
-
-.createButton{
-flex:1;
-background:#0c0709;
-border:1px solid #32131d;
-color:#938087;
-border-radius:22px;
-padding:11px 15px;
-text-align:left;
-}
-
-/* POST */
-
-.postHeader{
-display:flex;
-align-items:center;
-gap:10px;
-padding:13px;
-}
-
-.avatar{
-width:42px;
-height:42px;
-border-radius:50%;
-background:linear-gradient(135deg,#851c3d,#330b19);
-display:flex;
-align-items:center;
-justify-content:center;
-font-weight:900;
-flex-shrink:0;
-}
-
-.postUser{
-flex:1;
-}
-
-.postUser b{
-display:block;
-}
-
-.postUser small{
-color:#876f78;
-}
-
-.verify{
-color:#4fa5ff;
-}
-
-.more{
-background:none;
-border:0;
-color:#fff;
-font-size:22px;
-}
-
-.postText{
-padding:0 13px 12px;
-line-height:1.5;
-white-space:pre-wrap;
-}
-
-.postMedia{
-width:100%;
-max-height:650px;
-object-fit:cover;
-display:block;
-background:#000;
-}
-
-.actions{
-display:flex;
-align-items:center;
-gap:20px;
-padding:11px 13px;
-border-top:1px solid #251018;
-}
-
-.act{
-background:none;
-border:0;
-color:#fff;
-font-size:23px;
-}
-
-.likes{
-font-size:13px;
-margin-left:-14px;
-color:#b8a5ac;
-}
-
-.caption{
-padding:0 13px 13px;
-font-size:14px;
-}
-
-.comment{
-padding:8px 13px;
-border-top:1px solid #211018;
-}
-
-.comment b{
-font-size:13px;
-}
-
-.comment span{
-color:#c1adb5;
-font-size:13px;
-margin-left:5px;
-}
-
-.commentInput{
-display:flex;
-gap:8px;
-padding:10px;
-border-top:1px solid #261019;
-}
-
-.commentInput input{
-flex:1;
-background:#0b0709;
-border:1px solid #32131d;
-border-radius:20px;
-padding:10px 14px;
-color:#fff;
-outline:none;
-}
-
-.commentInput button{
-background:#791b37;
-border:0;
-border-radius:20px;
-color:#fff;
-padding:0 15px;
-}
-
-/* PROFILE */
-
-.profileHead{
-padding:20px 8px;
-display:flex;
-align-items:center;
-gap:18px;
-}
-
-.profileAvatar{
-width:90px;
-height:90px;
-border-radius:50%;
-background:linear-gradient(135deg,#8e2143,#260914);
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:32px;
-font-weight:900;
-border:2px solid #8d2947;
-overflow:hidden;
-}
-
-.profileAvatar img{
-width:100%;
-height:100%;
-object-fit:cover;
-}
-
-.profileInfo{
-flex:1;
-}
-
-.profileName{
-font-size:20px;
-font-weight:900;
-}
-
-.profileUsername{
-color:#9c838c;
-margin-top:5px;
-}
-
-.stats{
-display:flex;
-justify-content:space-around;
-border-top:1px solid #2b111a;
-border-bottom:1px solid #2b111a;
-padding:14px;
-}
-
-.stat{
-text-align:center;
-}
-
-.stat b{
-display:block;
-font-size:18px;
-}
-
-.stat small{
-color:#8e7881;
-}
-
-/* LEAGUE */
-
-.leagueTitle{
-font-size:29px;
-font-weight:1000;
-text-align:center;
-margin:10px 0 20px;
-letter-spacing:1px;
-}
-
-.leagueItem{
-display:flex;
-align-items:center;
-gap:11px;
-padding:13px;
-border:1px solid #2c111b;
-border-radius:15px;
-background:#11090d;
-margin-bottom:8px;
-}
-
-.rank{
-width:35px;
-text-align:center;
-font-size:19px;
-font-weight:900;
-}
-
-.rankAvatar{
-width:45px;
-height:45px;
-border-radius:50%;
-background:#66162f;
-display:flex;
-align-items:center;
-justify-content:center;
-font-weight:900;
-}
-
-.leagueUser{
-flex:1;
-}
-
-.leagueUser b{
-display:block;
-}
-
-.leagueUser small{
-color:#8d7780;
-}
-
-.point{
-color:#dc4267;
-font-weight:900;
-}
-
-.topThree{
-padding:18px;
-border-color:#7f2140;
-box-shadow:0 0 28px rgba(126,25,58,.22);
-}
-
-.founderRow{
-background:linear-gradient(90deg,#310a19,#12080c);
-border-color:#a52b4e;
-}
-
-/* SEARCH */
-
-.search{
-display:flex;
-gap:8px;
-margin-bottom:13px;
-}
-
-.search input{
-flex:1;
-background:#10080c;
-border:1px solid #35141f;
-color:#fff;
-padding:13px;
-border-radius:12px;
-outline:none;
-}
-
-.userResult{
-display:flex;
-align-items:center;
-gap:11px;
-padding:13px;
-border-bottom:1px solid #291019;
-}
-
-.userResult:last-child{
-border:0;
-}
-
-.userResultInfo{
-flex:1;
-}
-
-.userResultInfo small{
-display:block;
-color:#907a82;
-margin-top:3px;
-}
-
-/* MESSAGES */
-
-.channel{
-padding:16px;
-display:flex;
-align-items:center;
-gap:12px;
-cursor:pointer;
-border-bottom:1px solid #291019;
-}
-
-.channel:last-child{
-border:0;
-}
-
-.channelIcon{
-width:46px;
-height:46px;
-border-radius:14px;
-background:#65162e;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:22px;
-}
-
-.channelInfo{
-flex:1;
-}
-
-.channelInfo b{
-display:block;
-}
-
-.channelInfo small{
-color:#8d7780;
-}
-
-/* CHAT */
-
-.back{
-border:0;
-background:none;
-color:#fff;
-font-size:16px;
-margin-bottom:13px;
-}
-
-.chat{
-height:65vh;
-display:flex;
-flex-direction:column;
-}
-
-.chatMessages{
-flex:1;
-overflow-y:auto;
-padding:12px;
-}
-
-.msg{
-max-width:78%;
-padding:10px 13px;
-background:#1b0c13;
-border-radius:14px;
-margin:7px 0;
-}
-
-.msg.mine{
-margin-left:auto;
-background:#711934;
-}
-
-.msgUser{
-font-size:11px;
-color:#d08b9d;
-margin-bottom:3px;
-}
-
-.msgText{
-font-size:14px;
-white-space:pre-wrap;
-}
-
-.chatSend{
-display:flex;
-gap:7px;
-padding:10px;
-border-top:1px solid #291019;
-}
-
-.chatSend input{
-flex:1;
-background:#0c0709;
-border:1px solid #36141f;
-color:#fff;
-border-radius:21px;
-padding:11px 14px;
-outline:none;
-}
-
-.chatSend button{
-border:0;
-background:#791b38;
-color:#fff;
-border-radius:21px;
-padding:0 16px;
-}
-
-/* ADMIN */
-
-.admin{
-padding:15px;
-}
-
-.admin h3{
-margin-bottom:13px;
-}
-
-.admin input{
-width:100%;
-background:#0c0709;
-border:1px solid #37151f;
-color:#fff;
-border-radius:10px;
-padding:12px;
-margin-bottom:8px;
-}
-
-.adminGrid{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:8px;
-}
-
-.adminButton{
-padding:11px;
-background:#791a37;
-border:0;
-border-radius:10px;
-color:#fff;
-font-weight:bold;
-}
-
-/* MODAL */
-
-.modal{
-position:fixed;
-inset:0;
-background:rgba(0,0,0,.8);
-z-index:200;
-display:flex;
-align-items:flex-end;
-justify-content:center;
-}
-
-.modalBox{
-width:100%;
-max-width:650px;
-background:#13090e;
-border-radius:20px 20px 0 0;
-padding:18px;
-border:1px solid #451727;
-}
-
-.modalBox textarea{
-width:100%;
-height:130px;
-resize:none;
-background:#0c0709;
-border:1px solid #35141f;
-color:#fff;
-border-radius:12px;
-padding:12px;
-outline:none;
-margin-bottom:10px;
-}
-
-.modalActions{
-display:flex;
-gap:8px;
-}
-
-.modalActions button{
-flex:1;
-padding:12px;
-border-radius:10px;
-border:0;
-}
-
-.fileLabel{
-display:block;
-padding:12px;
-border:1px dashed #6c1d37;
-border-radius:10px;
-text-align:center;
-color:#c98b9b;
-margin-bottom:10px;
-cursor:pointer;
-}
-
-.empty{
-text-align:center;
-padding:40px 15px;
-color:#78666e;
-}
-
-/* NOTIFICATION */
-
-.notification{
-padding:13px;
-border-bottom:1px solid #281019;
-}
-
-.notification small{
-display:block;
-color:#806d75;
-margin-top:4px;
-}
+  --bg:#070509;--surface:#0d0a0f;--surface2:#130b11;--surface3:#1a0e16;
+  --line:#2a1721;--line2:#40202d;--accent:#9d2148;--accent2:#d13a68;
+  --text:#fff;--muted:#a58e98;--blue:#5aa8ff;--green:#55d68a;
+  --shadow:0 18px 55px rgba(0,0,0,.42);--radius:18px
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--text);font-family:Inter,Arial,Helvetica,sans-serif}
+body{min-height:100vh}
+button,input,textarea{font:inherit}
+button{cursor:pointer}
+.hidden{display:none!important}
+a{color:inherit;text-decoration:none}
+#auth{min-height:100vh;display:grid;place-items:center;padding:18px;background:
+radial-gradient(circle at 50% -10%,#4a0d25 0,#1c0711 28%,transparent 58%),var(--bg)}
+.authBox{width:min(430px,100%);padding:30px 22px;border:1px solid #4a1c2e;border-radius:26px;background:rgba(13,7,11,.96);box-shadow:var(--shadow)}
+.brand{font-size:42px;font-weight:1000;letter-spacing:7px;text-align:center}
+.tag{text-align:center;color:#c293a4;margin:8px 0 28px}
+.field{width:100%;padding:14px 15px;border-radius:13px;border:1px solid var(--line2);background:#09070a;color:#fff;outline:0;margin-bottom:10px}
+.field:focus{border-color:var(--accent2);box-shadow:0 0 0 3px rgba(209,58,104,.1)}
+.btn{border:0;border-radius:13px;padding:13px 15px;font-weight:800}
+.btn.primary{background:linear-gradient(135deg,#8e1b40,#b72a55);color:#fff}
+.btn.primary:hover{filter:brightness(1.1)}
+.btn.ghost{background:#100a0f;border:1px solid var(--line2);color:#fff}
+.btn.small{padding:9px 12px;border-radius:11px;font-size:13px}
+.switch{text-align:center;color:var(--muted);margin-top:17px}.switch b{color:#df4772;cursor:pointer}
+.authMsg{text-align:center;min-height:21px;color:#e85b7e;margin-top:11px}
+#app{min-height:100vh;padding-bottom:80px}
+.top{position:sticky;top:0;z-index:50;height:62px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;background:rgba(7,5,9,.88);backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}
+.topLogo{font-weight:1000;letter-spacing:4px;font-size:23px}.topActions{display:flex;gap:4px}
+.iconBtn{width:42px;height:42px;border:0;background:transparent;color:#fff;font-size:22px;border-radius:50%}.iconBtn:hover{background:#160b11}
+.page{width:min(700px,100%);margin:auto;padding:13px}
+.nav{position:fixed;z-index:100;left:0;right:0;bottom:0;height:72px;display:flex;justify-content:space-around;align-items:center;background:rgba(9,6,10,.97);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom)}
+.navBtn{min-width:60px;border:0;background:none;color:#806e78;font-size:21px;display:flex;flex-direction:column;align-items:center;gap:3px}.navBtn span{font-size:10px}.navBtn.active{color:#fff}.navBtn.plus{font-size:27px}
+.card{background:linear-gradient(180deg,var(--surface2),var(--surface));border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;margin-bottom:14px;box-shadow:0 8px 25px rgba(0,0,0,.13)}
+.sectionTitle{font-size:22px;font-weight:900;margin:8px 2px 14px}.sub{color:var(--muted);font-size:13px}
+.stories{display:flex;gap:15px;padding:15px;overflow:auto}.story{min-width:67px;text-align:center}.storyRing{width:63px;height:63px;margin:auto;padding:2px;border-radius:50%;background:conic-gradient(#d93e6c,#7d1639,#e86688,#d93e6c)}.storyAvatar{width:100%;height:100%;border-radius:50%;display:grid;place-items:center;background:#170b11;font-weight:900;overflow:hidden}.storyAvatar img{width:100%;height:100%;object-fit:cover}.storyName{margin-top:6px;color:#b39da5;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.create{display:flex;gap:11px;align-items:center;padding:13px}.avatar{width:44px;height:44px;flex:none;border-radius:50%;display:grid;place-items:center;font-weight:900;background:linear-gradient(135deg,#8f2045,#350b1d);overflow:hidden}.avatar img{width:100%;height:100%;object-fit:cover}.createInput{flex:1;border:1px solid var(--line);background:#0a070a;color:#97838c;border-radius:25px;padding:12px 16px;text-align:left}
+.postHead{display:flex;align-items:center;gap:11px;padding:13px}.grow{flex:1}.username{font-weight:900}.handle{font-size:12px;color:#8e7983;margin-top:3px}.verify{color:var(--blue);font-weight:900;margin-left:3px}.more{background:none;border:0;color:#fff;font-size:23px}
+.postText{padding:0 14px 12px;line-height:1.55;white-space:pre-wrap}.media{display:block;width:100%;max-height:700px;object-fit:cover;background:#000}
+.actions{display:flex;align-items:center;gap:5px;padding:7px 10px;border-top:1px solid rgba(255,255,255,.04)}.act{border:0;background:none;color:#fff;font-size:24px;padding:7px 8px}.act.liked{color:#ed416f}.count{font-size:13px;color:#c0adb5;margin-right:8px}.caption{padding:0 14px 13px;font-size:14px}.comment{padding:8px 14px;border-top:1px solid #201018;font-size:13px}.comment b{margin-right:5px}.comment span{color:#c6b4bc}
+.commentForm{display:flex;gap:8px;padding:10px;border-top:1px solid var(--line)}.commentForm input,.searchInput,.chatInput{flex:1;min-width:0;background:#09070a;color:#fff;border:1px solid var(--line2);border-radius:22px;padding:11px 14px;outline:0}.commentForm button,.sendBtn{border:0;border-radius:22px;padding:0 15px;background:#7f1939;color:#fff;font-weight:800}
+.searchBar{display:flex;gap:8px;margin-bottom:12px}.searchBar .btn{width:50px}.result{display:flex;align-items:center;gap:11px;padding:13px;border-bottom:1px solid var(--line)}.result:last-child{border:0}.resultActions{display:flex;gap:6px}.resultActions .btn{font-size:12px}
+.profileTop{padding:20px 16px 15px;display:flex;gap:18px;align-items:center}.profileAvatar{width:94px;height:94px;border-radius:50%;overflow:hidden;flex:none;display:grid;place-items:center;background:linear-gradient(135deg,#9d2148,#280a16);border:2px solid #8e2345;font-size:30px;font-weight:1000}.profileAvatar img{width:100%;height:100%;object-fit:cover}.profileName{font-size:20px;font-weight:1000}.profileHandle{color:var(--muted);margin-top:5px}.bio{color:#cdbac2;margin-top:8px;line-height:1.4;font-size:13px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:13px 5px}.stat{text-align:center}.stat b{display:block;font-size:18px}.stat small{color:#907c85}
+.profileButtons{display:flex;gap:8px;padding:12px}.profileButtons .btn{flex:1}
+.tabs{display:grid;grid-template-columns:repeat(2,1fr);border-bottom:1px solid var(--line)}.tab{padding:13px;text-align:center;color:var(--muted);border:0;background:none}.tab.active{color:#fff;border-bottom:2px solid var(--accent2)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}.gridItem{aspect-ratio:1;overflow:hidden;background:#12090e}.gridItem img,.gridItem video{width:100%;height:100%;object-fit:cover}
+.leagueTitle{text-align:center;font-size:30px;font-weight:1000;margin:8px 0 4px}.leagueSub{text-align:center;color:var(--muted);margin-bottom:17px}.leagueItem{display:flex;align-items:center;gap:11px;padding:13px;border:1px solid var(--line);border-radius:16px;background:var(--surface);margin-bottom:8px}.rank{width:30px;text-align:center;font-size:19px;font-weight:1000}.rankAv{width:45px;height:45px;border-radius:50%;display:grid;place-items:center;background:#68152f;font-weight:900;overflow:hidden}.rankAv img{width:100%;height:100%;object-fit:cover}.points{color:#e14871;font-weight:1000}.founderRow{border-color:#a72b50;background:linear-gradient(90deg,#320a1a,#11080d);box-shadow:0 0 25px rgba(157,33,72,.15)}
+.chatHead{display:flex;align-items:center;gap:10px;margin-bottom:10px}.chatTitle{font-weight:900;font-size:19px}.chat{height:calc(100vh - 185px);min-height:420px;display:flex;flex-direction:column}.messages{flex:1;overflow:auto;padding:12px}.bubble{max-width:78%;padding:10px 13px;border-radius:16px;background:#1b0d15;margin:7px 0}.bubble.mine{margin-left:auto;background:#731a39}.bubble small{display:block;color:#d79bad;font-size:10px;margin-bottom:3px}.bubble p{white-space:pre-wrap;word-break:break-word}.sendBar{display:flex;gap:7px;padding:10px;border-top:1px solid var(--line)}
+.channel{display:flex;align-items:center;gap:12px;padding:16px;border-bottom:1px solid var(--line)}.channel:last-child{border:0}.channelIcon{width:47px;height:47px;border-radius:14px;display:grid;place-items:center;background:#68162f;font-size:21px}.channel small{display:block;color:var(--muted);margin-top:3px}
+.notice{padding:14px;border-bottom:1px solid var(--line)}.notice small{display:block;color:#7f6d76;margin-top:5px}
+.modal{position:fixed;z-index:200;inset:0;background:rgba(0,0,0,.76);display:flex;align-items:flex-end;justify-content:center}.modalBox{width:min(700px,100%);background:#12090e;border:1px solid #4a1a2c;border-radius:22px 22px 0 0;padding:18px;max-height:92vh;overflow:auto}.modalTop{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}.modalTop h3{font-size:19px}.close{border:0;background:#25111a;color:#fff;border-radius:50%;width:34px;height:34px}.textarea{width:100%;height:140px;resize:none;background:#09070a;border:1px solid var(--line2);color:#fff;border-radius:14px;padding:13px;outline:0}.filePick{display:block;padding:13px;border:1px dashed #72203d;color:#c98b9e;text-align:center;border-radius:13px;margin:10px 0;cursor:pointer}.modalBtns{display:flex;gap:8px}.modalBtns .btn{flex:1}
+.settingsRow{display:flex;align-items:center;gap:12px;padding:15px;border-bottom:1px solid var(--line)}.settingsRow:last-child{border:0}.settingsRow .grow small{display:block;color:var(--muted);margin-top:4px}.danger{color:#ef5c7d}
+.empty{text-align:center;padding:45px 15px;color:#786870}.toast{position:fixed;z-index:300;left:50%;bottom:90px;transform:translateX(-50%);background:#1b0d15;border:1px solid #542036;color:#fff;padding:11px 15px;border-radius:13px;box-shadow:var(--shadow)}
+@media(max-width:520px){.page{padding:10px}.profileTop{gap:13px}.profileAvatar{width:82px;height:82px}.topLogo{font-size:21px}.stats{padding:11px 2px}.grid{gap:1px}}
 </style>
 </head>
-
 <body>
 
-<!-- GİRİŞ -->
-
 <section id="auth">
-
-<div class="authBox">
-
-<div class="logo">İNFAZ</div>
-<div class="tag">#İzra(cc)HerYerde</div>
-
-<div id="loginBox">
-
-<input
-id="loginEmail"
-class="authInput"
-type="email"
-placeholder="Gmail / E-posta">
-
-<input
-id="loginPassword"
-class="authInput"
-type="password"
-placeholder="Şifre">
-
-<button class="primary" onclick="login()">
-Giriş Yap
-</button>
-
-<button class="secondary" onclick="resetPassword()">
-Şifremi Unuttum
-</button>
-
-<div class="switch">
-Hesabın yok mu?
-<span onclick="showRegister()">Kaydol</span>
-</div>
-
-</div>
-
-
-<div id="registerBox" class="hidden">
-
-<input
-id="registerEmail"
-class="authInput"
-type="email"
-placeholder="Gmail / E-posta">
-
-<input
-id="registerUsername"
-class="authInput"
-type="text"
-placeholder="Kullanıcı adı">
-
-<input
-id="registerPassword"
-class="authInput"
-type="password"
-placeholder="Şifre">
-
-<button class="primary" onclick="register()">
-Kaydol
-</button>
-
-<div class="switch">
-Zaten hesabın var mı?
-<span onclick="showLogin()">Giriş Yap</span>
-</div>
-
-</div>
-
-<div id="authMsg" class="authMsg"></div>
-
-</div>
-
+  <div class="authBox">
+    <div class="brand">İNFAZ</div>
+    <div class="tag">#İzra(cc)HerYerde</div>
+    <div id="loginBox">
+      <input id="loginEmail" class="field" type="email" placeholder="Gmail / E-posta">
+      <input id="loginPassword" class="field" type="password" placeholder="Şifre">
+      <button class="btn primary" style="width:100%" onclick="login()">Giriş Yap</button>
+      <button class="btn ghost" style="width:100%;margin-top:9px" onclick="resetPassword()">Şifremi Unuttum</button>
+      <div class="switch">Hesabın yok mu? <b onclick="showRegister()">Kaydol</b></div>
+    </div>
+    <div id="registerBox" class="hidden">
+      <input id="registerEmail" class="field" type="email" placeholder="Gmail / E-posta">
+      <input id="registerUsername" class="field" placeholder="Kullanıcı adı">
+      <input id="registerPassword" class="field" type="password" placeholder="Şifre">
+      <button class="btn primary" style="width:100%" onclick="register()">Hesap Oluştur</button>
+      <div class="switch">Zaten hesabın var mı? <b onclick="showLogin()">Giriş Yap</b></div>
+    </div>
+    <div id="authMsg" class="authMsg"></div>
+  </div>
 </section>
-
-
-<!-- UYGULAMA -->
 
 <section id="app" class="hidden">
-
-<header class="top">
-
-<div class="topLogo">İNFAZ</div>
-
-<div class="topRight">
-
-<button class="topButton" onclick="openPage('search')">⌕</button>
-
-<button class="topButton" onclick="openPage('notifications')">♡</button>
-
-<button class="topButton" onclick="openPage('messages')">✉</button>
-
-</div>
-
-</header>
-
-
-<main id="content" class="page"></main>
-
-
-<nav class="nav">
-
-<button id="navHome" class="navBtn active" onclick="openPage('home')">
-⌂
-<span>Ana Sayfa</span>
-</button>
-
-<button id="navSearch" class="navBtn" onclick="openPage('search')">
-⌕
-<span>Ara</span>
-</button>
-
-<button id="navLeague" class="navBtn" onclick="openPage('league')">
-♛
-<span>Lig</span>
-</button>
-
-<button id="navMessages" class="navBtn" onclick="openPage('messages')">
-✉
-<span>Mesaj</span>
-</button>
-
-<button id="navProfile" class="navBtn" onclick="openPage('profile')">
-◉
-<span>Profil</span>
-</button>
-
-</nav>
-
+  <header class="top">
+    <div class="topLogo">İNFAZ</div>
+    <div class="topActions">
+      <button class="iconBtn" onclick="openPage('search')" aria-label="Ara">⌕</button>
+      <button class="iconBtn" onclick="openPage('notifications')" aria-label="Bildirimler">♡</button>
+      <button class="iconBtn" onclick="openPage('messages')" aria-label="Mesajlar">✉</button>
+    </div>
+  </header>
+  <main id="content" class="page"></main>
+  <nav class="nav">
+    <button id="navHome" class="navBtn active" onclick="openPage('home')">⌂<span>Ana Sayfa</span></button>
+    <button id="navSearch" class="navBtn" onclick="openPage('search')">⌕<span>Ara</span></button>
+    <button class="navBtn plus" onclick="openPostModal()">＋</button>
+    <button id="navLeague" class="navBtn" onclick="openPage('league')">♛<span>Lig</span></button>
+    <button id="navProfile" class="navBtn" onclick="openPage('profile')">◉<span>Profil</span></button>
+  </nav>
 </section>
 
-
-<!-- GÖNDERİ MODAL -->
-
 <div id="postModal" class="modal hidden">
-
-<div class="modalBox">
-
-<textarea
-id="postText"
-placeholder="Ne düşünüyorsun?"></textarea>
-
-<label class="fileLabel">
-
-📷 Fotoğraf / Video seç
-
-<input
-id="postFile"
-type="file"
-accept="image/*,video/*"
-hidden>
-
-</label>
-
-<div id="uploadStatus"
-style="color:#9e7c87;margin-bottom:10px">
+  <div class="modalBox">
+    <div class="modalTop"><h3>Yeni Gönderi</h3><button class="close" onclick="closePostModal()">×</button></div>
+    <textarea id="postText" class="textarea" placeholder="Ne düşünüyorsun?"></textarea>
+    <label class="filePick">📷 Fotoğraf / Video seç<input id="postFile" type="file" accept="image/*,video/*" hidden></label>
+    <div id="uploadStatus" class="sub" style="margin-bottom:10px"></div>
+    <div class="modalBtns"><button class="btn ghost" onclick="closePostModal()">İptal</button><button class="btn primary" onclick="createPost()">Paylaş</button></div>
+  </div>
 </div>
 
-<div class="modalActions">
-
-<button
-style="background:#291019;color:#fff"
-onclick="closePostModal()">
-İptal
-</button>
-
-<button
-style="background:#7e1b39;color:#fff"
-onclick="createPost()">
-Paylaş
-</button>
-
+<div id="editModal" class="modal hidden">
+  <div class="modalBox">
+    <div class="modalTop"><h3>Profili Düzenle</h3><button class="close" onclick="closeEdit()">×</button></div>
+    <input id="editUsername" class="field" placeholder="Kullanıcı adı">
+    <input id="editDisplay" class="field" placeholder="Ad">
+    <textarea id="editBio" class="textarea" style="height:100px" placeholder="Bio"></textarea>
+    <div class="modalBtns"><button class="btn ghost" onclick="closeEdit()">İptal</button><button class="btn primary" onclick="saveProfile()">Kaydet</button></div>
+  </div>
 </div>
 
-</div>
-
-</div>
-
+<div id="toast" class="toast hidden"></div>
 
 <script type="module">
-
-import {
-initializeApp
-}
-from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
-
-
-import {
-getAuth,
-createUserWithEmailAndPassword,
-signInWithEmailAndPassword,
-sendPasswordResetEmail,
-signOut,
-onAuthStateChanged
-}
+import {initializeApp} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+import {getAuth,createUserWithEmailAndPassword,signInWithEmailAndPassword,sendPasswordResetEmail,signOut,onAuthStateChanged}
 from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
-
-
 import {
-getFirestore,
-collection,
-doc,
-getDoc,
-setDoc,
-updateDoc,
-addDoc,
-getDocs,
-query,
-where,
-orderBy,
-limit,
-increment,
-serverTimestamp,
-arrayUnion,
-arrayRemove
-}
-from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
-
-
-import {
-getStorage,
-ref,
-uploadBytes,
-getDownloadURL
-}
-from "https://www.gstatic.com/firebasejs/12.18.0/firebase-storage.js";
-
+getFirestore,collection,doc,getDoc,setDoc,updateDoc,addDoc,getDocs,
+query,where,orderBy,limit,onSnapshot,increment,arrayUnion,arrayRemove,serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+import {getStorage,ref,uploadBytes,getDownloadURL} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-storage.js";
 
 const firebaseConfig={
 apiKey:"AIzaSyBomQXTZy3apU3LpY5hJhW0L1p6HB4BIM8",
@@ -1059,1745 +149,280 @@ storageBucket:"izra-site.firebasestorage.app",
 messagingSenderId:"539636714024",
 appId:"1:539636714024:web:6a28b1c91680e15b76c31d"
 };
-
-
-const firebaseApp=initializeApp(firebaseConfig);
-
-const auth=getAuth(firebaseApp);
-
-const db=getFirestore(firebaseApp);
-
-const storage=getStorage(firebaseApp);
-
-
-/* KURUCU */
-
+const app=initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app),storage=getStorage(app);
 const FOUNDER_UID="HGH0b0mDCePxfgR2k6F84dhbuRZ2";
+const FOUNDER_NAME="Allah", FOUNDER_DISPLAY="İzra Adel Karyan-Allah", FOUNDER_USERNAME="ll.sxtm.ll";
 
+let me=null,myProfile=null,currentPage="home",currentOther=null,unsubscribeFeed=null,unsubscribeChat=null;
 
-let me=null;
-
-let myProfile=null;
-
-let currentOtherUser=null;
-
-
-/* YARDIMCI */
-
-function $(id){
-return document.getElementById(id);
-}
-
-
-function safe(value){
-return String(value??"")
-.replaceAll("&","&amp;")
-.replaceAll("<","&lt;")
-.replaceAll(">","&gt;")
-.replaceAll('"',"&quot;")
-.replaceAll("'","&#039;");
-}
-
-
+const $=id=>document.getElementById(id);
+const esc=v=>String(v??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;");
+const initials=v=>esc((String(v||"k").trim()[0]||"k").toUpperCase());
+const isFounder=()=>me?.uid===FOUNDER_UID;
+function toast(t){$("toast").textContent=t;$("toast").classList.remove("hidden");clearTimeout(window.__toast);window.__toast=setTimeout(()=>$("toast").classList.add("hidden"),2200)}
 function errorText(e){
-
-if(e.code?.includes("invalid-credential"))
-return "E-posta veya şifre hatalı.";
-
-if(e.code?.includes("email-already-in-use"))
-return "Bu e-posta zaten kullanılıyor.";
-
-if(e.code?.includes("invalid-email"))
-return "Geçerli bir e-posta gir.";
-
-if(e.code?.includes("weak-password"))
-return "Şifre en az 6 karakter olmalı.";
-
-if(e.code?.includes("network"))
-return "İnternet bağlantısını kontrol et.";
-
-return "Bir hata oluştu.";
-
+if(e?.code?.includes("invalid-credential")||e?.code?.includes("wrong-password"))return"E-posta veya şifre hatalı.";
+if(e?.code?.includes("email-already-in-use"))return"Bu e-posta zaten kullanılıyor.";
+if(e?.code?.includes("invalid-email"))return"Geçerli bir e-posta gir.";
+if(e?.code?.includes("weak-password"))return"Şifre en az 6 karakter olmalı.";
+if(e?.code?.includes("permission-denied"))return"Firebase Rules işlemi engelledi.";
+if(e?.code?.includes("network"))return"İnternet bağlantısını kontrol et.";
+return"Bir hata oluştu.";
+}
+function avatarHTML(u,cls="avatar"){
+return `<div class="${cls}">${u?.photoURL?`<img src="${esc(u.photoURL)}" alt="">`:initials(u?.username||u?.displayName)}</div>`;
+}
+async function userData(uid){
+const s=await getDoc(doc(db,"users",uid));return s.exists()?{uid,...s.data()}:null;
 }
 
-
-/* AUTH */
-
-window.showRegister=()=>{
-$("loginBox").classList.add("hidden");
-$("registerBox").classList.remove("hidden");
-$("authMsg").textContent="";
-};
-
-
-window.showLogin=()=>{
-$("registerBox").classList.add("hidden");
-$("loginBox").classList.remove("hidden");
-$("authMsg").textContent="";
-};
-
-
-window.login=async()=>{
-
-const email=$("loginEmail").value.trim();
-
-const password=$("loginPassword").value;
-
-if(!email||!password){
-$("authMsg").textContent="E-posta ve şifreyi gir.";
-return;
-}
-
-try{
-
-await signInWithEmailAndPassword(
-auth,
-email,
-password
-);
-
-}catch(e){
-
-$("authMsg").textContent=errorText(e);
-
-}
-
-};
-
-
+window.showRegister=()=>{$("loginBox").classList.add("hidden");$("registerBox").classList.remove("hidden");$("authMsg").textContent=""};
+window.showLogin=()=>{$("registerBox").classList.add("hidden");$("loginBox").classList.remove("hidden");$("authMsg").textContent=""};
+window.login=async()=>{try{const e=$("loginEmail").value.trim(),p=$("loginPassword").value;if(!e||!p){$("authMsg").textContent="E-posta ve şifreyi gir.";return}await signInWithEmailAndPassword(auth,e,p)}catch(e){$("authMsg").textContent=errorText(e)}};
 window.register=async()=>{
-
-const email=$("registerEmail").value.trim();
-
-const username=$("registerUsername").value.trim().toLowerCase();
-
-const password=$("registerPassword").value;
-
-if(!email||!username||!password){
-$("authMsg").textContent="Tüm alanları doldur.";
-return;
-}
-
-if(username.length<3){
-$("authMsg").textContent="Kullanıcı adı en az 3 karakter.";
-return;
-}
-
-if(password.length<6){
-$("authMsg").textContent="Şifre en az 6 karakter.";
-return;
-}
-
+const email=$("registerEmail").value.trim(),username=$("registerUsername").value.trim().toLowerCase(),password=$("registerPassword").value;
+if(!email||!username||!password){$("authMsg").textContent="Tüm alanları doldur.";return}
+if(!/^[a-z0-9._]{3,30}$/.test(username)){$("authMsg").textContent="Kullanıcı adı 3-30 karakter; harf, rakam, nokta ve alt çizgi kullan.";return}
+if(password.length<6){$("authMsg").textContent="Şifre en az 6 karakter.";return}
 try{
-
 $("authMsg").textContent="Hesap oluşturuluyor...";
-
-const result=
-await createUserWithEmailAndPassword(
-auth,
-email,
-password
-);
-
-const uid=result.user.uid;
-
-const founder=uid===FOUNDER_UID;
-
-await setDoc(
-doc(db,"users",uid),
-{
-username,
-displayName:founder
-?"İzra Adel Karyan-Allah"
-:"kul",
-email,
-points:founder?999999:0,
-isFounder:founder,
-verified:founder,
-followers:[],
-following:[],
-createdAt:serverTimestamp()
-}
-);
-
-}catch(e){
-
-console.error(e);
-
-$("authMsg").textContent=errorText(e);
-
-}
-
+const r=await createUserWithEmailAndPassword(auth,email,password),uid=r.user.uid,founder=uid===FOUNDER_UID;
+await setDoc(doc(db,"users",uid),{
+username:founder?FOUNDER_USERNAME:username,
+displayName:founder?FOUNDER_DISPLAY:"kul",
+bio:founder?"İNFAZ kurucusu":"",
+email,points:founder?999999:0,isFounder:founder,verified:founder,
+followers:[],following:[],saved:[],createdAt:serverTimestamp()
+});
+}catch(e){$("authMsg").textContent=errorText(e)}
 };
-
-
 window.resetPassword=async()=>{
-
-const email=$("loginEmail").value.trim();
-
-if(!email){
-$("authMsg").textContent="Önce e-posta adresini yaz.";
-return;
-}
-
-try{
-
-await sendPasswordResetEmail(auth,email);
-
-$("authMsg").textContent=
-"Şifre sıfırlama bağlantısı gönderildi.";
-
-}catch(e){
-
-$("authMsg").textContent=errorText(e);
-
-}
-
+const e=$("loginEmail").value.trim();if(!e){$("authMsg").textContent="Önce e-posta adresini yaz.";return}
+try{await sendPasswordResetEmail(auth,e);$("authMsg").textContent="Şifre sıfırlama bağlantısı gönderildi."}catch(e){$("authMsg").textContent=errorText(e)}
 };
-
-
-window.logout=async()=>{
-await signOut(auth);
-};
-
-
-/* PROFILE */
+window.logout=()=>signOut(auth);
 
 async function loadProfile(){
-
-const ref=doc(db,"users",me.uid);
-
-const snap=await getDoc(ref);
-
-if(snap.exists()){
-
-myProfile={
-uid:me.uid,
-...snap.data()
-};
-
-return;
-
+const r=doc(db,"users",me.uid),s=await getDoc(r);
+if(s.exists()){
+const d=s.data();
+if(isFounder()){
+myProfile={uid:me.uid,...d,username:FOUNDER_USERNAME,displayName:FOUNDER_DISPLAY,isFounder:true,verified:true,points:999999};
+await updateDoc(r,{username:FOUNDER_USERNAME,displayName:FOUNDER_DISPLAY,isFounder:true,verified:true,points:999999});
+}else myProfile={uid:me.uid,...d};
+}else{
+myProfile={uid:me.uid,username:isFounder()?FOUNDER_USERNAME:"kul",displayName:isFounder()?FOUNDER_DISPLAY:"kul",bio:"",email:me.email,points:isFounder()?999999:0,isFounder:isFounder(),verified:isFounder(),followers:[],following:[],saved:[]};
+await setDoc(r,myProfile);
+}
 }
 
-
-const founder=me.uid===FOUNDER_UID;
-
-myProfile={
-uid:me.uid,
-username:founder?"ll.sxtm.ll":"kul",
-displayName:founder
-?"İzra Adel Karyan-Allah"
-:"kul",
-email:me.email,
-points:founder?999999:0,
-isFounder:founder,
-verified:founder,
-followers:[],
-following:[]
-};
-
-await setDoc(ref,myProfile);
-
-}
-
-
-/* AUTH STATE */
-
-onAuthStateChanged(auth,async(user)=>{
-
-if(!user){
-
-me=null;
-myProfile=null;
-
-$("app").classList.add("hidden");
-$("auth").classList.remove("hidden");
-
-return;
-
-}
-
-me=user;
-
-await loadProfile();
-
-$("auth").classList.add("hidden");
-$("app").classList.remove("hidden");
-
-openPage("home");
-
+onAuthStateChanged(auth,async u=>{
+if(!u){me=null;myProfile=null;if(unsubscribeFeed)unsubscribeFeed();if(unsubscribeChat)unsubscribeChat();$("app").classList.add("hidden");$("auth").classList.remove("hidden");return}
+me=u;await loadProfile();$("auth").classList.add("hidden");$("app").classList.remove("hidden");openPage("home");
 });
 
-
-/* NAV */
-
-window.openPage=async(page)=>{
-
-document.querySelectorAll(".navBtn")
-.forEach(x=>x.classList.remove("active"));
-
-const nav={
-home:"navHome",
-search:"navSearch",
-league:"navLeague",
-messages:"navMessages",
-profile:"navProfile"
+window.openPage=async page=>{
+currentPage=page;document.querySelectorAll(".navBtn").forEach(x=>x.classList.remove("active"));
+const map={home:"navHome",search:"navSearch",league:"navLeague",profile:"navProfile"};
+if(map[page])$(map[page]).classList.add("active");
+if(unsubscribeChat){unsubscribeChat();unsubscribeChat=null}
+if(page==="home")return home();if(page==="search")return searchPage();if(page==="league")return league();if(page==="profile")return profile();if(page==="messages")return messages();if(page==="notifications")return notifications();
 };
-
-if(nav[page])
-$(nav[page]).classList.add("active");
-
-if(page==="home")home();
-
-if(page==="search")searchPage();
-
-if(page==="league")league();
-
-if(page==="messages")messages();
-
-if(page==="profile")profile();
-
-if(page==="notifications")notifications();
-
-};
-
-
-/* HOME */
 
 async function home(){
-
 $("content").innerHTML=`
-
-<div class="card">
-
-<div class="stories">
-
-<div class="story">
-
-<div class="storyRing">
-<div class="storyAvatar">+</div>
-</div>
-
-<div class="storyName">Hikâyen</div>
-
-</div>
-
-<div class="story">
-
-<div class="storyRing">
-<div class="storyAvatar">İ</div>
-</div>
-
-<div class="storyName">İNFAZ</div>
-
-</div>
-
-</div>
-
-</div>
-
-
-<div class="card">
-
-<div class="create">
-
-<div class="createAvatar">
-${safe((myProfile.username||"k")[0]).toUpperCase()}
-</div>
-
-<button class="createButton" onclick="openPostModal()">
-Bir şeyler paylaş...
-</button>
-
-</div>
-
-</div>
-
-
-<div id="posts">
-
-<div class="empty">
-Gönderiler yükleniyor...
-</div>
-
-</div>
-`;
-
-await loadPosts();
-
+<div class="card"><div class="stories" id="stories"></div></div>
+<div class="card"><div class="create">${avatarHTML(myProfile)}<button class="createInput" onclick="openPostModal()">Bir şeyler paylaş...</button></div></div>
+<div id="posts"><div class="empty">Akış yükleniyor...</div></div>`;
+loadStories();loadFeed();
 }
-
-
-/* POST MODAL */
-
-window.openPostModal=()=>{
-$("postModal").classList.remove("hidden");
-$("postText").value="";
-$("postFile").value="";
-$("uploadStatus").textContent="";
-};
-
-
-window.closePostModal=()=>{
-$("postModal").classList.add("hidden");
-};
-
-
-/* CREATE POST */
-
-window.createPost=async()=>{
-
-const text=$("postText").value.trim();
-
-const file=$("postFile").files[0];
-
-if(!text&&!file){
-alert("Bir şey yaz veya fotoğraf/video seç.");
-return;
-}
-
+async function loadStories(){
+const box=$("stories");if(!box)return;
+let html=`<div class="story" onclick="openPostModal()"><div class="storyRing"><div class="storyAvatar">＋</div></div><div class="storyName">Hikâyen</div></div>`;
 try{
-
-$("uploadStatus").textContent="Paylaşılıyor...";
-
-let mediaUrl="";
-let mediaType="";
-
-if(file){
-
-const path=
-"posts/"+me.uid+"/"+Date.now()+"_"+file.name;
-
-const storageRef=ref(storage,path);
-
-await uploadBytes(storageRef,file);
-
-mediaUrl=await getDownloadURL(storageRef);
-
-mediaType=
-file.type.startsWith("video")
-?"video"
-:"image";
-
-}
-
-await addDoc(
-collection(db,"posts"),
-{
-uid:me.uid,
-username:myProfile.username,
-displayName:myProfile.displayName||"kul",
-verified:!!myProfile.verified,
-text,
-mediaUrl,
-mediaType,
-likes:[],
-likesCount:0,
-commentsCount:0,
-deleted:false,
-createdAt:serverTimestamp()
-}
-);
-
-$("uploadStatus").textContent="Paylaşıldı.";
-
-setTimeout(()=>{
-closePostModal();
-home();
-},500);
-
-}catch(e){
-
-console.error(e);
-
-$("uploadStatus").textContent=
-"Paylaşım sırasında hata oluştu.";
-
-}
-
-};
-
-
-/* POSTS */
-
-async function loadPosts(){
-
-const box=$("posts");
-
-try{
-
-const q=query(
-collection(db,"posts"),
-orderBy("createdAt","desc"),
-limit(40)
-);
-
-const snap=await getDocs(q);
-
-box.innerHTML="";
-
-let found=false;
-
-snap.forEach(d=>{
-
-const p={
-id:d.id,
-...d.data()
-};
-
-if(p.deleted)return;
-
-found=true;
-
-box.insertAdjacentHTML(
-"beforeend",
-postHTML(p)
-);
-
-});
-
-if(!found){
-
-box.innerHTML=
-`<div class="empty">Henüz gönderi yok.</div>`;
-
-}
-
-}catch(e){
-
-console.error(e);
-
-box.innerHTML=
-`<div class="empty">Gönderiler yüklenemedi.</div>`;
-
-}
-
-}
-
-
-function postHTML(p){
-
-const liked=
-Array.isArray(p.likes)&&
-p.likes.includes(me.uid);
-
-return`
-
-<article class="card">
-
-<div class="postHeader">
-
-<div class="avatar">
-${safe((p.username||"kul")[0]).toUpperCase()}
-</div>
-
-<div class="postUser">
-
-<b>
-${safe(p.username||"kul")}
-${p.verified?'<span class="verify">✓</span>':""}
-</b>
-
-<small>kul</small>
-
-</div>
-
-${
-p.uid===me.uid||myProfile.isFounder
-?
-`<button class="more"
-onclick="deletePost('${p.id}')">⋯</button>`
-:""
-}
-
-</div>
-
-
-${
-p.text
-?
-`<div class="postText">${safe(p.text)}</div>`
-:""
-}
-
-
-${
-p.mediaUrl
-?
-p.mediaType==="video"
-?
-`<video class="postMedia" controls src="${p.mediaUrl}"></video>`
-:
-`<img class="postMedia" src="${p.mediaUrl}">`
-:""
-}
-
-
-<div class="actions">
-
-<button
-class="act"
-onclick="toggleLike('${p.id}')">
-${liked?"♥":"♡"}
-</button>
-
-<span class="likes">
-${p.likesCount||0}
-</span>
-
-<button
-class="act"
-onclick="showComments('${p.id}')">
-○
-</button>
-
-<button
-class="act"
-onclick="sharePost('${p.id}')">
-↗
-</button>
-
-</div>
-
-
-<div id="comments_${p.id}"></div>
-
-
-<div class="commentInput">
-
-<input
-id="commentInput_${p.id}"
-placeholder="Yorum yaz...">
-
-<button onclick="addComment('${p.id}')">
-Gönder
-</button>
-
-</div>
-
-</article>
-
-`;
-
-}
-
-
-/* LIKE */
-
-window.toggleLike=async(postId)=>{
-
-const ref=doc(db,"posts",postId);
-
-const snap=await getDoc(ref);
-
-if(!snap.exists())return;
-
-const p=snap.data();
-
-const likes=Array.isArray(p.likes)?p.likes:[];
-
-const already=likes.includes(me.uid);
-
-await updateDoc(
-ref,
-{
-likes:already
-?arrayRemove(me.uid)
-:arrayUnion(me.uid),
-
-likesCount:increment(already?-1:1)
-}
-);
-
-await loadPosts();
-
-};
-
-
-/* COMMENT */
-
-window.addComment=async(postId)=>{
-
-const input=$("commentInput_"+postId);
-
-const text=input.value.trim();
-
-if(!text)return;
-
-await addDoc(
-collection(db,"comments"),
-{
-postId,
-uid:me.uid,
-username:myProfile.username,
-text,
-createdAt:serverTimestamp()
-}
-);
-
-await updateDoc(
-doc(db,"posts",postId),
-{
-commentsCount:increment(1)
-}
-);
-
-input.value="";
-
-await showComments(postId);
-
-};
-
-
-window.showComments=async(postId)=>{
-
-const box=$("comments_"+postId);
-
-if(!box)return;
-
-const q=query(
-collection(db,"comments"),
-where("postId","==",postId),
-orderBy("createdAt","asc"),
-limit(30)
-);
-
-const snap=await getDocs(q);
-
-box.innerHTML="";
-
-snap.forEach(d=>{
-
-const c=d.data();
-
-box.insertAdjacentHTML(
-"beforeend",
-`
-<div class="comment">
-<b>${safe(c.username||"kul")}</b>
-<span>${safe(c.text)}</span>
-</div>
-`
-);
-
-});
-
-};
-
-
-/* DELETE */
-
-window.deletePost=async(id)=>{
-
-if(!confirm("Bu gönderi silinsin mi?"))return;
-
-await updateDoc(
-doc(db,"posts",id),
-{
-deleted:true
-}
-);
-
-await loadPosts();
-
-};
-
-
-/* SHARE */
-
-window.sharePost=async(id)=>{
-
-const url=
-location.href.split("?")[0]+"?post="+id;
-
-try{
-
-if(navigator.share){
-
-await navigator.share({
-title:"İNFAZ",
-text:"İNFAZ gönderisi",
-url
-});
-
-}else{
-
-await navigator.clipboard.writeText(url);
-
-alert("Bağlantı kopyalandı.");
-
-}
-
+const q=query(collection(db,"stories"),orderBy("createdAt","desc"),limit(20)),s=await getDocs(q);
+const seen=new Set();
+for(const d of s.docs){const x=d.data();if(seen.has(x.uid))continue;seen.add(x.uid);const u=await userData(x.uid);html+=`<div class="story" onclick="viewStory('${d.id}')"><div class="storyRing"><div class="storyAvatar">${u?.photoURL?`<img src="${esc(u.photoURL)}">`:initials(u?.username)}</div></div><div class="storyName">${esc(u?.username||"kul")}</div></div>`}
 }catch(e){}
-
+box.innerHTML=html;
+}
+function postHTML(p){
+const liked=(p.likes||[]).includes(me.uid);
+return `<article class="card" id="post_${p.id}">
+<div class="postHead">${avatarHTML({username:p.username,photoURL:p.photoURL})}<div class="grow"><div class="username">${esc(p.username||"kul")}${p.verified?'<span class="verify">✓</span>':""}</div><div class="handle">${esc(p.displayName||"kul")}</div></div>${p.uid===me.uid||isFounder()?`<button class="more" onclick="deletePost('${p.id}')">•••</button>`:""}</div>
+${p.text?`<div class="postText">${esc(p.text)}</div>`:""}
+${p.mediaUrl?(p.mediaType==="video"?`<video class="media" controls src="${esc(p.mediaUrl)}"></video>`:`<img class="media" src="${esc(p.mediaUrl)}" alt="">`):""}
+<div class="actions">
+<button class="act ${liked?"liked":""}" onclick="toggleLike('${p.id}')">${liked?"♥":"♡"}</button><span class="count">${p.likesCount||0}</span>
+<button class="act" onclick="toggleComments('${p.id}')">◯</button><span class="count">${p.commentsCount||0}</span>
+<button class="act" onclick="sharePost('${p.id}')">↗</button>
+<button class="act" onclick="savePost('${p.id}')">▢</button>
+</div>
+<div id="comments_${p.id}" class="hidden"></div>
+<div class="commentForm"><input id="comment_${p.id}" placeholder="Yorum yaz..."><button onclick="addComment('${p.id}')">Gönder</button></div>
+</article>`;
+}
+function loadFeed(){
+const box=$("posts");if(unsubscribeFeed)unsubscribeFeed();
+try{
+const q=query(collection(db,"posts"),orderBy("createdAt","desc"),limit(50));
+unsubscribeFeed=onSnapshot(q,s=>{
+if(!$("posts"))return;let arr=[];s.forEach(d=>{const p={id:d.id,...d.data()};if(!p.deleted)arr.push(p)});
+box.innerHTML=arr.length?arr.map(postHTML).join(""):`<div class="empty">Henüz gönderi yok.<br>İlk paylaşımı sen yap.</div>`;
+},e=>box.innerHTML=`<div class="empty">Akış yüklenemedi.<br>${esc(errorText(e))}</div>`);
+}catch(e){box.innerHTML=`<div class="empty">Akış yüklenemedi.</div>`}
+}
+window.openPostModal=()=>{$("postModal").classList.remove("hidden");$("postText").value="";$("postFile").value="";$("uploadStatus").textContent=""};
+window.closePostModal=()=>$("postModal").classList.add("hidden");
+window.createPost=async()=>{
+const text=$("postText").value.trim(),file=$("postFile").files[0];if(!text&&!file){toast("Bir şey yaz veya medya seç.");return}
+try{
+$("uploadStatus").textContent="Paylaşılıyor...";
+let mediaUrl="",mediaType="";
+if(file){if(file.size>80*1024*1024){toast("Dosya 80 MB'dan küçük olmalı.");return}const r=ref(storage,`posts/${me.uid}/${Date.now()}_${file.name.replace(/[^\w.\-]/g,"_")}`);await uploadBytes(r,file);mediaUrl=await getDownloadURL(r);mediaType=file.type.startsWith("video")?"video":"image"}
+await addDoc(collection(db,"posts"),{uid:me.uid,username:myProfile.username,displayName:myProfile.displayName||"kul",photoURL:myProfile.photoURL||"",verified:!!myProfile.verified,text,mediaUrl,mediaType,likes:[],likesCount:0,commentsCount:0,deleted:false,createdAt:serverTimestamp()});
+closePostModal();toast("Gönderi paylaşıldı.");
+}catch(e){console.error(e);$("uploadStatus").textContent=errorText(e)}
 };
-
-
-/* SEARCH */
+window.toggleLike=async id=>{
+const r=doc(db,"posts",id),s=await getDoc(r);if(!s.exists())return;const p=s.data(),liked=(p.likes||[]).includes(me.uid);
+await updateDoc(r,{likes:liked?arrayRemove(me.uid):arrayUnion(me.uid),likesCount:increment(liked?-1:1)});
+if(!liked&&p.uid!==me.uid)await notify(p.uid,`${myProfile.username} gönderini beğendi.`);
+};
+window.toggleComments=async id=>{const box=$("comments_"+id);if(!box)return;box.classList.toggle("hidden");if(!box.classList.contains("hidden"))await showComments(id)};
+window.showComments=async id=>{
+const box=$("comments_"+id);if(!box)return;
+try{const q=query(collection(db,"comments"),where("postId","==",id),orderBy("createdAt","asc"),limit(50)),s=await getDocs(q);box.innerHTML=s.empty?`<div class="empty" style="padding:18px">Henüz yorum yok.</div>`:s.docs.map(d=>{const c=d.data();return`<div class="comment"><b>${esc(c.username||"kul")}</b><span>${esc(c.text)}</span></div>`}).join("")}catch(e){box.innerHTML=""}
+};
+window.addComment=async id=>{
+const input=$("comment_"+id),text=input?.value.trim();if(!text)return;
+const p=await getDoc(doc(db,"posts",id));if(!p.exists())return;
+await addDoc(collection(db,"comments"),{postId:id,uid:me.uid,username:myProfile.username,text,createdAt:serverTimestamp()});
+await updateDoc(doc(db,"posts",id),{commentsCount:increment(1)});input.value="";await showComments(id);$("comments_"+id)?.classList.remove("hidden");
+if(p.data().uid!==me.uid)await notify(p.data().uid,`${myProfile.username} gönderine yorum yaptı.`);
+};
+window.deletePost=async id=>{if(!confirm("Bu gönderi silinsin mi?"))return;await updateDoc(doc(db,"posts",id),{deleted:true});toast("Gönderi silindi.")};
+window.sharePost=async id=>{
+const url=location.href.split("?")[0]+"?post="+id;
+try{if(navigator.share)await navigator.share({title:"İNFAZ",text:"İNFAZ gönderisi",url});else{await navigator.clipboard.writeText(url);toast("Bağlantı kopyalandı.")}}catch(e){}
+};
+window.savePost=async id=>{
+const saved=myProfile.saved||[],has=saved.includes(id);await updateDoc(doc(db,"users",me.uid),{saved:has?arrayRemove(id):arrayUnion(id)});await loadProfile();toast(has?"Kaydedilenlerden çıkarıldı":"Kaydedildi");
+};
 
 function searchPage(){
-
-$("content").innerHTML=`
-
-<h2 style="margin:10px 0 15px">
-Kullanıcı Ara
-</h2>
-
-<div class="search">
-
-<input
-id="searchInput"
-placeholder="Kullanıcı adı..."
-onkeydown="if(event.key==='Enter')searchUsers()">
-
-<button
-class="adminButton"
-onclick="searchUsers()">
-Ara
-</button>
-
-</div>
-
-<div id="searchResults"></div>
-
-`;
-
+$("content").innerHTML=`<div class="sectionTitle">Ara</div><div class="searchBar"><input id="searchInput" class="searchInput" placeholder="Kullanıcı adı ara..." oninput="searchUsers()"><button class="btn primary" onclick="searchUsers()">⌕</button></div><div id="searchResults" class="card"></div>`;
 }
-
-
 window.searchUsers=async()=>{
-
-const value=
-$("searchInput").value.trim().toLowerCase();
-
-const box=$("searchResults");
-
-if(!value){
-
-box.innerHTML="";
-
-return;
-
-}
-
-const q=query(
-collection(db,"users"),
-where("username",">=",value),
-where("username","<=",value+"\uf8ff"),
-limit(20)
-);
-
-const snap=await getDocs(q);
-
-box.innerHTML="";
-
-snap.forEach(d=>{
-
-const u=d.data();
-
-const following=
-Array.isArray(myProfile.following)&&
-myProfile.following.includes(d.id);
-
-box.insertAdjacentHTML(
-"beforeend",
-`
-<div class="card userResult">
-
-<div class="avatar">
-${safe((u.username||"k")[0]).toUpperCase()}
-</div>
-
-<div class="userResultInfo">
-
-<b>
-${safe(u.username||"kul")}
-${u.verified?'<span class="verify">✓</span>':""}
-</b>
-
-<small>
-${u.points||0} puan
-</small>
-
-</div>
-
-${
-d.id!==me.uid
-?
-`
-<button
-class="adminButton"
-onclick="followUser('${d.id}',${following})">
-${following?"Takibi Bırak":"Takip Et"}
-</button>
-
-<button
-class="adminButton"
-onclick="openPrivate('${d.id}','${safe(u.username||"kul")}')">
-Mesaj
-</button>
-`
-:""
-}
-
-</div>
-`
-);
-
-});
-
-if(snap.empty){
-
-box.innerHTML=
-`<div class="empty">Kullanıcı bulunamadı.</div>`;
-
-}
-
-};
-
-
-/* FOLLOW */
-
-window.followUser=async(uid,currentlyFollowing)=>{
-
-const myRef=doc(db,"users",me.uid);
-
-const otherRef=doc(db,"users",uid);
-
-await updateDoc(
-myRef,
-{
-following:currentlyFollowing
-?arrayRemove(uid)
-:arrayUnion(uid)
-}
-);
-
-await updateDoc(
-otherRef,
-{
-followers:currentlyFollowing
-?arrayRemove(me.uid)
-:arrayUnion(me.uid)
-}
-);
-
-await loadProfile();
-
-searchUsers();
-
-};
-
-
-/* PROFILE */
-
-async function profile(){
-
-await loadProfile();
-
-const followerCount=
-Array.isArray(myProfile.followers)
-?myProfile.followers.length
-:0;
-
-const followingCount=
-Array.isArray(myProfile.following)
-?myProfile.following.length
-:0;
-
-
-$("content").innerHTML=`
-
-<div class="profileHead">
-
-<div class="profileAvatar">
-
-${
-myProfile.photoURL
-?
-`<img src="${myProfile.photoURL}">`
-:
-safe((myProfile.username||"k")[0]).toUpperCase()
-}
-
-</div>
-
-<div class="profileInfo">
-
-<div class="profileName">
-
-${safe(
-myProfile.isFounder
-?"İzra Adel Karyan-Allah"
-:(myProfile.displayName||"kul")
-)}
-
-${myProfile.verified
-?'<span class="verify">✓</span>'
-:""}
-
-</div>
-
-<div class="profileUsername">
-@${safe(myProfile.username||"kul")}
-</div>
-
-</div>
-
-</div>
-
-
-<div class="stats">
-
-<div class="stat">
-<b>${myProfile.points||0}</b>
-<small>Puan</small>
-</div>
-
-<div class="stat">
-<b>0</b>
-<small>Gönderi</small>
-</div>
-
-<div class="stat">
-<b>${followerCount}</b>
-<small>Takipçi</small>
-</div>
-
-<div class="stat">
-<b>${followingCount}</b>
-<small>Takip</small>
-</div>
-
-</div>
-
-
-<div class="card admin">
-
-<button class="secondary"
-onclick="editProfile()">
-Profili Düzenle
-</button>
-
-<button class="secondary"
-onclick="changePhoto()">
-Profil Fotoğrafı Değiştir
-</button>
-
-<button class="secondary"
-onclick="logout()">
-Çıkış Yap
-</button>
-
-</div>
-
-
-${
-myProfile.isFounder
-?
-founderPanel()
-:""
-}
-
-`;
-
-}
-
-
-/* EDIT PROFILE */
-
-window.editProfile=async()=>{
-
-const username=
-prompt(
-"Yeni kullanıcı adı:",
-myProfile.username
-);
-
-if(!username)return;
-
-if(username.length<3){
-alert("En az 3 karakter.");
-return;
-}
-
-await updateDoc(
-doc(db,"users",me.uid),
-{
-username:username.toLowerCase(),
-displayName:
-myProfile.isFounder
-?"İzra Adel Karyan-Allah"
-:"kul"
-}
-);
-
-await loadProfile();
-
-profile();
-
-};
-
-
-/* PHOTO */
-
-window.changePhoto=()=>{
-
-const input=document.createElement("input");
-
-input.type="file";
-
-input.accept="image/*";
-
-input.onchange=async()=>{
-
-const file=input.files[0];
-
-if(!file)return;
-
+const v=$("searchInput").value.trim().toLowerCase(),box=$("searchResults");if(!v){box.innerHTML=`<div class="empty">Kullanıcı adı yazmaya başla.</div>`;return}
 try{
-
-const r=ref(
-storage,
-"profiles/"+me.uid+"/avatar"
-);
-
-await uploadBytes(r,file);
-
-const url=await getDownloadURL(r);
-
-await updateDoc(
-doc(db,"users",me.uid),
-{
-photoURL:url
-}
-);
-
-await loadProfile();
-
-profile();
-
-}catch(e){
-
-alert("Profil fotoğrafı yüklenemedi.");
-
-}
-
+const q=query(collection(db,"users"),where("username",">=",v),where("username","<=",v+"\uf8ff"),limit(20)),s=await getDocs(q);
+if(s.empty){box.innerHTML=`<div class="empty">Kullanıcı bulunamadı.</div>`;return}
+box.innerHTML=s.docs.map(d=>{const u={uid:d.id,...d.data()},following=(myProfile.following||[]).includes(d.id);return `<div class="result">${avatarHTML(u)}<div class="grow"><div class="username">${esc(u.username)}${u.verified?'<span class="verify">✓</span>':""}</div><div class="handle">${esc(u.displayName||"kul")} · ${u.points||0} puan</div></div><div class="resultActions">${d.id!==me.uid?`<button class="btn small ${following?"ghost":"primary"}" onclick="followUser('${d.id}',${following})">${following?"Takipte":"Takip Et"}</button><button class="btn small ghost" onclick="openPrivate('${d.id}','${esc(u.username)}')">Mesaj</button>`:""}</div></div>`}).join("");
+}catch(e){box.innerHTML=`<div class="empty">${esc(errorText(e))}</div>`}
+};
+window.followUser=async(uid,following)=>{
+await updateDoc(doc(db,"users",me.uid),{following:following?arrayRemove(uid):arrayUnion(uid)});
+await updateDoc(doc(db,"users",uid),{followers:following?arrayRemove(me.uid):arrayUnion(me.uid)});
+if(!following)await notify(uid,`${myProfile.username} seni takip etmeye başladı.`);
+await loadProfile();searchUsers();
 };
 
-input.click();
-
+async function profile(uid=me.uid){
+const u=uid===me.uid?myProfile:await userData(uid);if(!u){toast("Profil bulunamadı.");return}
+const own=uid===me.uid,following=(myProfile.following||[]).includes(uid);
+const q=query(collection(db,"posts"),where("uid","==",uid),orderBy("createdAt","desc"),limit(60));
+let posts=[];try{const s=await getDocs(q);s.forEach(d=>{const p={id:d.id,...d.data()};if(!p.deleted)posts.push(p)})}catch(e){}
+$("content").innerHTML=`
+<div class="card">
+<div class="profileTop">${avatarHTML(u,"profileAvatar")}<div class="grow"><div class="profileName">${esc(u.isFounder?FOUNDER_DISPLAY:(u.displayName||"kul"))}${u.verified?'<span class="verify">✓</span>':""}</div><div class="profileHandle">@${esc(u.username||"kul")}</div>${u.bio?`<div class="bio">${esc(u.bio)}</div>`:""}</div></div>
+<div class="stats"><div class="stat"><b>${posts.length}</b><small>Gönderi</small></div><div class="stat"><b>${(u.followers||[]).length}</b><small>Takipçi</small></div><div class="stat"><b>${(u.following||[]).length}</b><small>Takip</small></div><div class="stat"><b>${u.points||0}</b><small>Puan</small></div></div>
+<div class="profileButtons">${own?`<button class="btn ghost" onclick="openEdit()">Profili Düzenle</button><button class="btn ghost" onclick="changePhoto()">Fotoğraf</button>`:`<button class="btn ${following?"ghost":"primary"}" onclick="followUser('${uid}',${following})">${following?"Takibi Bırak":"Takip Et"}</button><button class="btn ghost" onclick="openPrivate('${uid}','${esc(u.username||"kul")}')">Mesaj</button>`}</div>
+</div>
+<div class="card"><div class="tabs"><button class="tab active">Gönderiler</button><button class="tab" onclick="showSaved('${uid}')">${own?"Kaydedilenler":"Hakkında"}</button></div><div class="grid">${posts.length?posts.map(p=>p.mediaUrl?`<div class="gridItem" onclick="openSinglePost('${p.id}')">${p.mediaType==="video"?`<video src="${esc(p.mediaUrl)}"></video>`:`<img src="${esc(p.mediaUrl)}">`}</div>`:`<div class="empty" style="grid-column:1/-1">Henüz gönderi yok.</div>`}</div></div>
+${own&&isFounder()?founderPanel():""}`;
+}
+window.profile=profile;
+async function openSinglePost(id){const p=await getDoc(doc(db,"posts",id));if(!p.exists())return;const x={id,...p.data()};$("content").innerHTML=`<button class="btn ghost" onclick="openPage('home')" style="margin-bottom:10px">← Geri</button>${postHTML(x)}`}
+window.openSinglePost=openSinglePost;
+window.showSaved=async uid=>{if(uid!==me.uid)return;const saved=myProfile.saved||[];if(!saved.length){toast("Kaydedilmiş gönderi yok.");return}let posts=[];for(const id of saved.slice(-30)){const s=await getDoc(doc(db,"posts",id));if(s.exists()&&!s.data().deleted)posts.push({id,...s.data()})}$("content").innerHTML=`<button class="btn ghost" onclick="profile()" style="margin-bottom:10px">← Profil</button><div class="sectionTitle">Kaydedilenler</div>${posts.length?posts.map(postHTML).join(""):`<div class="empty">Kaydedilmiş gönderi yok.</div>`}`};
+window.openEdit=()=>{$("editUsername").value=myProfile.username||"";$("editDisplay").value=myProfile.isFounder?FOUNDER_DISPLAY:(myProfile.displayName||"kul");$("editBio").value=myProfile.bio||"";$("editModal").classList.remove("hidden")};
+window.closeEdit=()=>$("editModal").classList.add("hidden");
+window.saveProfile=async()=>{
+let username=$("editUsername").value.trim().toLowerCase(),display=$("editDisplay").value.trim(),bio=$("editBio").value.trim();
+if(!/^[a-z0-9._]{3,30}$/.test(username)){toast("Geçersiz kullanıcı adı.");return}
+if(isFounder()){username=FOUNDER_USERNAME;display=FOUNDER_DISPLAY}
+await updateDoc(doc(db,"users",me.uid),{username,displayName:isFounder()?FOUNDER_DISPLAY:(display||"kul"),bio});await loadProfile();closeEdit();profile();toast("Profil güncellendi.");
 };
-
-
-/* LEAGUE */
+window.changePhoto=()=>{
+const i=document.createElement("input");i.type="file";i.accept="image/*";i.onchange=async()=>{
+const f=i.files[0];if(!f)return;if(f.size>10*1024*1024){toast("Fotoğraf 10 MB'dan küçük olmalı.");return}
+try{const r=ref(storage,`profiles/${me.uid}/avatar`);await uploadBytes(r,f);const url=await getDownloadURL(r);await updateDoc(doc(db,"users",me.uid),{photoURL:url});await loadProfile();profile();toast("Profil fotoğrafı güncellendi.")}catch(e){toast(errorText(e))}
+};i.click();
+};
 
 async function league(){
-
-$("content").innerHTML=`
-
-<div class="leagueTitle">
-İNFAZ LİG
-</div>
-
-<div id="leagueList">
-
-<div class="empty">
-Sıralama yükleniyor...
-</div>
-
-</div>
-
-`;
-
-const q=query(
-collection(db,"users"),
-orderBy("points","desc"),
-limit(20)
-);
-
-const snap=await getDocs(q);
-
-const box=$("leagueList");
-
-box.innerHTML="";
-
-let rank=0;
-
-snap.forEach(d=>{
-
-rank++;
-
-const u=d.data();
-
-const founder=
-d.id===FOUNDER_UID||
-u.isFounder===true;
-
-const top=rank<=3;
-
-box.insertAdjacentHTML(
-"beforeend",
-`
-<div class="leagueItem
-${top?"topThree":""}
-${founder?"founderRow":""}">
-
-<div class="rank">
-${rank}
-</div>
-
-<div class="rankAvatar">
-${safe((u.username||"k")[0]).toUpperCase()}
-</div>
-
-<div class="leagueUser">
-
-<b>
-
-${safe(
-founder
-?"İzra Adel Karyan-Allah"
-:(u.username||"kul")
-)}
-
-${
-founder||u.verified
-?
-'<span class="verify">✓</span>'
-:""
+$("content").innerHTML=`<div class="leagueTitle">İNFAZ LİG</div><div class="leagueSub">Puanına göre en aktif kullanıcılar</div><div id="leagueList"><div class="empty">Sıralama yükleniyor...</div></div>`;
+try{
+const q=query(collection(db,"users"),orderBy("points","desc"),limit(50)),s=await getDocs(q);let rank=0;
+$("leagueList").innerHTML=s.docs.map(d=>{rank++;const u={uid:d.id,...d.data()},founder=d.id===FOUNDER_UID;return `<div class="leagueItem ${founder?"founderRow":""}"><div class="rank">${rank}</div>${avatarHTML(u,"rankAv")}<div class="grow"><div class="username">${esc(founder?FOUNDER_NAME:(u.username||"kul"))}${founder||u.verified?'<span class="verify">✓</span>':""}</div><div class="handle">${founder?"Kurucu":"kul"}</div></div><div class="points">${u.points||0}</div></div>`}).join("")||`<div class="empty">Henüz kullanıcı yok.</div>`;
+}catch(e){$("leagueList").innerHTML=`<div class="empty">${esc(errorText(e))}</div>`}
 }
-
-</b>
-
-<small>
-${founder?"Kurucu":"kul"}
-</small>
-
-</div>
-
-<div class="point">
-${u.points||0}
-</div>
-
-</div>
-`
-);
-
-});
-
-}
-
-
-/* FOUNDER PANEL */
-
-function founderPanel(){
-
-return`
-
-<div class="card admin">
-
-<h3>Kurucu Paneli</h3>
-
-<input
-id="adminUser"
-placeholder="Kullanıcı adı">
-
-<input
-id="adminPoints"
-type="number"
-placeholder="Eklenecek puan">
-
-<button
-class="adminButton"
-onclick="addPoints()">
-Puan Ekle
-</button>
-
-<div
-id="adminMessage"
-style="margin-top:10px;color:#b88b99">
-</div>
-
-</div>
-
-`;
-
-}
-
-
-/* ADD POINTS */
-
+function founderPanel(){return `<div class="card" style="padding:15px"><div class="sectionTitle" style="font-size:18px">Kurucu Paneli</div><div class="sub" style="margin-bottom:10px">Kullanıcıya puan ekle veya çıkar.</div><input id="adminUser" class="field" placeholder="Kullanıcı adı"><input id="adminPoints" class="field" type="number" placeholder="Puan (eksi de olabilir)"><button class="btn primary" style="width:100%" onclick="addPoints()">Puanı Uygula</button><div id="adminMessage" class="sub" style="margin-top:9px"></div></div>`}
 window.addPoints=async()=>{
-
-if(
-me.uid!==FOUNDER_UID||
-!myProfile.isFounder
-){
-
-alert("Kurucu yetkisi gerekli.");
-
-return;
-
-}
-
-const username=
-$("adminUser").value.trim().toLowerCase();
-
-const points=
-Number($("adminPoints").value);
-
-if(!username||!points){
-
-alert("Kullanıcı ve puan gir.");
-
-return;
-
-}
-
-const q=query(
-collection(db,"users"),
-where("username","==",username),
-limit(1)
-);
-
-const snap=await getDocs(q);
-
-if(snap.empty){
-
-$("adminMessage").textContent=
-"Kullanıcı bulunamadı.";
-
-return;
-
-}
-
-const target=snap.docs[0];
-
-await updateDoc(
-doc(db,"users",target.id),
-{
-points:increment(points)
-}
-);
-
-$("adminMessage").textContent=
-`${username} hesabına ${points} puan eklendi.`;
-
+if(!isFounder()){toast("Kurucu yetkisi gerekli.");return}
+const username=$("adminUser").value.trim().toLowerCase(),points=Number($("adminPoints").value);if(!username||!Number.isFinite(points)){toast("Kullanıcı ve puan gir.");return}
+const q=query(collection(db,"users"),where("username","==",username),limit(1)),s=await getDocs(q);if(s.empty){$("adminMessage").textContent="Kullanıcı bulunamadı.";return}
+await updateDoc(doc(db,"users",s.docs[0].id),{points:increment(points)});$("adminMessage").textContent=`${username}: ${points>0?"+":""}${points} puan uygulandı.`;toast("Puan güncellendi.");
 };
-
-
-/* MESSAGES */
 
 function messages(){
-
-$("content").innerHTML=`
-
-<h2 style="margin:10px 0 15px">
-Mesajlar
-</h2>
-
-<div class="card">
-
-<div class="channel"
-onclick="openChannel('announcement')">
-
-<div class="channelIcon">
-📢
-</div>
-
-<div class="channelInfo">
-
-<b>Duyuru</b>
-
-<small>
-İNFAZ resmi duyuru kanalı
-</small>
-
-</div>
-
-</div>
-
-
-<div class="channel"
-onclick="openChannel('general')">
-
-<div class="channelIcon">
-💬
-</div>
-
-<div class="channelInfo">
-
-<b>Genel Sohbet</b>
-
-<small>
-İNFAZ genel sohbet kanalı
-</small>
-
-</div>
-
-</div>
-
-</div>
-
-`;
-
+$("content").innerHTML=`<div class="sectionTitle">Mesajlar</div><div class="card">
+<div class="channel" onclick="openChannel('announcement')"><div class="channelIcon">📢</div><div class="grow"><b>Duyuru</b><small>İNFAZ resmi duyuru kanalı</small></div>›</div>
+<div class="channel" onclick="openChannel('general')"><div class="channelIcon">💬</div><div class="grow"><b>Genel Sohbet</b><small>Topluluk sohbeti</small></div>›</div>
+</div><div class="sectionTitle" style="font-size:17px">Yeni mesaj</div><div class="card"><div class="empty" style="padding:25px">Bir kullanıcı bulup <b>Mesaj</b> seçerek sohbet başlatabilirsin.</div></div>`;
 }
-
-
-/* CHANNEL */
-
-window.openChannel=async(type)=>{
-
-const title=
-type==="announcement"
-?"📢 Duyuru"
-:"💬 Genel Sohbet";
-
-
-const canWrite=
-myProfile.isFounder||
-myProfile.channelWriter===true;
-
-
-$("content").innerHTML=`
-
-<button class="back"
-onclick="openPage('messages')">
-← Geri
-</button>
-
-<h2 style="margin-bottom:13px">
-${title}
-</h2>
-
-<div class="card chat">
-
-<div id="channelMessages"
-class="chatMessages">
-
-<div class="empty">
-Mesajlar yükleniyor...
-</div>
-
-</div>
-
-${
-canWrite
-?
-`
-<div class="chatSend">
-
-<input
-id="channelInput"
-placeholder="Mesaj yaz..."
-onkeydown="if(event.key==='Enter')sendChannel('${type}')">
-
-<button onclick="sendChannel('${type}')">
-Gönder
-</button>
-
-</div>
-`
-:
-`
-<div class="empty" style="padding:15px">
-Bu kanalda yalnızca kurucu tarafından yetkilendirilen kişiler yazabilir.
-</div>
-`
-}
-
-</div>
-
-`;
-
-await loadChannel(type);
-
-};
-
-
-/* CHANNEL LOAD */
-
-async function loadChannel(type){
-
-const box=$("channelMessages");
-
-const q=query(
-collection(db,"channelMessages"),
-where("channel","==",type),
-orderBy("createdAt","asc"),
-limit(100)
-);
-
-const snap=await getDocs(q);
-
-box.innerHTML="";
-
-snap.forEach(d=>{
-
-const m=d.data();
-
-box.insertAdjacentHTML(
-"beforeend",
-`
-<div class="msg ${m.uid===me.uid?"mine":""}">
-
-<div class="msgUser">
-${safe(m.username||"kul")}
-</div>
-
-<div class="msgText">
-${safe(m.text)}
-</div>
-
-</div>
-`
-);
-
-});
-
-box.scrollTop=box.scrollHeight;
-
-}
-
-
-/* SEND CHANNEL */
-
-window.sendChannel=async(type)=>{
-
-const input=$("channelInput");
-
-if(!input)return;
-
-const text=input.value.trim();
-
-if(!text)return;
-
-const canWrite=
-myProfile.isFounder||
-myProfile.channelWriter===true;
-
-if(!canWrite){
-
-alert("Bu kanalda yazma yetkin yok.");
-
-return;
-
-}
-
-await addDoc(
-collection(db,"channelMessages"),
-{
-channel:type,
-uid:me.uid,
-username:myProfile.username,
-text,
-createdAt:serverTimestamp()
-}
-);
-
-input.value="";
-
-await loadChannel(type);
-
-};
-
-
-/* PRIVATE CHAT */
-
 window.openPrivate=async(uid,username)=>{
-
-currentOtherUser={
-uid,
-username
+currentOther={uid,username};renderPrivate();loadPrivate(uid);
+};
+function renderPrivate(){
+const other=currentOther;$("content").innerHTML=`<button class="btn ghost" onclick="openPage('search')" style="margin-bottom:10px">← Geri</button><div class="chatHead">${avatarHTML({username:other.username})}<div class="chatTitle">${esc(other.username)}</div></div><div class="card chat"><div id="privateMessages" class="messages"><div class="empty">Mesajlar yükleniyor...</div></div><div class="sendBar"><input id="privateInput" class="chatInput" placeholder="Mesaj yaz..." onkeydown="if(event.key==='Enter')sendPrivate('${other.uid}')"><button class="sendBtn" onclick="sendPrivate('${other.uid}')">Gönder</button></div></div>`;
+}
+function conversation(a,b){return[a,b].sort().join("_")}
+function loadPrivate(uid){
+if(unsubscribeChat)unsubscribeChat();const id=conversation(me.uid,uid);
+const q=query(collection(db,"privateMessages"),where("conversationId","==",id),orderBy("createdAt","asc"),limit(200));
+unsubscribeChat=onSnapshot(q,s=>{const box=$("privateMessages");if(!box)return;box.innerHTML=s.empty?`<div class="empty">Henüz mesaj yok.</div>`:s.docs.map(d=>{const m=d.data();return `<div class="bubble ${m.uid===me.uid?"mine":""}">${m.uid!==me.uid?`<small>${esc(m.username||"kul")}</small>`:""}<p>${esc(m.text)}</p></div>`}).join("");box.scrollTop=box.scrollHeight},e=>{const box=$("privateMessages");if(box)box.innerHTML=`<div class="empty">${esc(errorText(e))}</div>`});
+}
+window.sendPrivate=async uid=>{
+const i=$("privateInput"),text=i?.value.trim();if(!text)return;await addDoc(collection(db,"privateMessages"),{conversationId:conversation(me.uid,uid),uid:me.uid,to:uid,username:myProfile.username,text,createdAt:serverTimestamp()});i.value="";
 };
 
-$("content").innerHTML=`
-
-<button class="back"
-onclick="openPage('search')">
-← Geri
-</button>
-
-<h2 style="margin-bottom:13px">
-${safe(username)}
-</h2>
-
-<div class="card chat">
-
-<div id="privateMessages"
-class="chatMessages">
-</div>
-
-<div class="chatSend">
-
-<input
-id="privateInput"
-placeholder="Mesaj yaz..."
-onkeydown="if(event.key==='Enter')sendPrivate('${uid}')">
-
-<button onclick="sendPrivate('${uid}')">
-Gönder
-</button>
-
-</div>
-
-</div>
-
-`;
-
-await loadPrivate(uid);
-
+window.openChannel=async type=>{
+const title=type==="announcement"?"📢 Duyuru":"💬 Genel Sohbet",canWrite=isFounder()||myProfile.channelWriter===true;
+$("content").innerHTML=`<button class="btn ghost" onclick="openPage('messages')" style="margin-bottom:10px">← Geri</button><div class="chatHead"><div class="chatTitle">${title}</div></div><div class="card chat"><div id="channelMessages" class="messages"><div class="empty">Mesajlar yükleniyor...</div></div>${canWrite?`<div class="sendBar"><input id="channelInput" class="chatInput" placeholder="Mesaj yaz..." onkeydown="if(event.key==='Enter')sendChannel('${type}')"><button class="sendBtn" onclick="sendChannel('${type}')">Gönder</button></div>`:`<div class="empty" style="padding:15px">Bu kanalda yalnızca yetkili kişiler yazabilir.</div>`}</div>`;
+loadChannel(type);
+};
+function loadChannel(type){
+if(unsubscribeChat)unsubscribeChat();const q=query(collection(db,"channelMessages"),where("channel","==",type),orderBy("createdAt","asc"),limit(200));
+unsubscribeChat=onSnapshot(q,s=>{const box=$("channelMessages");if(!box)return;box.innerHTML=s.empty?`<div class="empty">Henüz mesaj yok.</div>`:s.docs.map(d=>{const m=d.data();return `<div class="bubble ${m.uid===me.uid?"mine":""}"><small>${esc(m.username||"kul")}</small><p>${esc(m.text)}</p></div>`}).join("");box.scrollTop=box.scrollHeight},e=>{const box=$("channelMessages");if(box)box.innerHTML=`<div class="empty">${esc(errorText(e))}</div>`});
+}
+window.sendChannel=async type=>{
+const i=$("channelInput"),text=i?.value.trim();if(!text)return;if(!(isFounder()||myProfile.channelWriter===true)){toast("Yetkin yok.");return}
+await addDoc(collection(db,"channelMessages"),{channel:type,uid:me.uid,username:myProfile.username,text,createdAt:serverTimestamp()});i.value="";
 };
 
-
-/* CONVERSATION */
-
-function conversation(a,b){
-
-return[a,b].sort().join("_");
-
-}
-
-
-/* LOAD PRIVATE */
-
-async function loadPrivate(otherUid){
-
-const id=
-conversation(me.uid,otherUid);
-
-const box=$("privateMessages");
-
-const q=query(
-collection(db,"privateMessages"),
-where("conversationId","==",id),
-orderBy("createdAt","asc"),
-limit(100)
-);
-
-const snap=await getDocs(q);
-
-box.innerHTML="";
-
-snap.forEach(d=>{
-
-const m=d.data();
-
-box.insertAdjacentHTML(
-"beforeend",
-`
-<div class="msg ${m.uid===me.uid?"mine":""}">
-
-<div class="msgText">
-${safe(m.text)}
-</div>
-
-</div>
-`
-);
-
-});
-
-box.scrollTop=box.scrollHeight;
-
-}
-
-
-/* SEND PRIVATE */
-
-window.sendPrivate=async(otherUid)=>{
-
-const input=$("privateInput");
-
-const text=input.value.trim();
-
-if(!text)return;
-
-await addDoc(
-collection(db,"privateMessages"),
-{
-conversationId:
-conversation(me.uid,otherUid),
-uid:me.uid,
-to:otherUid,
-text,
-createdAt:serverTimestamp()
-}
-);
-
-input.value="";
-
-await loadPrivate(otherUid);
-
-};
-
-
-/* NOTIFICATIONS */
-
+async function notify(to,text){try{await addDoc(collection(db,"notifications"),{to,text,createdAt:serverTimestamp(),from:me.uid})}catch(e){}}
 async function notifications(){
-
-$("content").innerHTML=`
-
-<h2 style="margin:10px 0 15px">
-Bildirimler
-</h2>
-
-<div id="notificationList" class="card">
-
-<div class="empty">
-Bildirimler yükleniyor...
-</div>
-
-</div>
-
-`;
-
-const q=query(
-collection(db,"notifications"),
-where("to","==",me.uid),
-orderBy("createdAt","desc"),
-limit(50)
-);
-
-const snap=await getDocs(q);
-
-const box=$("notificationList");
-
-box.innerHTML="";
-
-snap.forEach(d=>{
-
-const n=d.data();
-
-box.insertAdjacentHTML(
-"beforeend",
-`
-<div class="notification">
-
-${safe(n.text||"Yeni bildirim")}
-
-<small>
-İNFAZ
-</small>
-
-</div>
-`
-);
-
-});
-
-if(snap.empty){
-
-box.innerHTML=
-`<div class="empty">Henüz bildirim yok.</div>`;
-
+$("content").innerHTML=`<div class="sectionTitle">Bildirimler</div><div id="notificationList" class="card"><div class="empty">Yükleniyor...</div></div>`;
+try{const q=query(collection(db,"notifications"),where("to","==",me.uid),orderBy("createdAt","desc"),limit(60)),s=await getDocs(q);$("notificationList").innerHTML=s.empty?`<div class="empty">Henüz bildirim yok.</div>`:s.docs.map(d=>`<div class="notice">${esc(d.data().text||"Yeni bildirim")}<small>İNFAZ</small></div>`).join("")}catch(e){$("notificationList").innerHTML=`<div class="empty">${esc(errorText(e))}</div>`}
 }
+window.viewStory=async id=>{
+const s=await getDoc(doc(db,"stories",id));if(!s.exists())return;const x=s.data();const u=await userData(x.uid);
+$("content").innerHTML=`<button class="btn ghost" onclick="openPage('home')" style="margin-bottom:10px">← Geri</button><div class="card" style="min-height:70vh;display:grid;place-items:center;background:#050405">${x.mediaType==="video"?`<video controls autoplay style="max-width:100%;max-height:75vh" src="${esc(x.mediaUrl)}"></video>`:`<img style="max-width:100%;max-height:75vh;object-fit:contain" src="${esc(x.mediaUrl)}">`}<div style="padding:12px;width:100%"><b>${esc(u?.username||"kul")}</b>${x.text?`<div class="sub" style="margin-top:5px">${esc(x.text)}</div>`:""}</div></div>`;
+};
 
-}
-
+$("postFile").addEventListener("change",()=>{const f=$("postFile").files[0];$("uploadStatus").textContent=f?`${f.name} seçildi.`:""});
 </script>
-
 </body>
   </html>
