@@ -502,6 +502,17 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+  window.sifremiUnuttum = async function() {
+  const email = prompt("Kayıt olduğun Gmail adresini yaz:");
+  if (!email) return;
+
+  try {
+    await sendPasswordResetEmail(auth, email.trim());
+    alert("Şifre sıfırlama bağlantısı e-posta adresine gönderildi.");
+  } catch (error) {
+    alert("Şifre sıfırlama başarısız: " + error.message);
+  }
+};
 const db = getFirestore(app);
 
 let kayitModu = false;
