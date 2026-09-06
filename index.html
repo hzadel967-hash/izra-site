@@ -630,6 +630,29 @@ onAuthStateChanged(auth, async (user) => {
     document.getElementById("app").style.display = "none";
   }
 });
+window.duzenleProfil = async function() {
+  const yeniIsim = prompt("Yeni kullanıcı adını yaz:");
+
+  if (!yeniIsim) return;
+
+  const user = auth.currentUser;
+
+  if (!user) return;
+
+  await setDoc(
+    doc(db, "users", user.uid),
+    { username: yeniIsim },
+    { merge: true }
+  );
+
+  const profileName = document.getElementById("profileName");
+  const profileUsername = document.getElementById("profileUsername");
+
+  if (profileName) profileName.textContent = yeniIsim + " kul";
+  if (profileUsername) profileUsername.textContent = "@" + yeniIsim;
+
+  alert("Profil güncellendi!");
+};
 </script>
 </body>
   </html>
