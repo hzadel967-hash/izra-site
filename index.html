@@ -1,3002 +1,2803 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#0b0809">
-  <title>İNFAZ</title>
-
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: Arial, Helvetica, sans-serif;
-    }
-
-    body {
-      background: #090708;
-      color: #fff;
-      min-height: 100vh;
-    }
-
-    button,
-    input,
-    textarea {
-      font: inherit;
-    }
-
-    button {
-      cursor: pointer;
-    }
-
-    .hidden {
-      display: none !important;
-    }
-
-    /* LOGIN */
-
-    #authScreen {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      background:
-        radial-gradient(circle at top, rgba(110,0,25,.25), transparent 45%),
-        #090708;
-    }
-
-    .authBox {
-      width: 100%;
-      max-width: 410px;
-      background: #100b0d;
-      border: 1px solid #3b171f;
-      border-radius: 18px;
-      padding: 28px;
-      box-shadow: 0 20px 60px rgba(0,0,0,.65);
-    }
-
-    .logo {
-      text-align: center;
-      font-size: 38px;
-      font-weight: 900;
-      letter-spacing: 5px;
-      color: #fff;
-      margin-bottom: 8px;
-    }
-
-    .slogan {
-      text-align: center;
-      color: #a78b91;
-      margin-bottom: 25px;
-      font-size: 13px;
-    }
-
-    .authBox input,
-    .authBox textarea,
-    .adminBox input {
-      width: 100%;
-      background: #090708;
-      border: 1px solid #402027;
-      color: #fff;
-      border-radius: 11px;
-      padding: 13px;
-      margin-bottom: 10px;
-      outline: none;
-    }
-
-    input:focus,
-    textarea:focus {
-      border-color: #8d263b;
-    }
-
-    .mainBtn {
-      width: 100%;
-      border: none;
-      border-radius: 11px;
-      padding: 13px;
-      background: #74172c;
-      color: #fff;
-      font-weight: 700;
-      margin-top: 5px;
-    }
-
-    .mainBtn:hover {
-      background: #8d2038;
-    }
-
-    .secondaryBtn {
-      width: 100%;
-      border: 1px solid #402027;
-      border-radius: 11px;
-      padding: 12px;
-      background: transparent;
-      color: #ddd;
-      margin-top: 9px;
-    }
-
-    .authMsg {
-      text-align: center;
-      color: #c97c8b;
-      font-size: 13px;
-      min-height: 18px;
-      margin: 10px 0;
-    }
-
-    .switchText {
-      text-align: center;
-      color: #8f7b80;
-      font-size: 13px;
-      margin-top: 17px;
-    }
-
-    .switchText span {
-      color: #d34d69;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    /* APP */
-
-    #app {
-      min-height: 100vh;
-      padding-bottom: 75px;
-    }
-
-    .topbar {
-      height: 62px;
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      background: rgba(9,7,8,.94);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid #261317;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 17px;
-    }
-
-    .topLogo {
-      font-size: 21px;
-      font-weight: 900;
-      letter-spacing: 3px;
-    }
-
-    .topActions {
-      display: flex;
-      gap: 8px;
-    }
-
-    .iconBtn {
-      width: 39px;
-      height: 39px;
-      border-radius: 50%;
-      background: #160e11;
-      border: 1px solid #382027;
-      color: #fff;
-      font-size: 18px;
-    }
-
-    .content {
-      width: 100%;
-      max-width: 680px;
-      margin: auto;
-      padding: 15px;
-    }
-
-    .view {
-      display: none;
-    }
-
-    .view.active {
-      display: block;
-    }
-
-    /* STORIES */
-
-    .stories {
-      display: flex;
-      gap: 13px;
-      overflow-x: auto;
-      padding: 5px 0 15px;
-      scrollbar-width: none;
-    }
-
-    .stories::-webkit-scrollbar {
-      display: none;
-    }
-
-    .story {
-      min-width: 65px;
-      text-align: center;
-      font-size: 11px;
-      color: #bba8ad;
-    }
-
-    .storyCircle {
-      width: 58px;
-      height: 58px;
-      margin: auto;
-      border-radius: 50%;
-      padding: 2px;
-      background: linear-gradient(135deg,#8b1d39,#300912);
-    }
-
-    .storyCircleInner {
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      background: #120b0e;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
-      font-size: 20px;
-    }
-
-    /* CARDS */
-
-    .card {
-      background: #100b0d;
-      border: 1px solid #2d171d;
-      border-radius: 15px;
-      margin-bottom: 15px;
-      overflow: hidden;
-    }
-
-    .postHead {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 13px;
-    }
-
-    .avatar {
-      width: 39px;
-      height: 39px;
-      border-radius: 50%;
-      background: #46111e;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
-    }
-
-    .postUser {
-      font-weight: bold;
-      font-size: 14px;
-    }
-
-    .verified {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 15px;
-      height: 15px;
-      border-radius: 50%;
-      background: #8d203c;
-      font-size: 9px;
-      margin-left: 3px;
-    }
-
-    .founderName {
-      color: #e04b68;
-    }
-
-    .postBody {
-      padding: 0 13px 13px;
-      color: #e6dfe1;
-      line-height: 1.5;
-      white-space: pre-wrap;
-    }
-
-    .postImage {
-      width: 100%;
-      max-height: 600px;
-      object-fit: cover;
-      display: block;
-    }
-
-    .postActions {
-      display: flex;
-      gap: 8px;
-      padding: 9px 13px;
-      border-top: 1px solid #211116;
-    }
-
-    .actionBtn {
-      border: none;
-      background: transparent;
-      color: #bcaeb2;
-      padding: 6px;
-      font-size: 13px;
-    }
-
-    .actionBtn:hover {
-      color: #fff;
-    }
-
-    .liked {
-      color: #e74362 !important;
-    }
-
-    /* CREATE POST */
-
-    .createBox {
-      padding: 14px;
-      margin-bottom: 15px;
-    }
-
-    .createBox textarea {
-      width: 100%;
-      min-height: 80px;
-      resize: vertical;
-      background: #090708;
-      border: 1px solid #3b2027;
-      color: #fff;
-      border-radius: 12px;
-      padding: 12px;
-      outline: none;
-    }
-
-    .createBottom {
-      display: flex;
-      justify-content: flex-end;
-      margin-top: 10px;
-    }
-
-    .smallBtn {
-      background: #74172c;
-      color: #fff;
-      border: none;
-      border-radius: 9px;
-      padding: 9px 15px;
-      font-weight: bold;
-    }
-
-    /* LEAGUE */
-
-    .leagueTitle {
-      font-size: 25px;
-      font-weight: 900;
-      margin-bottom: 5px;
-    }
-
-    .leagueSub {
-      color: #8f7c81;
-      margin-bottom: 18px;
-      font-size: 13px;
-    }
-
-    .podium {
-      display: grid;
-      grid-template-columns: 1fr 1.2fr 1fr;
-      gap: 8px;
-      align-items: end;
-      margin-bottom: 15px;
-    }
-
-    .podiumUser {
-      background: #120c0e;
-      border: 1px solid #382027;
-      border-radius: 14px;
-      padding: 15px 7px;
-      text-align: center;
-    }
-
-    .podiumUser.first {
-      padding-top: 25px;
-      border-color: #7e2037;
-      box-shadow: 0 0 25px rgba(126,32,55,.16);
-    }
-
-    .rank {
-      color: #9f7b83;
-      font-size: 12px;
-      margin-bottom: 7px;
-    }
-
-    .rankName {
-      font-weight: bold;
-      font-size: 12px;
-      word-break: break-word;
-    }
-
-    .points {
-      color: #d44965;
-      font-size: 12px;
-      margin-top: 7px;
-    }
-
-    .leaderRow {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      background: #100b0d;
-      border: 1px solid #29171c;
-      border-radius: 12px;
-      padding: 12px;
-      margin-bottom: 8px;
-    }
-
-    .leaderRank {
-      width: 25px;
-      color: #8e7c81;
-      font-weight: bold;
-    }
-
-    .leaderInfo {
-      flex: 1;
-    }
-
-    .leaderUsername {
-      font-weight: bold;
-    }
-
-    .leaderPoints {
-      color: #d14965;
-      font-size: 13px;
-    }
-
-    /* PROFILE */
-
-    .profileHead {
-      text-align: center;
-      padding: 20px 0;
-    }
-
-    .profileAvatar {
-      width: 85px;
-      height: 85px;
-      margin: auto;
-      border-radius: 50%;
-      background: #481221;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 32px;
-      font-weight: bold;
-      border: 2px solid #76233b;
-    }
-
-    .profileName {
-      font-size: 21px;
-      font-weight: bold;
-      margin-top: 12px;
-    }
-
-    .profileUsername {
-      color: #927f84;
-      margin-top: 4px;
-    }
-
-    .profilePoints {
-      color: #d94a67;
-      margin-top: 8px;
-    }
-
-    .profileBox {
-      padding: 15px;
-    }
-
-    .profileBox input {
-      width: 100%;
-      background: #090708;
-      color: #fff;
-      border: 1px solid #392027;
-      border-radius: 10px;
-      padding: 12px;
-      margin-bottom: 9px;
-      outline: none;
-    }
-
-    /* DM */
-
-    .chatTabs {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 12px;
-    }
-
-    .chatTab {
-      flex: 1;
-      padding: 11px;
-      background: #100b0d;
-      color: #aaa;
-      border: 1px solid #342027;
-      border-radius: 10px;
-    }
-
-    .chatTab.active {
-      background: #74172c;
-      color: #fff;
-      border-color: #74172c;
-    }
-
-    .chatInfo {
-      color: #88777c;
-      font-size: 12px;
-      margin-bottom: 12px;
-    }
-
-    .messages {
-      min-height: 300px;
-      max-height: 480px;
-      overflow-y: auto;
-      padding: 10px;
-      background: #0d090b;
-      border: 1px solid #2a171c;
-      border-radius: 12px;
-      margin-bottom: 10px;
-    }
-
-    .message {
-      padding: 9px 11px;
-      background: #181013;
-      border-radius: 11px;
-      margin-bottom: 8px;
-    }
-
-    .message strong {
-      color: #d04a65;
-      font-size: 12px;
-    }
-
-    .message p {
-      margin-top: 4px;
-      color: #ddd;
-      font-size: 14px;
-    }
-
-    .chatSend {
-      display: flex;
-      gap: 7px;
-    }
-
-    .chatSend input {
-      flex: 1;
-      background: #100b0d;
-      border: 1px solid #392027;
-      color: #fff;
-      border-radius: 10px;
-      padding: 11px;
-      outline: none;
-    }
-
-    /* ADMIN */
-
-    .adminBox {
-      padding: 15px;
-    }
-
-    .adminTitle {
-      font-size: 20px;
-      font-weight: 900;
-      margin-bottom: 6px;
-    }
-
-    .adminDesc {
-      color: #8f7d82;
-      font-size: 12px;
-      margin-bottom: 13px;
-    }
-
-    .adminResult {
-      margin-top: 12px;
-      background: #0b0809;
-      border: 1px solid #3a2027;
-      border-radius: 11px;
-      padding: 12px;
-    }
-
-    .adminActions {
-      display: flex;
-      gap: 7px;
-      margin-top: 10px;
-    }
-
-    .adminActions button {
-      flex: 1;
-      padding: 10px;
-      border: none;
-      border-radius: 9px;
-      background: #74172c;
-      color: #fff;
-      font-weight: bold;
-    }
-
-    /* BOTTOM NAV */
-
-    .bottomNav {
-      position: fixed;
-      z-index: 100;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 66px;
-      background: rgba(11,8,9,.96);
-      backdrop-filter: blur(15px);
-      border-top: 1px solid #29171d;
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-    }
-
-    .navBtn {
-      background: transparent;
-      border: none;
-      color: #77666b;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
-      font-size: 11px;
-    }
-
-    .navBtn .navIcon {
-      font-size: 19px;
-    }
-
-    .navBtn.active {
-      color: #d84865;
-    }
-
-    /* RESPONSIVE */
-
-    @media(max-width: 500px) {
-      .authBox {
-        padding: 23px 18px;
-      }
-
-      .logo {
-        font-size: 33px;
-      }
-
-      .content {
-        padding: 11px;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+<meta name="theme-color" content="#080608">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+<title>İNFAZ</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,Helvetica,sans-serif;
+}
+
+:root{
+--bg:#080608;
+--panel:#11090d;
+--panel2:#160b10;
+--line:#32141f;
+--red:#8d1e3e;
+--red2:#b62b51;
+--text:#fff;
+--muted:#9c818b;
+}
+
+body{
+background:var(--bg);
+color:var(--text);
+min-height:100vh;
+}
+
+button,input,textarea{
+font:inherit;
+}
+
+button{
+cursor:pointer;
+}
+
+.hidden{
+display:none!important;
+}
+
+/* AUTH */
+
+#auth{
+min-height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+padding:20px;
+background:
+radial-gradient(circle at 50% 0,#3a0c1c 0%,#16070d 30%,#080608 72%);
+}
+
+.authBox{
+width:100%;
+max-width:410px;
+background:rgba(14,7,10,.97);
+border:1px solid #4a1928;
+border-radius:22px;
+padding:30px 23px;
+box-shadow:0 25px 80px #000;
+}
+
+.logo{
+font-size:39px;
+font-weight:1000;
+letter-spacing:6px;
+text-align:center;
+}
+
+.tag{
+text-align:center;
+color:#bd8997;
+margin:7px 0 28px;
+}
+
+.authInput{
+width:100%;
+background:#0b0709;
+border:1px solid #3a1520;
+color:#fff;
+padding:14px;
+border-radius:12px;
+margin-bottom:11px;
+outline:none;
+}
+
+.authInput:focus{
+border-color:#9f2949;
+}
+
+.primary{
+width:100%;
+padding:14px;
+border:0;
+border-radius:12px;
+background:#821b3a;
+color:white;
+font-weight:800;
+}
+
+.primary:hover{
+background:#a72348;
+}
+
+.secondary{
+width:100%;
+padding:13px;
+margin-top:9px;
+border:1px solid #431725;
+border-radius:12px;
+background:#10080c;
+color:#fff;
+}
+
+.switch{
+text-align:center;
+margin-top:18px;
+color:#96838a;
+}
+
+.switch span{
+color:#dc4168;
+font-weight:bold;
+cursor:pointer;
+}
+
+.authMsg{
+text-align:center;
+min-height:20px;
+margin-top:12px;
+color:#e35b7b;
+}
+
+/* APP */
+
+#app{
+min-height:100vh;
+padding-bottom:72px;
+}
+
+.top{
+height:61px;
+position:sticky;
+top:0;
+z-index:50;
+background:rgba(8,6,8,.96);
+backdrop-filter:blur(15px);
+border-bottom:1px solid #271019;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 15px;
+}
+
+.topLogo{
+font-weight:1000;
+font-size:24px;
+letter-spacing:3px;
+}
+
+.topRight{
+display:flex;
+gap:14px;
+}
+
+.topButton{
+border:0;
+background:none;
+color:#fff;
+font-size:23px;
+}
+
+.page{
+max-width:720px;
+margin:auto;
+padding:13px;
+}
+
+/* NAV */
+
+.nav{
+position:fixed;
+bottom:0;
+left:0;
+right:0;
+height:68px;
+z-index:100;
+display:flex;
+align-items:center;
+justify-content:space-around;
+background:rgba(11,6,9,.98);
+border-top:1px solid #30121d;
+padding-bottom:env(safe-area-inset-bottom);
+}
+
+.navBtn{
+background:none;
+border:0;
+color:#806f76;
+font-size:21px;
+display:flex;
+flex-direction:column;
+align-items:center;
+gap:3px;
+}
+
+.navBtn span{
+font-size:10px;
+}
+
+.navBtn.active{
+color:#fff;
+}
+
+/* CARD */
+
+.card{
+background:var(--panel);
+border:1px solid #291019;
+border-radius:17px;
+overflow:hidden;
+margin-bottom:14px;
+}
+
+/* STORIES */
+
+.stories{
+display:flex;
+gap:14px;
+padding:15px;
+overflow-x:auto;
+}
+
+.story{
+min-width:65px;
+text-align:center;
+}
+
+.storyRing{
+width:62px;
+height:62px;
+border-radius:50%;
+padding:2px;
+margin:auto;
+background:linear-gradient(135deg,#bd2752,#5e1029,#e04c73);
+}
+
+.storyAvatar{
+height:100%;
+width:100%;
+border-radius:50%;
+background:#160a10;
+display:flex;
+align-items:center;
+justify-content:center;
+font-weight:900;
+}
+
+.storyName{
+font-size:11px;
+color:#ad939c;
+margin-top:6px;
+white-space:nowrap;
+overflow:hidden;
+text-overflow:ellipsis;
+}
+
+/* CREATE */
+
+.create{
+padding:13px;
+display:flex;
+gap:10px;
+align-items:center;
+}
+
+.createAvatar{
+width:43px;
+height:43px;
+border-radius:50%;
+background:#64152e;
+display:flex;
+align-items:center;
+justify-content:center;
+font-weight:900;
+}
+
+.createButton{
+flex:1;
+background:#0c0709;
+border:1px solid #32131d;
+color:#938087;
+border-radius:22px;
+padding:11px 15px;
+text-align:left;
+}
+
+/* POST */
+
+.postHeader{
+display:flex;
+align-items:center;
+gap:10px;
+padding:13px;
+}
+
+.avatar{
+width:42px;
+height:42px;
+border-radius:50%;
+background:linear-gradient(135deg,#851c3d,#330b19);
+display:flex;
+align-items:center;
+justify-content:center;
+font-weight:900;
+flex-shrink:0;
+}
+
+.postUser{
+flex:1;
+}
+
+.postUser b{
+display:block;
+}
+
+.postUser small{
+color:#876f78;
+}
+
+.verify{
+color:#4fa5ff;
+}
+
+.more{
+background:none;
+border:0;
+color:#fff;
+font-size:22px;
+}
+
+.postText{
+padding:0 13px 12px;
+line-height:1.5;
+white-space:pre-wrap;
+}
+
+.postMedia{
+width:100%;
+max-height:650px;
+object-fit:cover;
+display:block;
+background:#000;
+}
+
+.actions{
+display:flex;
+align-items:center;
+gap:20px;
+padding:11px 13px;
+border-top:1px solid #251018;
+}
+
+.act{
+background:none;
+border:0;
+color:#fff;
+font-size:23px;
+}
+
+.likes{
+font-size:13px;
+margin-left:-14px;
+color:#b8a5ac;
+}
+
+.caption{
+padding:0 13px 13px;
+font-size:14px;
+}
+
+.comment{
+padding:8px 13px;
+border-top:1px solid #211018;
+}
+
+.comment b{
+font-size:13px;
+}
+
+.comment span{
+color:#c1adb5;
+font-size:13px;
+margin-left:5px;
+}
+
+.commentInput{
+display:flex;
+gap:8px;
+padding:10px;
+border-top:1px solid #261019;
+}
+
+.commentInput input{
+flex:1;
+background:#0b0709;
+border:1px solid #32131d;
+border-radius:20px;
+padding:10px 14px;
+color:#fff;
+outline:none;
+}
+
+.commentInput button{
+background:#791b37;
+border:0;
+border-radius:20px;
+color:#fff;
+padding:0 15px;
+}
+
+/* PROFILE */
+
+.profileHead{
+padding:20px 8px;
+display:flex;
+align-items:center;
+gap:18px;
+}
+
+.profileAvatar{
+width:90px;
+height:90px;
+border-radius:50%;
+background:linear-gradient(135deg,#8e2143,#260914);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:32px;
+font-weight:900;
+border:2px solid #8d2947;
+overflow:hidden;
+}
+
+.profileAvatar img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+.profileInfo{
+flex:1;
+}
+
+.profileName{
+font-size:20px;
+font-weight:900;
+}
+
+.profileUsername{
+color:#9c838c;
+margin-top:5px;
+}
+
+.stats{
+display:flex;
+justify-content:space-around;
+border-top:1px solid #2b111a;
+border-bottom:1px solid #2b111a;
+padding:14px;
+}
+
+.stat{
+text-align:center;
+}
+
+.stat b{
+display:block;
+font-size:18px;
+}
+
+.stat small{
+color:#8e7881;
+}
+
+/* LEAGUE */
+
+.leagueTitle{
+font-size:29px;
+font-weight:1000;
+text-align:center;
+margin:10px 0 20px;
+letter-spacing:1px;
+}
+
+.leagueItem{
+display:flex;
+align-items:center;
+gap:11px;
+padding:13px;
+border:1px solid #2c111b;
+border-radius:15px;
+background:#11090d;
+margin-bottom:8px;
+}
+
+.rank{
+width:35px;
+text-align:center;
+font-size:19px;
+font-weight:900;
+}
+
+.rankAvatar{
+width:45px;
+height:45px;
+border-radius:50%;
+background:#66162f;
+display:flex;
+align-items:center;
+justify-content:center;
+font-weight:900;
+}
+
+.leagueUser{
+flex:1;
+}
+
+.leagueUser b{
+display:block;
+}
+
+.leagueUser small{
+color:#8d7780;
+}
+
+.point{
+color:#dc4267;
+font-weight:900;
+}
+
+.topThree{
+padding:18px;
+border-color:#7f2140;
+box-shadow:0 0 28px rgba(126,25,58,.22);
+}
+
+.founderRow{
+background:linear-gradient(90deg,#310a19,#12080c);
+border-color:#a52b4e;
+}
+
+/* SEARCH */
+
+.search{
+display:flex;
+gap:8px;
+margin-bottom:13px;
+}
+
+.search input{
+flex:1;
+background:#10080c;
+border:1px solid #35141f;
+color:#fff;
+padding:13px;
+border-radius:12px;
+outline:none;
+}
+
+.userResult{
+display:flex;
+align-items:center;
+gap:11px;
+padding:13px;
+border-bottom:1px solid #291019;
+}
+
+.userResult:last-child{
+border:0;
+}
+
+.userResultInfo{
+flex:1;
+}
+
+.userResultInfo small{
+display:block;
+color:#907a82;
+margin-top:3px;
+}
+
+/* MESSAGES */
+
+.channel{
+padding:16px;
+display:flex;
+align-items:center;
+gap:12px;
+cursor:pointer;
+border-bottom:1px solid #291019;
+}
+
+.channel:last-child{
+border:0;
+}
+
+.channelIcon{
+width:46px;
+height:46px;
+border-radius:14px;
+background:#65162e;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:22px;
+}
+
+.channelInfo{
+flex:1;
+}
+
+.channelInfo b{
+display:block;
+}
+
+.channelInfo small{
+color:#8d7780;
+}
+
+/* CHAT */
+
+.back{
+border:0;
+background:none;
+color:#fff;
+font-size:16px;
+margin-bottom:13px;
+}
+
+.chat{
+height:65vh;
+display:flex;
+flex-direction:column;
+}
+
+.chatMessages{
+flex:1;
+overflow-y:auto;
+padding:12px;
+}
+
+.msg{
+max-width:78%;
+padding:10px 13px;
+background:#1b0c13;
+border-radius:14px;
+margin:7px 0;
+}
+
+.msg.mine{
+margin-left:auto;
+background:#711934;
+}
+
+.msgUser{
+font-size:11px;
+color:#d08b9d;
+margin-bottom:3px;
+}
+
+.msgText{
+font-size:14px;
+white-space:pre-wrap;
+}
+
+.chatSend{
+display:flex;
+gap:7px;
+padding:10px;
+border-top:1px solid #291019;
+}
+
+.chatSend input{
+flex:1;
+background:#0c0709;
+border:1px solid #36141f;
+color:#fff;
+border-radius:21px;
+padding:11px 14px;
+outline:none;
+}
+
+.chatSend button{
+border:0;
+background:#791b38;
+color:#fff;
+border-radius:21px;
+padding:0 16px;
+}
+
+/* ADMIN */
+
+.admin{
+padding:15px;
+}
+
+.admin h3{
+margin-bottom:13px;
+}
+
+.admin input{
+width:100%;
+background:#0c0709;
+border:1px solid #37151f;
+color:#fff;
+border-radius:10px;
+padding:12px;
+margin-bottom:8px;
+}
+
+.adminGrid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:8px;
+}
+
+.adminButton{
+padding:11px;
+background:#791a37;
+border:0;
+border-radius:10px;
+color:#fff;
+font-weight:bold;
+}
+
+/* MODAL */
+
+.modal{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.8);
+z-index:200;
+display:flex;
+align-items:flex-end;
+justify-content:center;
+}
+
+.modalBox{
+width:100%;
+max-width:650px;
+background:#13090e;
+border-radius:20px 20px 0 0;
+padding:18px;
+border:1px solid #451727;
+}
+
+.modalBox textarea{
+width:100%;
+height:130px;
+resize:none;
+background:#0c0709;
+border:1px solid #35141f;
+color:#fff;
+border-radius:12px;
+padding:12px;
+outline:none;
+margin-bottom:10px;
+}
+
+.modalActions{
+display:flex;
+gap:8px;
+}
+
+.modalActions button{
+flex:1;
+padding:12px;
+border-radius:10px;
+border:0;
+}
+
+.fileLabel{
+display:block;
+padding:12px;
+border:1px dashed #6c1d37;
+border-radius:10px;
+text-align:center;
+color:#c98b9b;
+margin-bottom:10px;
+cursor:pointer;
+}
+
+.empty{
+text-align:center;
+padding:40px 15px;
+color:#78666e;
+}
+
+/* NOTIFICATION */
+
+.notification{
+padding:13px;
+border-bottom:1px solid #281019;
+}
+
+.notification small{
+display:block;
+color:#806d75;
+margin-top:4px;
+}
+</style>
 </head>
 
 <body>
 
-  <!-- GİRİŞ -->
+<!-- GİRİŞ -->
 
-  <section id="authScreen">
+<section id="auth">
 
-    <div class="authBox">
+<div class="authBox">
 
-      <div class="logo">İNFAZ</div>
-      <div class="slogan">#İzra(cc)HerYerde</div>
+<div class="logo">İNFAZ</div>
+<div class="tag">#İzra(cc)HerYerde</div>
 
-      <div id="loginForm">
+<div id="loginBox">
 
-        <input
-          id="loginEmail"
-          type="email"
-          placeholder="Gmail / E-posta"
-          autocomplete="email"
-        >
+<input
+id="loginEmail"
+class="authInput"
+type="email"
+placeholder="Gmail / E-posta">
 
-        <input
-          id="loginPassword"
-          type="password"
-          placeholder="Şifre"
-          autocomplete="current-password"
-        >
+<input
+id="loginPassword"
+class="authInput"
+type="password"
+placeholder="Şifre">
 
-        <button class="mainBtn" onclick="girisYap()">
-          Giriş Yap
-        </button>
+<button class="primary" onclick="login()">
+Giriş Yap
+</button>
 
-        <button class="secondaryBtn" onclick="sifreSifirla()">
-          Şifremi Unuttum
-        </button>
+<button class="secondary" onclick="resetPassword()">
+Şifremi Unuttum
+</button>
 
-        <div class="switchText">
-          Hesabın yok mu?
-          <span onclick="kayitFormunuAc()">Kaydol</span>
-        </div>
+<div class="switch">
+Hesabın yok mu?
+<span onclick="showRegister()">Kaydol</span>
+</div>
 
-      </div>
+</div>
 
 
-      <div id="registerForm" class="hidden">
+<div id="registerBox" class="hidden">
 
-        <input
-          id="registerEmail"
-          type="email"
-          placeholder="Gmail / E-posta"
-          autocomplete="email"
-        >
+<input
+id="registerEmail"
+class="authInput"
+type="email"
+placeholder="Gmail / E-posta">
 
-        <input
-          id="registerUsername"
-          type="text"
-          placeholder="Kullanıcı adı"
-          autocomplete="username"
-        >
+<input
+id="registerUsername"
+class="authInput"
+type="text"
+placeholder="Kullanıcı adı">
 
-        <input
-          id="registerPassword"
-          type="password"
-          placeholder="Şifre (en az 6 karakter)"
-          autocomplete="new-password"
-        >
+<input
+id="registerPassword"
+class="authInput"
+type="password"
+placeholder="Şifre">
 
-        <button class="mainBtn" onclick="kayitOl()">
-          Kaydol
-        </button>
+<button class="primary" onclick="register()">
+Kaydol
+</button>
 
-        <div class="switchText">
-          Zaten hesabın var mı?
-          <span onclick="girisFormunuAc()">Giriş Yap</span>
-        </div>
+<div class="switch">
+Zaten hesabın var mı?
+<span onclick="showLogin()">Giriş Yap</span>
+</div>
 
-      </div>
+</div>
 
-      <div id="authMsg" class="authMsg"></div>
+<div id="authMsg" class="authMsg"></div>
 
-    </div>
+</div>
 
-  </section>
+</section>
 
 
-  <!-- UYGULAMA -->
+<!-- UYGULAMA -->
 
-  <main id="app" class="hidden">
+<section id="app" class="hidden">
 
-    <header class="topbar">
+<header class="top">
 
-      <div class="topLogo">İNFAZ</div>
+<div class="topLogo">İNFAZ</div>
 
-      <div class="topActions">
+<div class="topRight">
 
-        <button
-          class="iconBtn"
-          onclick="showView('notifications')"
-          title="Bildirimler"
-        >
-          ♡
-        </button>
+<button class="topButton" onclick="openPage('search')">⌕</button>
 
-        <button
-          class="iconBtn"
-          onclick="showView('messages')"
-          title="Mesajlar"
-        >
-          ✉
-        </button>
+<button class="topButton" onclick="openPage('notifications')">♡</button>
 
-      </div>
+<button class="topButton" onclick="openPage('messages')">✉</button>
 
-    </header>
+</div>
 
+</header>
 
-    <div class="content">
 
-      <!-- ANA SAYFA -->
+<main id="content" class="page"></main>
 
-      <section id="homeView" class="view active">
 
-        <div class="stories">
+<nav class="nav">
 
-          <div class="story">
-            <div class="storyCircle">
-              <div class="storyCircleInner">İ</div>
-            </div>
-            <div>İzra</div>
-          </div>
+<button id="navHome" class="navBtn active" onclick="openPage('home')">
+⌂
+<span>Ana Sayfa</span>
+</button>
 
-          <div class="story">
-            <div class="storyCircle">
-              <div class="storyCircleInner">+</div>
-            </div>
-            <div>Hikâye</div>
-          </div>
+<button id="navSearch" class="navBtn" onclick="openPage('search')">
+⌕
+<span>Ara</span>
+</button>
 
-        </div>
+<button id="navLeague" class="navBtn" onclick="openPage('league')">
+♛
+<span>Lig</span>
+</button>
 
+<button id="navMessages" class="navBtn" onclick="openPage('messages')">
+✉
+<span>Mesaj</span>
+</button>
 
-        <div class="card createBox">
+<button id="navProfile" class="navBtn" onclick="openPage('profile')">
+◉
+<span>Profil</span>
+</button>
 
-          <textarea
-            id="postText"
-            placeholder="Ne düşünüyorsun?"
-          ></textarea>
+</nav>
 
-          <div class="createBottom">
-            <button class="smallBtn" onclick="yeniPaylasim()">
-              Paylaş
-            </button>
-          </div>
+</section>
 
-        </div>
 
+<!-- GÖNDERİ MODAL -->
 
-        <div id="postsContainer">
-          <div class="card" style="padding:20px;text-align:center;color:#827278;">
-            Gönderiler yükleniyor...
-          </div>
-        </div>
+<div id="postModal" class="modal hidden">
 
-      </section>
+<div class="modalBox">
 
+<textarea
+id="postText"
+placeholder="Ne düşünüyorsun?"></textarea>
 
-      <!-- LİG -->
+<label class="fileLabel">
 
-      <section id="leagueView" class="view">
+📷 Fotoğraf / Video seç
 
-        <div class="leagueTitle">Lig</div>
-        <div class="leagueSub">
-          En yüksek puana sahip 20 kul
-        </div>
+<input
+id="postFile"
+type="file"
+accept="image/*,video/*"
+hidden>
 
-        <div id="podium"></div>
+</label>
 
-        <div id="leagueList"></div>
+<div id="uploadStatus"
+style="color:#9e7c87;margin-bottom:10px">
+</div>
 
-      </section>
+<div class="modalActions">
 
+<button
+style="background:#291019;color:#fff"
+onclick="closePostModal()">
+İptal
+</button>
 
-      <!-- MESAJLAR -->
+<button
+style="background:#7e1b39;color:#fff"
+onclick="createPost()">
+Paylaş
+</button>
 
-      <section id="messagesView" class="view">
+</div>
 
-        <div class="leagueTitle">Mesajlar</div>
-        <div class="leagueSub">
-          Sohbetler
-        </div>
+</div>
 
-        <div class="chatTabs">
+</div>
 
-          <button
-            id="announcementTab"
-            class="chatTab active"
-            onclick="chatAc('announcement')"
-          >
-            Duyuru
-          </button>
 
-          <button
-            id="generalTab"
-            class="chatTab"
-            onclick="chatAc('general')"
-          >
-            Genel Sohbet
-          </button>
+<script type="module">
 
-        </div>
+import {
+initializeApp
+}
+from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
 
-        <div id="chatInfo" class="chatInfo">
-          Duyuru kanalı yalnızca kurucu tarafından kullanılabilir.
-        </div>
 
-        <div id="messagesContainer" class="messages">
-          Yükleniyor...
-        </div>
+import {
+getAuth,
+createUserWithEmailAndPassword,
+signInWithEmailAndPassword,
+sendPasswordResetEmail,
+signOut,
+onAuthStateChanged
+}
+from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
 
-        <div id="chatSendArea" class="chatSend">
 
-          <input
-            id="messageInput"
-            type="text"
-            placeholder="Mesaj yaz..."
-          >
+import {
+getFirestore,
+collection,
+doc,
+getDoc,
+setDoc,
+updateDoc,
+addDoc,
+getDocs,
+query,
+where,
+orderBy,
+limit,
+increment,
+serverTimestamp,
+arrayUnion,
+arrayRemove
+}
+from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
 
-          <button
-            class="smallBtn"
-            onclick="mesajGonder()"
-          >
-            Gönder
-          </button>
 
-        </div>
+import {
+getStorage,
+ref,
+uploadBytes,
+getDownloadURL
+}
+from "https://www.gstatic.com/firebasejs/12.18.0/firebase-storage.js";
 
-      </section>
 
+const firebaseConfig={
+apiKey:"AIzaSyBomQXTZy3apU3LpY5hJhW0L1p6HB4BIM8",
+authDomain:"izra-site.firebaseapp.com",
+projectId:"izra-site",
+storageBucket:"izra-site.firebasestorage.app",
+messagingSenderId:"539636714024",
+appId:"1:539636714024:web:6a28b1c91680e15b76c31d"
+};
 
-      <!-- BİLDİRİMLER -->
 
-      <section id="notificationsView" class="view">
+const firebaseApp=initializeApp(firebaseConfig);
 
-        <div class="leagueTitle">Bildirimler</div>
+const auth=getAuth(firebaseApp);
 
-        <div class="card" style="padding:20px;color:#918086;text-align:center;">
-          Henüz yeni bildirimin yok.
-        </div>
+const db=getFirestore(firebaseApp);
 
-      </section>
+const storage=getStorage(firebaseApp);
 
 
-      <!-- PROFİL -->
+/* KURUCU */
 
-      <section id="profileView" class="view">
+const FOUNDER_UID="HGH0b0mDCePxfgR2k6F84dhbuRZ2";
 
-        <div class="profileHead">
 
-          <div id="profileAvatar" class="profileAvatar">
-            K
-          </div>
+let me=null;
 
-          <div id="profileName" class="profileName">
-            Kul
-          </div>
+let myProfile=null;
 
-          <div id="profileUsername" class="profileUsername">
-            @kul
-          </div>
+let currentOtherUser=null;
 
-          <div id="profilePoints" class="profilePoints">
-            0 puan
-          </div>
 
-        </div>
+/* YARDIMCI */
 
+function $(id){
+return document.getElementById(id);
+}
 
-        <div class="card profileBox">
 
-          <input
-            id="editUsername"
-            type="text"
-            placeholder="Yeni kullanıcı adı"
-          >
+function safe(value){
+return String(value??"")
+.replaceAll("&","&amp;")
+.replaceAll("<","&lt;")
+.replaceAll(">","&gt;")
+.replaceAll('"',"&quot;")
+.replaceAll("'","&#039;");
+}
 
-          <button
-            class="mainBtn"
-            onclick="duzenleProfil()"
-          >
-            Profili Güncelle
-          </button>
 
-          <button
-            class="secondaryBtn"
-            onclick="cikisYap()"
-          >
-            Çıkış Yap
-          </button>
+function errorText(e){
 
-        </div>
+if(e.code?.includes("invalid-credential"))
+return "E-posta veya şifre hatalı.";
 
+if(e.code?.includes("email-already-in-use"))
+return "Bu e-posta zaten kullanılıyor.";
 
-        <div
-          id="adminPanel"
-          class="card adminBox hidden"
-        >
+if(e.code?.includes("invalid-email"))
+return "Geçerli bir e-posta gir.";
 
-          <div class="adminTitle">
-            Kurucu Paneli
-          </div>
+if(e.code?.includes("weak-password"))
+return "Şifre en az 6 karakter olmalı.";
 
-          <div class="adminDesc">
-            Kullanıcı ara ve puan yönetimi yap.
-          </div>
+if(e.code?.includes("network"))
+return "İnternet bağlantısını kontrol et.";
 
-          <input
-            id="adminSearch"
-            type="text"
-            placeholder="Kullanıcı adı"
-          >
+return "Bir hata oluştu.";
 
-          <button
-            class="mainBtn"
-            onclick="adminKullaniciAra()"
-          >
-            Kullanıcı Ara
-          </button>
+}
 
-          <div id="adminResult"></div>
 
-        </div>
+/* AUTH */
 
-      </section>
+window.showRegister=()=>{
+$("loginBox").classList.add("hidden");
+$("registerBox").classList.remove("hidden");
+$("authMsg").textContent="";
+};
 
-    </div>
 
+window.showLogin=()=>{
+$("registerBox").classList.add("hidden");
+$("loginBox").classList.remove("hidden");
+$("authMsg").textContent="";
+};
 
-    <!-- ALT MENÜ -->
 
-    <nav class="bottomNav">
+window.login=async()=>{
 
-      <button
-        id="navHome"
-        class="navBtn active"
-        onclick="showView('home')"
-      >
-        <span class="navIcon">⌂</span>
-        Ana Sayfa
-      </button>
+const email=$("loginEmail").value.trim();
 
-      <button
-        id="navLeague"
-        class="navBtn"
-        onclick="showView('league')"
-      >
-        <span class="navIcon">♛</span>
-        Lig
-      </button>
+const password=$("loginPassword").value;
 
-      <button
-        id="navMessages"
-        class="navBtn"
-        onclick="showView('messages')"
-      >
-        <span class="navIcon">✉</span>
-        Mesaj
-      </button>
+if(!email||!password){
+$("authMsg").textContent="E-posta ve şifreyi gir.";
+return;
+}
 
-      <button
-        id="navProfile"
-        class="navBtn"
-        onclick="showView('profile')"
-      >
-        <span class="navIcon">●</span>
-        Profil
-      </button>
+try{
 
-    </nav>
+await signInWithEmailAndPassword(
+auth,
+email,
+password
+);
 
-  </main>
+}catch(e){
 
+$("authMsg").textContent=errorText(e);
 
-  <!-- FIREBASE -->
+}
 
-  <script type="module">
+};
 
-    import {
-      initializeApp
-    } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
 
-    import {
-      getAuth,
-      createUserWithEmailAndPassword,
-      signInWithEmailAndPassword,
-      sendPasswordResetEmail,
-      signOut,
-      onAuthStateChanged
-    } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+window.register=async()=>{
 
-    import {
-      getFirestore,
-      collection,
-      doc,
-      getDoc,
-      setDoc,
-      updateDoc,
-      addDoc,
-      deleteDoc,
-      query,
-      where,
-      orderBy,
-      limit,
-      getDocs,
-      onSnapshot,
-      serverTimestamp,
-      increment
-    } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+const email=$("registerEmail").value.trim();
 
+const username=$("registerUsername").value.trim().toLowerCase();
 
-    /* FIREBASE */
+const password=$("registerPassword").value;
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyBomQXTZy3apU3LpY5hJhW0L1p6HB4BIM8",
-      authDomain: "izra-site.firebaseapp.com",
-      projectId: "izra-site",
-      storageBucket: "izra-site.firebasestorage.app",
-      messagingSenderId: "539636714024",
-      appId: "1:539636714024:web:6a28b1c91680e15b76c31d"
-    };
+if(!email||!username||!password){
+$("authMsg").textContent="Tüm alanları doldur.";
+return;
+}
 
+if(username.length<3){
+$("authMsg").textContent="Kullanıcı adı en az 3 karakter.";
+return;
+}
 
-    const app = initializeApp(firebaseConfig);
+if(password.length<6){
+$("authMsg").textContent="Şifre en az 6 karakter.";
+return;
+}
 
-    const auth = getAuth(app);
+try{
 
-    const db = getFirestore(app);
+$("authMsg").textContent="Hesap oluşturuluyor...";
 
+const result=
+await createUserWithEmailAndPassword(
+auth,
+email,
+password
+);
 
-    /* KURUCU UID */
+const uid=result.user.uid;
 
-    const FOUNDER_UID =
-      "HGH0b0mDCePxfgR2k6F84dhbuRZ2";
+const founder=uid===FOUNDER_UID;
 
+await setDoc(
+doc(db,"users",uid),
+{
+username,
+displayName:founder
+?"İzra Adel Karyan-Allah"
+:"kul",
+email,
+points:founder?999999:0,
+isFounder:founder,
+verified:founder,
+followers:[],
+following:[],
+createdAt:serverTimestamp()
+}
+);
 
-    let aktifKullanici = null;
-    let aktifProfil = null;
-    let aktifChat = "announcement";
+}catch(e){
 
+console.error(e);
 
-    /* ELEMENTLER */
+$("authMsg").textContent=errorText(e);
 
-    const authScreen =
-      document.getElementById("authScreen");
+}
 
-    const appScreen =
-      document.getElementById("app");
+};
 
-    const authMsg =
-      document.getElementById("authMsg");
 
+window.resetPassword=async()=>{
 
-    /* FORM */
+const email=$("loginEmail").value.trim();
 
-    window.kayitFormunuAc = function() {
+if(!email){
+$("authMsg").textContent="Önce e-posta adresini yaz.";
+return;
+}
 
-      document
-        .getElementById("loginForm")
-        .classList.add("hidden");
+try{
 
-      document
-        .getElementById("registerForm")
-        .classList.remove("hidden");
+await sendPasswordResetEmail(auth,email);
 
-      authMsg.textContent = "";
+$("authMsg").textContent=
+"Şifre sıfırlama bağlantısı gönderildi.";
 
-    };
+}catch(e){
 
+$("authMsg").textContent=errorText(e);
 
-    window.girisFormunuAc = function() {
+}
 
-      document
-        .getElementById("registerForm")
-        .classList.add("hidden");
+};
 
-      document
-        .getElementById("loginForm")
-        .classList.remove("hidden");
 
-      authMsg.textContent = "";
+window.logout=async()=>{
+await signOut(auth);
+};
 
-    };
 
+/* PROFILE */
 
-    /* KAYIT */
+async function loadProfile(){
 
-    window.kayitOl = async function() {
+const ref=doc(db,"users",me.uid);
 
-      const email =
-        document
-          .getElementById("registerEmail")
-          .value
-          .trim();
+const snap=await getDoc(ref);
 
-      const username =
-        document
-          .getElementById("registerUsername")
-          .value
-          .trim();
+if(snap.exists()){
 
-      const password =
-        document
-          .getElementById("registerPassword")
-          .value;
+myProfile={
+uid:me.uid,
+...snap.data()
+};
 
+return;
 
-      if (!email) {
-        authMsg.textContent =
-          "E-posta adresini gir.";
-        return;
-      }
+}
 
-      if (username.length < 3) {
-        authMsg.textContent =
-          "Kullanıcı adı en az 3 karakter olmalı.";
-        return;
-      }
 
-      if (password.length < 6) {
-        authMsg.textContent =
-          "Şifre en az 6 karakter olmalı.";
-        return;
-      }
+const founder=me.uid===FOUNDER_UID;
 
+myProfile={
+uid:me.uid,
+username:founder?"ll.sxtm.ll":"kul",
+displayName:founder
+?"İzra Adel Karyan-Allah"
+:"kul",
+email:me.email,
+points:founder?999999:0,
+isFounder:founder,
+verified:founder,
+followers:[],
+following:[]
+};
 
-      authMsg.textContent =
-        "Hesap oluşturuluyor...";
+await setDoc(ref,myProfile);
 
+}
 
-      try {
 
-        /* Kullanıcı adı kontrolü */
+/* AUTH STATE */
 
-        const usernameQuery = query(
-          collection(db, "users"),
-          where("username", "==", username.toLowerCase()),
-          limit(1)
-        );
+onAuthStateChanged(auth,async(user)=>{
 
-        const usernameSnapshot =
-          await getDocs(usernameQuery);
+if(!user){
 
+me=null;
+myProfile=null;
 
-        if (!usernameSnapshot.empty) {
+$("app").classList.add("hidden");
+$("auth").classList.remove("hidden");
 
-          authMsg.textContent =
-            "Bu kullanıcı adı zaten alınmış.";
+return;
 
-          return;
-        }
+}
 
+me=user;
 
-        /* Firebase Auth hesabı */
+await loadProfile();
 
-        const credential =
-          await createUserWithEmailAndPassword(
-            auth,
-            email,
-            password
-          );
+$("auth").classList.add("hidden");
+$("app").classList.remove("hidden");
 
+openPage("home");
 
-        const uid =
-          credential.user.uid;
+});
 
 
-        /* UID üzerinden kurucu */
+/* NAV */
 
-        const isFounder =
-          uid === FOUNDER_UID;
+window.openPage=async(page)=>{
 
+document.querySelectorAll(".navBtn")
+.forEach(x=>x.classList.remove("active"));
 
-        const displayName =
-          isFounder
-            ? "İzra Adel Karyan-Allah"
-            : username;
+const nav={
+home:"navHome",
+search:"navSearch",
+league:"navLeague",
+messages:"navMessages",
+profile:"navProfile"
+};
 
+if(nav[page])
+$(nav[page]).classList.add("active");
 
-        await setDoc(
-          doc(db, "users", uid),
-          {
-            uid: uid,
+if(page==="home")home();
 
-            username:
-              username.toLowerCase(),
+if(page==="search")searchPage();
 
-            displayName:
-              displayName,
+if(page==="league")league();
 
-            email:
-              email,
+if(page==="messages")messages();
 
-            points:
-              isFounder ? 999999 : 0,
+if(page==="profile")profile();
 
-            isFounder:
-              isFounder,
+if(page==="notifications")notifications();
 
-            verified:
-              isFounder,
+};
 
-            createdAt:
-              serverTimestamp()
-          }
-        );
 
+/* HOME */
 
-        authMsg.textContent =
-          "Hesabın oluşturuldu.";
+async function home(){
 
-      }
+$("content").innerHTML=`
 
-      catch (error) {
+<div class="card">
 
-        console.error(error);
+<div class="stories">
 
-        authMsg.textContent =
-          firebaseHata(error);
+<div class="story">
 
-      }
+<div class="storyRing">
+<div class="storyAvatar">+</div>
+</div>
 
-    };
+<div class="storyName">Hikâyen</div>
 
+</div>
 
-    /* GİRİŞ */
+<div class="story">
 
-    window.girisYap = async function() {
+<div class="storyRing">
+<div class="storyAvatar">İ</div>
+</div>
 
-      const email =
-        document
-          .getElementById("loginEmail")
-          .value
-          .trim();
+<div class="storyName">İNFAZ</div>
 
-      const password =
-        document
-          .getElementById("loginPassword")
-          .value;
+</div>
 
+</div>
 
-      if (!email || !password) {
+</div>
 
-        authMsg.textContent =
-          "E-posta ve şifreyi gir.";
 
-        return;
-      }
+<div class="card">
 
+<div class="create">
 
-      authMsg.textContent =
-        "Giriş yapılıyor...";
+<div class="createAvatar">
+${safe((myProfile.username||"k")[0]).toUpperCase()}
+</div>
 
+<button class="createButton" onclick="openPostModal()">
+Bir şeyler paylaş...
+</button>
 
-      try {
+</div>
 
-        await signInWithEmailAndPassword(
-          auth,
-          email,
-          password
-        );
+</div>
 
-      }
 
-      catch (error) {
+<div id="posts">
 
-        console.error(error);
+<div class="empty">
+Gönderiler yükleniyor...
+</div>
 
-        authMsg.textContent =
-          firebaseHata(error);
+</div>
+`;
 
-      }
+await loadPosts();
 
-    };
+}
 
 
-    /* ŞİFRE SIFIRLA */
+/* POST MODAL */
 
-    window.sifreSifirla = async function() {
+window.openPostModal=()=>{
+$("postModal").classList.remove("hidden");
+$("postText").value="";
+$("postFile").value="";
+$("uploadStatus").textContent="";
+};
 
-      const email =
-        document
-          .getElementById("loginEmail")
-          .value
-          .trim();
 
+window.closePostModal=()=>{
+$("postModal").classList.add("hidden");
+};
 
-      if (!email) {
 
-        authMsg.textContent =
-          "Önce e-posta adresini yaz.";
+/* CREATE POST */
 
-        return;
-      }
+window.createPost=async()=>{
 
+const text=$("postText").value.trim();
 
-      try {
+const file=$("postFile").files[0];
 
-        await sendPasswordResetEmail(
-          auth,
-          email
-        );
+if(!text&&!file){
+alert("Bir şey yaz veya fotoğraf/video seç.");
+return;
+}
 
-        authMsg.textContent =
-          "Şifre sıfırlama bağlantısı e-postana gönderildi.";
+try{
 
-      }
+$("uploadStatus").textContent="Paylaşılıyor...";
 
-      catch (error) {
+let mediaUrl="";
+let mediaType="";
 
-        authMsg.textContent =
-          firebaseHata(error);
+if(file){
 
-      }
+const path=
+"posts/"+me.uid+"/"+Date.now()+"_"+file.name;
 
-    };
+const storageRef=ref(storage,path);
 
+await uploadBytes(storageRef,file);
 
-    /* AUTH DURUMU */
+mediaUrl=await getDownloadURL(storageRef);
 
-    onAuthStateChanged(
-      auth,
-      async user => {
+mediaType=
+file.type.startsWith("video")
+?"video"
+:"image";
 
-        if (user) {
+}
 
-          aktifKullanici = user;
+await addDoc(
+collection(db,"posts"),
+{
+uid:me.uid,
+username:myProfile.username,
+displayName:myProfile.displayName||"kul",
+verified:!!myProfile.verified,
+text,
+mediaUrl,
+mediaType,
+likes:[],
+likesCount:0,
+commentsCount:0,
+deleted:false,
+createdAt:serverTimestamp()
+}
+);
 
-          authScreen
-            .classList
-            .add("hidden");
+$("uploadStatus").textContent="Paylaşıldı.";
 
-          appScreen
-            .classList
-            .remove("hidden");
+setTimeout(()=>{
+closePostModal();
+home();
+},500);
 
+}catch(e){
 
-          await kullaniciyiYukle();
+console.error(e);
 
-          await gonderileriYukle();
+$("uploadStatus").textContent=
+"Paylaşım sırasında hata oluştu.";
 
-          await ligiYukle();
+}
 
-        }
+};
 
-        else {
 
-          aktifKullanici = null;
-          aktifProfil = null;
+/* POSTS */
 
-          appScreen
-            .classList
-            .add("hidden");
+async function loadPosts(){
 
-          authScreen
-            .classList
-            .remove("hidden");
+const box=$("posts");
 
-        }
+try{
 
-      }
-    );
+const q=query(
+collection(db,"posts"),
+orderBy("createdAt","desc"),
+limit(40)
+);
 
+const snap=await getDocs(q);
 
-    /* KULLANICI */
+box.innerHTML="";
 
-    async function kullaniciyiYukle() {
+let found=false;
 
-      if (!aktifKullanici) return;
+snap.forEach(d=>{
 
+const p={
+id:d.id,
+...d.data()
+};
 
-      const ref =
-        doc(
-          db,
-          "users",
-          aktifKullanici.uid
-        );
+if(p.deleted)return;
 
+found=true;
 
-      const snap =
-        await getDoc(ref);
+box.insertAdjacentHTML(
+"beforeend",
+postHTML(p)
+);
 
+});
 
-      if (!snap.exists()) {
+if(!found){
 
-        const isFounder =
-          aktifKullanici.uid === FOUNDER_UID;
+box.innerHTML=
+`<div class="empty">Henüz gönderi yok.</div>`;
 
+}
 
-        aktifProfil = {
+}catch(e){
 
-          uid:
-            aktifKullanici.uid,
+console.error(e);
 
-          username:
-            isFounder
-              ? "ll.sxtm.ll"
-              : aktifKullanici.email.split("@")[0],
+box.innerHTML=
+`<div class="empty">Gönderiler yüklenemedi.</div>`;
 
-          displayName:
-            isFounder
-              ? "İzra Adel Karyan-Allah"
-              : aktifKullanici.email.split("@")[0],
+}
 
-          email:
-            aktifKullanici.email,
+}
 
-          points:
-            isFounder ? 999999 : 0,
 
-          isFounder:
-            isFounder,
+function postHTML(p){
 
-          verified:
-            isFounder
+const liked=
+Array.isArray(p.likes)&&
+p.likes.includes(me.uid);
 
-        };
+return`
 
+<article class="card">
 
-        await setDoc(
-          ref,
-          {
-            ...aktifProfil,
-            createdAt:
-              serverTimestamp()
-          }
-        );
+<div class="postHeader">
 
-      }
+<div class="avatar">
+${safe((p.username||"kul")[0]).toUpperCase()}
+</div>
 
-      else {
+<div class="postUser">
 
-        aktifProfil =
-          snap.data();
+<b>
+${safe(p.username||"kul")}
+${p.verified?'<span class="verify">✓</span>':""}
+</b>
 
-      }
+<small>kul</small>
 
+</div>
 
-      profilEkraniniGuncelle();
+${
+p.uid===me.uid||myProfile.isFounder
+?
+`<button class="more"
+onclick="deletePost('${p.id}')">⋯</button>`
+:""
+}
 
-    }
+</div>
 
 
-    function profilEkraniniGuncelle() {
+${
+p.text
+?
+`<div class="postText">${safe(p.text)}</div>`
+:""
+}
 
-      if (!aktifProfil) return;
 
+${
+p.mediaUrl
+?
+p.mediaType==="video"
+?
+`<video class="postMedia" controls src="${p.mediaUrl}"></video>`
+:
+`<img class="postMedia" src="${p.mediaUrl}">`
+:""
+}
 
-      const displayName =
-        aktifProfil.displayName ||
-        aktifProfil.username ||
-        "Kul";
 
+<div class="actions">
 
-      const username =
-        aktifProfil.username ||
-        "kul";
+<button
+class="act"
+onclick="toggleLike('${p.id}')">
+${liked?"♥":"♡"}
+</button>
 
+<span class="likes">
+${p.likesCount||0}
+</span>
 
-      document
-        .getElementById("profileName")
-        .innerHTML =
-          escapeHtml(displayName) +
-          (
-            aktifProfil.verified
-              ? ' <span class="verified">✓</span>'
-              : ''
-          );
+<button
+class="act"
+onclick="showComments('${p.id}')">
+○
+</button>
 
+<button
+class="act"
+onclick="sharePost('${p.id}')">
+↗
+</button>
 
-      document
-        .getElementById("profileUsername")
-        .textContent =
-          "@" + username;
+</div>
 
 
-      document
-        .getElementById("profilePoints")
-        .textContent =
-          Number(aktifProfil.points || 0) +
-          " puan";
+<div id="comments_${p.id}"></div>
 
 
-      document
-        .getElementById("profileAvatar")
-        .textContent =
-          displayName
-            .charAt(0)
-            .toUpperCase();
+<div class="commentInput">
 
+<input
+id="commentInput_${p.id}"
+placeholder="Yorum yaz...">
 
-      document
-        .getElementById("editUsername")
-        .value =
-          username;
+<button onclick="addComment('${p.id}')">
+Gönder
+</button>
 
+</div>
 
-      /* UID ile kurucu kontrolü */
+</article>
 
-      if (
-        aktifKullanici &&
-        aktifKullanici.uid === FOUNDER_UID
-      ) {
+`;
 
-        document
-          .getElementById("adminPanel")
-          .classList
-          .remove("hidden");
+}
 
-      }
 
-      else {
+/* LIKE */
 
-        document
-          .getElementById("adminPanel")
-          .classList
-          .add("hidden");
+window.toggleLike=async(postId)=>{
 
-      }
+const ref=doc(db,"posts",postId);
 
-    }
+const snap=await getDoc(ref);
 
+if(!snap.exists())return;
 
-    /* PROFİL DÜZENLE */
+const p=snap.data();
 
-    window.duzenleProfil = async function() {
+const likes=Array.isArray(p.likes)?p.likes:[];
 
-      if (!aktifKullanici) return;
+const already=likes.includes(me.uid);
 
+await updateDoc(
+ref,
+{
+likes:already
+?arrayRemove(me.uid)
+:arrayUnion(me.uid),
 
-      const newUsername =
-        document
-          .getElementById("editUsername")
-          .value
-          .trim()
-          .toLowerCase();
+likesCount:increment(already?-1:1)
+}
+);
 
+await loadPosts();
 
-      if (newUsername.length < 3) {
+};
 
-        alert(
-          "Kullanıcı adı en az 3 karakter olmalı."
-        );
 
-        return;
-      }
+/* COMMENT */
 
+window.addComment=async(postId)=>{
 
-      try {
+const input=$("commentInput_"+postId);
 
-        const usernameQuery =
-          query(
-            collection(db, "users"),
-            where(
-              "username",
-              "==",
-              newUsername
-            ),
-            limit(1)
-          );
+const text=input.value.trim();
 
+if(!text)return;
 
-        const result =
-          await getDocs(usernameQuery);
+await addDoc(
+collection(db,"comments"),
+{
+postId,
+uid:me.uid,
+username:myProfile.username,
+text,
+createdAt:serverTimestamp()
+}
+);
 
+await updateDoc(
+doc(db,"posts",postId),
+{
+commentsCount:increment(1)
+}
+);
 
-        if (
-          !result.empty &&
-          result.docs[0].id !== aktifKullanici.uid
-        ) {
+input.value="";
 
-          alert(
-            "Bu kullanıcı adı alınmış."
-          );
+await showComments(postId);
 
-          return;
-        }
+};
 
 
-        await updateDoc(
-          doc(
-            db,
-            "users",
-            aktifKullanici.uid
-          ),
-          {
-            username:
-              newUsername
-          }
-        );
+window.showComments=async(postId)=>{
 
+const box=$("comments_"+postId);
 
-        aktifProfil.username =
-          newUsername;
+if(!box)return;
 
+const q=query(
+collection(db,"comments"),
+where("postId","==",postId),
+orderBy("createdAt","asc"),
+limit(30)
+);
 
-        profilEkraniniGuncelle();
+const snap=await getDocs(q);
 
+box.innerHTML="";
 
-        alert(
-          "Profil güncellendi."
-        );
+snap.forEach(d=>{
 
-      }
+const c=d.data();
 
-      catch (error) {
+box.insertAdjacentHTML(
+"beforeend",
+`
+<div class="comment">
+<b>${safe(c.username||"kul")}</b>
+<span>${safe(c.text)}</span>
+</div>
+`
+);
 
-        console.error(error);
+});
 
-        alert(
-          "Profil güncellenemedi."
-        );
+};
 
-      }
 
-    };
+/* DELETE */
 
+window.deletePost=async(id)=>{
 
-    /* ÇIKIŞ */
+if(!confirm("Bu gönderi silinsin mi?"))return;
 
-    window.cikisYap = async function() {
+await updateDoc(
+doc(db,"posts",id),
+{
+deleted:true
+}
+);
 
-      await signOut(auth);
+await loadPosts();
 
-    };
+};
 
 
-    /* GÖRÜNÜM */
+/* SHARE */
 
-    window.showView = async function(view) {
+window.sharePost=async(id)=>{
 
-      document
-        .querySelectorAll(".view")
-        .forEach(
-          el =>
-            el.classList.remove("active")
-        );
+const url=
+location.href.split("?")[0]+"?post="+id;
 
+try{
 
-      const target =
-        document.getElementById(
-          view + "View"
-        );
+if(navigator.share){
 
+await navigator.share({
+title:"İNFAZ",
+text:"İNFAZ gönderisi",
+url
+});
 
-      if (target) {
+}else{
 
-        target.classList.add("active");
+await navigator.clipboard.writeText(url);
 
-      }
+alert("Bağlantı kopyalandı.");
 
+}
 
-      document
-        .querySelectorAll(".navBtn")
-        .forEach(
-          el =>
-            el.classList.remove("active")
-        );
+}catch(e){}
 
+};
 
-      const nav =
-        document.getElementById(
-          "nav" +
-          view.charAt(0).toUpperCase() +
-          view.slice(1)
-        );
 
+/* SEARCH */
 
-      if (nav) {
+function searchPage(){
 
-        nav.classList.add("active");
+$("content").innerHTML=`
 
-      }
+<h2 style="margin:10px 0 15px">
+Kullanıcı Ara
+</h2>
 
+<div class="search">
 
-      if (view === "league") {
+<input
+id="searchInput"
+placeholder="Kullanıcı adı..."
+onkeydown="if(event.key==='Enter')searchUsers()">
 
-        await ligiYukle();
+<button
+class="adminButton"
+onclick="searchUsers()">
+Ara
+</button>
 
-      }
+</div>
 
+<div id="searchResults"></div>
 
-      if (view === "messages") {
+`;
 
-        await chatAc(aktifChat);
+}
 
-      }
 
-    };
+window.searchUsers=async()=>{
 
+const value=
+$("searchInput").value.trim().toLowerCase();
 
-    /* GÖNDERİ OLUŞTUR */
+const box=$("searchResults");
 
-    window.yeniPaylasim = async function() {
+if(!value){
 
-      if (!aktifKullanici || !aktifProfil) return;
+box.innerHTML="";
 
+return;
 
-      const text =
-        document
-          .getElementById("postText")
-          .value
-          .trim();
+}
 
+const q=query(
+collection(db,"users"),
+where("username",">=",value),
+where("username","<=",value+"\uf8ff"),
+limit(20)
+);
 
-      if (!text) {
+const snap=await getDocs(q);
 
-        alert(
-          "Gönderi metni boş olamaz."
-        );
+box.innerHTML="";
 
-        return;
-      }
+snap.forEach(d=>{
 
+const u=d.data();
 
-      try {
+const following=
+Array.isArray(myProfile.following)&&
+myProfile.following.includes(d.id);
 
-        await addDoc(
-          collection(db, "posts"),
-          {
+box.insertAdjacentHTML(
+"beforeend",
+`
+<div class="card userResult">
 
-            uid:
-              aktifKullanici.uid,
+<div class="avatar">
+${safe((u.username||"k")[0]).toUpperCase()}
+</div>
 
-            username:
-              aktifProfil.username,
+<div class="userResultInfo">
 
-            displayName:
-              aktifProfil.displayName,
+<b>
+${safe(u.username||"kul")}
+${u.verified?'<span class="verify">✓</span>':""}
+</b>
 
-            text:
-              text,
+<small>
+${u.points||0} puan
+</small>
 
-            likes:
-              0,
+</div>
 
-            likedBy:
-              [],
+${
+d.id!==me.uid
+?
+`
+<button
+class="adminButton"
+onclick="followUser('${d.id}',${following})">
+${following?"Takibi Bırak":"Takip Et"}
+</button>
 
-            createdAt:
-              serverTimestamp()
+<button
+class="adminButton"
+onclick="openPrivate('${d.id}','${safe(u.username||"kul")}')">
+Mesaj
+</button>
+`
+:""
+}
 
-          }
-        );
+</div>
+`
+);
 
+});
 
-        document
-          .getElementById("postText")
-          .value = "";
+if(snap.empty){
 
+box.innerHTML=
+`<div class="empty">Kullanıcı bulunamadı.</div>`;
 
-        await gonderileriYukle();
+}
 
-      }
+};
 
-      catch (error) {
 
-        console.error(error);
+/* FOLLOW */
 
-        alert(
-          "Gönderi paylaşılırken hata oluştu."
-        );
+window.followUser=async(uid,currentlyFollowing)=>{
 
-      }
+const myRef=doc(db,"users",me.uid);
 
-    };
+const otherRef=doc(db,"users",uid);
 
+await updateDoc(
+myRef,
+{
+following:currentlyFollowing
+?arrayRemove(uid)
+:arrayUnion(uid)
+}
+);
 
-    /* GÖNDERİLER */
+await updateDoc(
+otherRef,
+{
+followers:currentlyFollowing
+?arrayRemove(me.uid)
+:arrayUnion(me.uid)
+}
+);
 
-    async function gonderileriYukle() {
+await loadProfile();
 
-      const container =
-        document.getElementById(
-          "postsContainer"
-        );
+searchUsers();
 
+};
 
-      try {
 
-        const q =
-          query(
-            collection(db, "posts"),
-            orderBy(
-              "createdAt",
-              "desc"
-            ),
-            limit(50)
-          );
+/* PROFILE */
 
+async function profile(){
 
-        const snapshot =
-          await getDocs(q);
+await loadProfile();
 
+const followerCount=
+Array.isArray(myProfile.followers)
+?myProfile.followers.length
+:0;
 
-        container.innerHTML = "";
+const followingCount=
+Array.isArray(myProfile.following)
+?myProfile.following.length
+:0;
 
 
-        if (snapshot.empty) {
+$("content").innerHTML=`
 
-          container.innerHTML = `
-            <div class="card" style="padding:20px;text-align:center;color:#827278;">
-              Henüz gönderi yok.
-            </div>
-          `;
+<div class="profileHead">
 
-          return;
-        }
+<div class="profileAvatar">
 
+${
+myProfile.photoURL
+?
+`<img src="${myProfile.photoURL}">`
+:
+safe((myProfile.username||"k")[0]).toUpperCase()
+}
 
-        snapshot.forEach(
-          postDoc => {
+</div>
 
-            const post =
-              postDoc.data();
+<div class="profileInfo">
 
+<div class="profileName">
 
-            if (post.deleted) return;
+${safe(
+myProfile.isFounder
+?"İzra Adel Karyan-Allah"
+:(myProfile.displayName||"kul")
+)}
 
+${myProfile.verified
+?'<span class="verify">✓</span>'
+:""}
 
-            const liked =
-              Array.isArray(post.likedBy) &&
-              aktifKullanici &&
-              post.likedBy.includes(
-                aktifKullanici.uid
-              );
+</div>
 
+<div class="profileUsername">
+@${safe(myProfile.username||"kul")}
+</div>
 
-            const isFounder =
-              post.uid === FOUNDER_UID;
+</div>
 
+</div>
 
-            const card =
-              document.createElement("div");
 
+<div class="stats">
 
-            card.className =
-              "card";
+<div class="stat">
+<b>${myProfile.points||0}</b>
+<small>Puan</small>
+</div>
 
+<div class="stat">
+<b>0</b>
+<small>Gönderi</small>
+</div>
 
-            const name =
-              post.displayName ||
-              post.username ||
-              "Kul";
+<div class="stat">
+<b>${followerCount}</b>
+<small>Takipçi</small>
+</div>
 
+<div class="stat">
+<b>${followingCount}</b>
+<small>Takip</small>
+</div>
 
-            const username =
-              post.username ||
-              "kul";
+</div>
 
 
-            card.innerHTML = `
+<div class="card admin">
 
-              <div class="postHead">
+<button class="secondary"
+onclick="editProfile()">
+Profili Düzenle
+</button>
 
-                <div class="avatar">
-                  ${escapeHtml(
-                    name.charAt(0).toUpperCase()
-                  )}
-                </div>
+<button class="secondary"
+onclick="changePhoto()">
+Profil Fotoğrafı Değiştir
+</button>
 
-                <div>
+<button class="secondary"
+onclick="logout()">
+Çıkış Yap
+</button>
 
-                  <div class="postUser ${
-                    isFounder
-                      ? "founderName"
-                      : ""
-                  }">
+</div>
 
-                    ${escapeHtml(name)}
 
-                    ${
-                      isFounder
-                        ? '<span class="verified">✓</span>'
-                        : ""
-                    }
+${
+myProfile.isFounder
+?
+founderPanel()
+:""
+}
 
-                  </div>
+`;
 
-                  <div style="font-size:11px;color:#796970;">
-                    @${escapeHtml(username)}
-                  </div>
+}
 
-                </div>
 
-              </div>
+/* EDIT PROFILE */
 
+window.editProfile=async()=>{
 
-              ${
-                post.image
-                  ? `
-                    <img
-                      class="postImage"
-                      src="${escapeHtml(post.image)}"
-                      alt="Gönderi"
-                    >
-                  `
-                  : ""
-              }
+const username=
+prompt(
+"Yeni kullanıcı adı:",
+myProfile.username
+);
 
+if(!username)return;
 
-              <div class="postBody">
-                ${escapeHtml(post.text || "")}
-              </div>
+if(username.length<3){
+alert("En az 3 karakter.");
+return;
+}
 
+await updateDoc(
+doc(db,"users",me.uid),
+{
+username:username.toLowerCase(),
+displayName:
+myProfile.isFounder
+?"İzra Adel Karyan-Allah"
+:"kul"
+}
+);
 
-              <div class="postActions">
+await loadProfile();
 
-                <button
-                  class="actionBtn ${
-                    liked ? "liked" : ""
-                  }"
-                  onclick="gonderiBegen('${postDoc.id}')"
-                >
-                  ♥ ${Number(post.likes || 0)}
-                </button>
+profile();
 
-                <button
-                  class="actionBtn"
-                  onclick="yorumYap('${postDoc.id}')"
-                >
-                  Yorum
-                </button>
+};
 
-                <button
-                  class="actionBtn"
-                  onclick="paylas('${postDoc.id}')"
-                >
-                  Paylaş
-                </button>
 
-                ${
-                  aktifKullanici &&
-                  (
-                    post.uid ===
-                    aktifKullanici.uid ||
-                    aktifKullanici.uid ===
-                    FOUNDER_UID
-                  )
-                    ? `
-                      <button
-                        class="actionBtn"
-                        onclick="gonderiSil('${postDoc.id}')"
-                      >
-                        Sil
-                      </button>
-                    `
-                    : ""
-                }
+/* PHOTO */
 
-              </div>
-            `;
+window.changePhoto=()=>{
 
+const input=document.createElement("input");
 
-            container.appendChild(card);
+input.type="file";
 
-          }
-        );
+input.accept="image/*";
 
-      }
+input.onchange=async()=>{
 
-      catch (error) {
+const file=input.files[0];
 
-        console.error(error);
+if(!file)return;
 
-        container.innerHTML = `
-          <div class="card" style="padding:20px;color:#d45a70;">
-            Gönderiler yüklenemedi.
-          </div>
-        `;
+try{
 
-      }
+const r=ref(
+storage,
+"profiles/"+me.uid+"/avatar"
+);
 
-    }
+await uploadBytes(r,file);
 
+const url=await getDownloadURL(r);
 
-    /* BEĞEN */
+await updateDoc(
+doc(db,"users",me.uid),
+{
+photoURL:url
+}
+);
 
-    window.gonderiBegen = async function(postId) {
+await loadProfile();
 
-      if (!aktifKullanici) return;
+profile();
 
+}catch(e){
 
-      try {
+alert("Profil fotoğrafı yüklenemedi.");
 
-        const ref =
-          doc(
-            db,
-            "posts",
-            postId
-          );
+}
 
+};
 
-        const snap =
-          await getDoc(ref);
+input.click();
 
+};
 
-        if (!snap.exists()) return;
 
+/* LEAGUE */
 
-        const post =
-          snap.data();
+async function league(){
 
+$("content").innerHTML=`
 
-        let likedBy =
-          Array.isArray(post.likedBy)
-            ? [...post.likedBy]
-            : [];
+<div class="leagueTitle">
+İNFAZ LİG
+</div>
 
+<div id="leagueList">
 
-        const index =
-          likedBy.indexOf(
-            aktifKullanici.uid
-          );
+<div class="empty">
+Sıralama yükleniyor...
+</div>
 
+</div>
 
-        if (index === -1) {
+`;
 
-          likedBy.push(
-            aktifKullanici.uid
-          );
+const q=query(
+collection(db,"users"),
+orderBy("points","desc"),
+limit(20)
+);
 
-        }
+const snap=await getDocs(q);
 
-        else {
+const box=$("leagueList");
 
-          likedBy.splice(
-            index,
-            1
-          );
+box.innerHTML="";
 
-        }
+let rank=0;
 
+snap.forEach(d=>{
 
-        await updateDoc(
-          ref,
-          {
-            likedBy:
-              likedBy,
+rank++;
 
-            likes:
-              likedBy.length
-          }
-        );
+const u=d.data();
 
+const founder=
+d.id===FOUNDER_UID||
+u.isFounder===true;
 
-        await gonderileriYukle();
+const top=rank<=3;
 
-      }
+box.insertAdjacentHTML(
+"beforeend",
+`
+<div class="leagueItem
+${top?"topThree":""}
+${founder?"founderRow":""}">
 
-      catch (error) {
+<div class="rank">
+${rank}
+</div>
 
-        console.error(error);
+<div class="rankAvatar">
+${safe((u.username||"k")[0]).toUpperCase()}
+</div>
 
-      }
+<div class="leagueUser">
 
-    };
+<b>
 
+${safe(
+founder
+?"İzra Adel Karyan-Allah"
+:(u.username||"kul")
+)}
 
-    /* YORUM */
+${
+founder||u.verified
+?
+'<span class="verify">✓</span>'
+:""
+}
 
-    window.yorumYap = function(postId) {
+</b>
 
-      const comment =
-        prompt(
-          "Yorumunu yaz:"
-        );
+<small>
+${founder?"Kurucu":"kul"}
+</small>
 
+</div>
 
-      if (!comment) return;
+<div class="point">
+${u.points||0}
+</div>
 
+</div>
+`
+);
 
-      alert(
-        "Yorum sistemi bir sonraki aşamada aktif edilecek."
-      );
+});
 
-    };
+}
 
 
-    /* PAYLAŞ */
+/* FOUNDER PANEL */
 
-    window.paylas = async function(postId) {
+function founderPanel(){
 
-      const link =
-        location.href +
-        "#post-" +
-        postId;
+return`
 
+<div class="card admin">
 
-      try {
+<h3>Kurucu Paneli</h3>
 
-        await navigator.clipboard.writeText(
-          link
-        );
+<input
+id="adminUser"
+placeholder="Kullanıcı adı">
 
-        alert(
-          "Gönderi bağlantısı kopyalandı."
-        );
+<input
+id="adminPoints"
+type="number"
+placeholder="Eklenecek puan">
 
-      }
+<button
+class="adminButton"
+onclick="addPoints()">
+Puan Ekle
+</button>
 
-      catch {
+<div
+id="adminMessage"
+style="margin-top:10px;color:#b88b99">
+</div>
 
-        prompt(
-          "Bağlantıyı kopyala:",
-          link
-        );
+</div>
 
-      }
+`;
 
-    };
+}
 
 
-    /* SİL */
+/* ADD POINTS */
 
-    window.gonderiSil = async function(postId) {
+window.addPoints=async()=>{
 
-      if (!aktifKullanici) return;
+if(
+me.uid!==FOUNDER_UID||
+!myProfile.isFounder
+){
 
+alert("Kurucu yetkisi gerekli.");
 
-      if (
-        aktifKullanici.uid !==
-        FOUNDER_UID
-      ) {
+return;
 
-        const post =
-          await getDoc(
-            doc(
-              db,
-              "posts",
-              postId
-            )
-          );
+}
 
+const username=
+$("adminUser").value.trim().toLowerCase();
 
-        if (
-          !post.exists() ||
-          post.data().uid !==
-          aktifKullanici.uid
-        ) {
+const points=
+Number($("adminPoints").value);
 
-          alert(
-            "Bu gönderiyi silemezsin."
-          );
+if(!username||!points){
 
-          return;
+alert("Kullanıcı ve puan gir.");
 
-        }
+return;
 
-      }
+}
 
+const q=query(
+collection(db,"users"),
+where("username","==",username),
+limit(1)
+);
 
-      if (
-        !confirm(
-          "Bu gönderi silinsin mi?"
-        )
-      ) return;
+const snap=await getDocs(q);
 
+if(snap.empty){
 
-      try {
+$("adminMessage").textContent=
+"Kullanıcı bulunamadı.";
 
-        await updateDoc(
-          doc(
-            db,
-            "posts",
-            postId
-          ),
-          {
-            deleted:
-              true,
+return;
 
-            deletedAt:
-              serverTimestamp()
-          }
-        );
+}
 
+const target=snap.docs[0];
 
-        await gonderileriYukle();
+await updateDoc(
+doc(db,"users",target.id),
+{
+points:increment(points)
+}
+);
 
-      }
+$("adminMessage").textContent=
+`${username} hesabına ${points} puan eklendi.`;
 
-      catch (error) {
+};
 
-        console.error(error);
 
-        alert(
-          "Gönderi silinemedi."
-        );
+/* MESSAGES */
 
-      }
+function messages(){
 
-    };
+$("content").innerHTML=`
 
+<h2 style="margin:10px 0 15px">
+Mesajlar
+</h2>
 
-    /* LİG */
+<div class="card">
 
-    async function ligiYukle() {
+<div class="channel"
+onclick="openChannel('announcement')">
 
-      const podium =
-        document.getElementById(
-          "podium"
-        );
+<div class="channelIcon">
+📢
+</div>
 
-      const list =
-        document.getElementById(
-          "leagueList"
-        );
+<div class="channelInfo">
 
+<b>Duyuru</b>
 
-      try {
+<small>
+İNFAZ resmi duyuru kanalı
+</small>
 
-        const q =
-          query(
-            collection(db, "users"),
-            orderBy(
-              "points",
-              "desc"
-            ),
-            limit(20)
-          );
+</div>
 
+</div>
 
-        const snapshot =
-          await getDocs(q);
 
+<div class="channel"
+onclick="openChannel('general')">
 
-        const users =
-          snapshot.docs.map(
-            d => ({
-              id: d.id,
-              ...d.data()
-            })
-          );
+<div class="channelIcon">
+💬
+</div>
 
+<div class="channelInfo">
 
-        /* Kurucu her zaman üstte */
+<b>Genel Sohbet</b>
 
-        users.sort(
-          (a,b) => {
+<small>
+İNFAZ genel sohbet kanalı
+</small>
 
-            if (
-              a.uid === FOUNDER_UID
-            ) return -1;
+</div>
 
-            if (
-              b.uid === FOUNDER_UID
-            ) return 1;
+</div>
 
-            return (
-              Number(b.points || 0) -
-              Number(a.points || 0)
-            );
+</div>
 
-          }
-        );
+`;
 
+}
 
-        const top3 =
-          users.slice(0,3);
 
+/* CHANNEL */
 
-        podium.innerHTML =
-          top3.map(
-            (user,index) => {
+window.openChannel=async(type)=>{
 
-              const rank =
-                index + 1;
+const title=
+type==="announcement"
+?"📢 Duyuru"
+:"💬 Genel Sohbet";
 
 
-              return `
+const canWrite=
+myProfile.isFounder||
+myProfile.channelWriter===true;
 
-                <div class="podiumUser ${
-                  rank === 1
-                    ? "first"
-                    : ""
-                }">
 
-                  <div class="rank">
-                    #${rank}
-                  </div>
+$("content").innerHTML=`
 
-                  <div class="rankName ${
-                    user.uid === FOUNDER_UID
-                      ? "founderName"
-                      : ""
-                  }">
+<button class="back"
+onclick="openPage('messages')">
+← Geri
+</button>
 
-                    ${escapeHtml(
-                      user.displayName ||
-                      user.username ||
-                      "Kul"
-                    )}
+<h2 style="margin-bottom:13px">
+${title}
+</h2>
 
-                    ${
-                      user.uid === FOUNDER_UID
-                        ? '<span class="verified">✓</span>'
-                        : ""
-                    }
+<div class="card chat">
 
-                  </div>
+<div id="channelMessages"
+class="chatMessages">
 
-                  <div class="points">
-                    ${Number(user.points || 0)} P
-                  </div>
+<div class="empty">
+Mesajlar yükleniyor...
+</div>
 
-                </div>
+</div>
 
-              `;
+${
+canWrite
+?
+`
+<div class="chatSend">
 
-            }
-          )
-          .join("");
+<input
+id="channelInput"
+placeholder="Mesaj yaz..."
+onkeydown="if(event.key==='Enter')sendChannel('${type}')">
 
+<button onclick="sendChannel('${type}')">
+Gönder
+</button>
 
-        list.innerHTML =
-          users.map(
-            (user,index) => {
+</div>
+`
+:
+`
+<div class="empty" style="padding:15px">
+Bu kanalda yalnızca kurucu tarafından yetkilendirilen kişiler yazabilir.
+</div>
+`
+}
 
-              return `
+</div>
 
-                <div class="leaderRow">
+`;
 
-                  <div class="leaderRank">
-                    #${index + 1}
-                  </div>
+await loadChannel(type);
 
-                  <div class="leaderInfo">
+};
 
-                    <div class="leaderUsername ${
-                      user.uid === FOUNDER_UID
-                        ? "founderName"
-                        : ""
-                    }">
 
-                      ${escapeHtml(
-                        user.displayName ||
-                        user.username ||
-                        "Kul"
-                      )}
+/* CHANNEL LOAD */
 
-                      ${
-                        user.uid === FOUNDER_UID
-                          ? '<span class="verified">✓</span>'
-                          : ""
-                      }
+async function loadChannel(type){
 
-                    </div>
+const box=$("channelMessages");
 
-                    <div style="font-size:11px;color:#74666b;">
-                      @${escapeHtml(
-                        user.username ||
-                        "kul"
-                      )}
-                    </div>
+const q=query(
+collection(db,"channelMessages"),
+where("channel","==",type),
+orderBy("createdAt","asc"),
+limit(100)
+);
 
-                  </div>
+const snap=await getDocs(q);
 
-                  <div class="leaderPoints">
-                    ${Number(user.points || 0)} P
-                  </div>
+box.innerHTML="";
 
-                </div>
+snap.forEach(d=>{
 
-              `;
+const m=d.data();
 
-            }
-          )
-          .join("");
+box.insertAdjacentHTML(
+"beforeend",
+`
+<div class="msg ${m.uid===me.uid?"mine":""}">
 
-      }
+<div class="msgUser">
+${safe(m.username||"kul")}
+</div>
 
-      catch (error) {
+<div class="msgText">
+${safe(m.text)}
+</div>
 
-        console.error(error);
+</div>
+`
+);
 
-        podium.innerHTML = "";
+});
 
-        list.innerHTML = `
-          <div class="card" style="padding:20px;color:#d45a70;">
-            Lig yüklenemedi. Firebase Firestore kurallarını kontrol et.
-          </div>
-        `;
+box.scrollTop=box.scrollHeight;
 
-      }
+}
 
-    }
 
+/* SEND CHANNEL */
 
-    /* KURUCU KULLANICI ARAMA */
+window.sendChannel=async(type)=>{
 
-    window.adminKullaniciAra = async function() {
+const input=$("channelInput");
 
-      if (
-        !aktifKullanici ||
-        aktifKullanici.uid !== FOUNDER_UID
-      ) {
+if(!input)return;
 
-        alert(
-          "Bu alan yalnızca kurucuya açık."
-        );
+const text=input.value.trim();
 
-        return;
-      }
+if(!text)return;
 
+const canWrite=
+myProfile.isFounder||
+myProfile.channelWriter===true;
 
-      const username =
-        document
-          .getElementById("adminSearch")
-          .value
-          .trim()
-          .toLowerCase();
+if(!canWrite){
 
+alert("Bu kanalda yazma yetkin yok.");
 
-      if (!username) return;
+return;
 
+}
 
-      const result =
-        document.getElementById(
-          "adminResult"
-        );
+await addDoc(
+collection(db,"channelMessages"),
+{
+channel:type,
+uid:me.uid,
+username:myProfile.username,
+text,
+createdAt:serverTimestamp()
+}
+);
 
+input.value="";
 
-      try {
+await loadChannel(type);
 
-        const q =
-          query(
-            collection(db, "users"),
-            where(
-              "username",
-              "==",
-              username
-            ),
-            limit(1)
-          );
+};
 
 
-        const snapshot =
-          await getDocs(q);
+/* PRIVATE CHAT */
 
+window.openPrivate=async(uid,username)=>{
 
-        if (snapshot.empty) {
+currentOtherUser={
+uid,
+username
+};
 
-          result.innerHTML = `
-            <div class="adminResult">
-              Kullanıcı bulunamadı.
-            </div>
-          `;
+$("content").innerHTML=`
 
-          return;
+<button class="back"
+onclick="openPage('search')">
+← Geri
+</button>
 
-        }
+<h2 style="margin-bottom:13px">
+${safe(username)}
+</h2>
 
+<div class="card chat">
 
-        const userDoc =
-          snapshot.docs[0];
+<div id="privateMessages"
+class="chatMessages">
+</div>
 
+<div class="chatSend">
 
-        const user =
-          userDoc.data();
+<input
+id="privateInput"
+placeholder="Mesaj yaz..."
+onkeydown="if(event.key==='Enter')sendPrivate('${uid}')">
 
+<button onclick="sendPrivate('${uid}')">
+Gönder
+</button>
 
-        result.innerHTML = `
+</div>
 
-          <div class="adminResult">
+</div>
 
-            <strong>
-              ${escapeHtml(
-                user.displayName ||
-                user.username
-              )}
-            </strong>
+`;
 
-            <div style="color:#827278;margin-top:4px;">
-              @${escapeHtml(
-                user.username
-              )}
-            </div>
+await loadPrivate(uid);
 
-            <div style="margin-top:8px;color:#d04a65;">
-              ${Number(user.points || 0)} puan
-            </div>
+};
 
-            <div class="adminActions">
 
-              <button
-                onclick="puanEkle('${userDoc.id}',100)"
-              >
-                +100
-              </button>
+/* CONVERSATION */
 
-              <button
-                onclick="puanEkle('${userDoc.id}',1000)"
-              >
-                +1.000
-              </button>
+function conversation(a,b){
 
-              <button
-                onclick="puanEkle('${userDoc.id}',10000)"
-              >
-                +10.000
-              </button>
+return[a,b].sort().join("_");
 
-            </div>
+}
 
-          </div>
 
-        `;
+/* LOAD PRIVATE */
 
-      }
+async function loadPrivate(otherUid){
 
-      catch (error) {
+const id=
+conversation(me.uid,otherUid);
 
-        console.error(error);
+const box=$("privateMessages");
 
-        result.innerHTML = `
-          <div class="adminResult">
-            Kullanıcı aranamadı.
-          </div>
-        `;
+const q=query(
+collection(db,"privateMessages"),
+where("conversationId","==",id),
+orderBy("createdAt","asc"),
+limit(100)
+);
 
-      }
+const snap=await getDocs(q);
 
-    };
+box.innerHTML="";
 
+snap.forEach(d=>{
 
-    /* PUAN EKLE */
+const m=d.data();
 
-    window.puanEkle = async function(
-      uid,
-      amount
-    ) {
+box.insertAdjacentHTML(
+"beforeend",
+`
+<div class="msg ${m.uid===me.uid?"mine":""}">
 
-      if (
-        !aktifKullanici ||
-        aktifKullanici.uid !== FOUNDER_UID
-      ) {
+<div class="msgText">
+${safe(m.text)}
+</div>
 
-        alert(
-          "Bu işlem yalnızca kurucuya açık."
-        );
+</div>
+`
+);
 
-        return;
-      }
+});
 
+box.scrollTop=box.scrollHeight;
 
-      try {
+}
 
-        await updateDoc(
-          doc(
-            db,
-            "users",
-            uid
-          ),
-          {
-            points:
-              increment(amount)
-          }
-        );
 
+/* SEND PRIVATE */
 
-        alert(
-          amount +
-          " puan eklendi."
-        );
+window.sendPrivate=async(otherUid)=>{
 
+const input=$("privateInput");
 
-        await ligiYukle();
+const text=input.value.trim();
 
-      }
+if(!text)return;
 
-      catch (error) {
+await addDoc(
+collection(db,"privateMessages"),
+{
+conversationId:
+conversation(me.uid,otherUid),
+uid:me.uid,
+to:otherUid,
+text,
+createdAt:serverTimestamp()
+}
+);
 
-        console.error(error);
+input.value="";
 
-        alert(
-          "Puan eklenemedi."
-        );
+await loadPrivate(otherUid);
 
-      }
+};
 
-    };
 
+/* NOTIFICATIONS */
 
-    /* CHAT */
+async function notifications(){
 
-    window.chatAc = async function(type) {
+$("content").innerHTML=`
 
-      aktifChat =
-        type;
+<h2 style="margin:10px 0 15px">
+Bildirimler
+</h2>
 
+<div id="notificationList" class="card">
 
-      const announcementTab =
-        document.getElementById(
-          "announcementTab"
-        );
+<div class="empty">
+Bildirimler yükleniyor...
+</div>
 
-      const generalTab =
-        document.getElementById(
-          "generalTab"
-        );
+</div>
 
-      const info =
-        document.getElementById(
-          "chatInfo"
-        );
+`;
 
+const q=query(
+collection(db,"notifications"),
+where("to","==",me.uid),
+orderBy("createdAt","desc"),
+limit(50)
+);
 
-      announcementTab
-        .classList
-        .remove("active");
+const snap=await getDocs(q);
 
-      generalTab
-        .classList
-        .remove("active");
+const box=$("notificationList");
 
+box.innerHTML="";
 
-      if (type === "announcement") {
+snap.forEach(d=>{
 
-        announcementTab
-          .classList
-          .add("active");
+const n=d.data();
 
-        info.textContent =
-          "Duyuru kanalı yalnızca kurucu tarafından kullanılabilir.";
+box.insertAdjacentHTML(
+"beforeend",
+`
+<div class="notification">
 
-      }
+${safe(n.text||"Yeni bildirim")}
 
-      else {
+<small>
+İNFAZ
+</small>
 
-        generalTab
-          .classList
-          .add("active");
+</div>
+`
+);
 
-        info.textContent =
-          "Genel Sohbet — tüm kul'lar mesaj gönderebilir.";
+});
 
-      }
+if(snap.empty){
 
+box.innerHTML=
+`<div class="empty">Henüz bildirim yok.</div>`;
 
-      await mesajlariYukle();
+}
 
-    };
+}
 
-
-    /* MESAJLARI YÜKLE */
-
-    async function mesajlariYukle() {
-
-      const container =
-        document.getElementById(
-          "messagesContainer"
-        );
-
-
-      try {
-
-        const q =
-          query(
-            collection(
-              db,
-              "chats",
-              aktifChat,
-              "messages"
-            ),
-            orderBy(
-              "createdAt",
-              "asc"
-            ),
-            limit(100)
-          );
-
-
-        onSnapshot(
-          q,
-          snapshot => {
-
-            container.innerHTML = "";
-
-
-            snapshot.forEach(
-              messageDoc => {
-
-                const message =
-                  messageDoc.data();
-
-
-                const isFounder =
-                  message.uid ===
-                  FOUNDER_UID;
-
-
-                const div =
-                  document.createElement(
-                    "div"
-                  );
-
-
-                div.className =
-                  "message";
-
-
-                div.innerHTML = `
-
-                  <strong class="${
-                    isFounder
-                      ? "founderName"
-                      : ""
-                  }">
-
-                    ${escapeHtml(
-                      message.displayName ||
-                      message.username ||
-                      "Kul"
-                    )}
-
-                    ${
-                      isFounder
-                        ? '<span class="verified">✓</span>'
-                        : ""
-                    }
-
-                  </strong>
-
-                  <p>
-                    ${escapeHtml(
-                      message.text || ""
-                    )}
-                  </p>
-
-                `;
-
-
-                container.appendChild(div);
-
-              }
-            );
-
-
-            container.scrollTop =
-              container.scrollHeight;
-
-          },
-
-          error => {
-
-            console.error(error);
-
-            container.innerHTML = `
-              <div style="padding:15px;color:#d35b72;">
-                Mesajlar yüklenemedi.
-              </div>
-            `;
-
-          }
-
-        );
-
-      }
-
-      catch (error) {
-
-        console.error(error);
-
-      }
-
-    }
-
-
-    /* MESAJ GÖNDER */
-
-    window.mesajGonder = async function() {
-
-      if (
-        !aktifKullanici ||
-        !aktifProfil
-      ) return;
-
-
-      /* Duyuru yalnızca kurucu */
-
-      if (
-        aktifChat ===
-        "announcement" &&
-        aktifKullanici.uid !==
-        FOUNDER_UID
-      ) {
-
-        alert(
-          "Duyuru kanalına yalnızca kurucu mesaj gönderebilir."
-        );
-
-        return;
-      }
-
-
-      const input =
-        document.getElementById(
-          "messageInput"
-        );
-
-
-      const text =
-        input.value.trim();
-
-
-      if (!text) return;
-
-
-      try {
-
-        await addDoc(
-          collection(
-            db,
-            "chats",
-            aktifChat,
-            "messages"
-          ),
-          {
-
-            uid:
-              aktifKullanici.uid,
-
-            username:
-              aktifProfil.username,
-
-            displayName:
-              aktifProfil.displayName,
-
-            text:
-              text,
-
-            createdAt:
-              serverTimestamp()
-
-          }
-        );
-
-
-        input.value = "";
-
-      }
-
-      catch (error) {
-
-        console.error(error);
-
-        alert(
-          "Mesaj gönderilemedi."
-        );
-
-      }
-
-    };
-
-
-    /* FIREBASE HATALARI */
-
-    function firebaseHata(error) {
-
-      switch (
-        error.code
-      ) {
-
-        case "auth/email-already-in-use":
-          return "Bu e-posta zaten kullanılıyor.";
-
-        case "auth/invalid-email":
-          return "Geçersiz e-posta adresi.";
-
-        case "auth/weak-password":
-          return "Şifre çok zayıf.";
-
-        case "auth/invalid-credential":
-          return "E-posta veya şifre hatalı.";
-
-        case "auth/user-not-found":
-          return "Bu hesap bulunamadı.";
-
-        case "auth/wrong-password":
-          return "Şifre hatalı.";
-
-        case "auth/too-many-requests":
-          return "Çok fazla deneme yapıldı. Bir süre bekle.";
-
-        default:
-          return (
-            error.message ||
-            "Bir hata oluştu."
-          );
-
-      }
-
-    }
-
-
-    /* HTML GÜVENLİĞİ */
-
-    function escapeHtml(value) {
-
-      return String(value ?? "")
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
-
-    }
-
-
-    /* ENTER İLE MESAJ */
-
-    document
-      .getElementById("messageInput")
-      .addEventListener(
-        "keydown",
-        event => {
-
-          if (
-            event.key === "Enter"
-          ) {
-
-            mesajGonder();
-
-          }
-
-        }
-      );
-
-  </script>
+</script>
 
 </body>
-          </html>
+  </html>
