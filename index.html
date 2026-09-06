@@ -466,5 +466,127 @@ onAuthStateChanged(auth, (user) => {
   }
 });
 </script>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBomQXTZy3apU3LpY5hJhW0L1p6HB4BIM8",
+  authDomain: "izra-site.firebaseapp.com",
+  projectId: "izra-site",
+  storageBucket: "izra-site.firebasestorage.app",
+  messagingSenderId: "539636714024",
+  appId: "1:539636714024:web:6a28b1c91680e15b76c31d"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+let kayitModu = false;
+
+window.showRegister = async function () {
+  kayitModu = true;
+
+  try {
+    await signOut(auth);
+  } catch (e) {}
+
+  document.getElementById("login").style.display = "none";
+  document.getElementById("register").style.display = "block";
+  document.getElementById("app").style.display = "none";
+};
+
+window.login = async function () {
+  const email = document.getElementById("user").value.trim();
+  const password = document.getElementById("pass").value;
+
+  if (!email || !password) {
+    alert("Gmail ve şifreyi gir.");
+    return;
+  }
+
+  try {
+    await signInWithEmailAndPassword(auth, email, password);
+  } catch (error) {
+    alert("Giriş başarısız. Gmail veya şifre yanlış.");
+  }
+};
+
+window.registerUser = async function () {
+  const inputs = document.querySelectorAll("#register input");
+
+  const email = inputs[0].value.trim();
+  const username = inputs[1].value.trim();
+  const password = inputs[2].value;
+
+  if (!email || !username || !password) {
+    alert("Gmail, kullanıcı adı ve şifreyi doldur.");
+    return;
+  }
+
+  if (!email.includes("@")) {
+    alert("Şimdilik Gmail/e-posta ile kayıt ol.");
+    return;
+  }
+
+  if (password.length < 6) {
+    alert("Şifre en az 6 karakter olmalı.");
+    return;
+  }
+
+  try {
+    await signOut(auth);
+
+    await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+
+    alert("Hesabın oluşturuldu!");
+  } catch (error) {
+    if (error.code === "auth/email-already-in-use") {
+      alert("Bu Gmail zaten kayıtlı. Başka bir Gmail kullan.");
+    } else {
+      alert("Kayıt başarısız: " + error.message);
+    }
+  }
+};
+
+window.page = function (name) {
+  document.querySelectorAll(".page").forEach(x => {
+    x.classList.remove("active");
+  });
+
+  document.getElementById(name).classList.add("active");
+};
+
+onAuthStateChanged(auth, (user) => {
+
+  if (user) {
+    document.getElementById("login").style.display = "none";
+    document.getElementById("register").style.display = "none";
+    document.getElementById("app").style.display = "block";
+
+  } else if (kayitModu) {
+    document.getElementById("login").style.display = "none";
+    document.getElementById("register").style.display = "block";
+    document.getElementById("app").style.display = "none";
+
+  } else {
+    document.getElementById("login").style.display = "block";
+    document.getElementById("register").style.display = "none";
+    document.getElementById("app").style.display = "none";
+  }
+
+});
+</script>
 </body>
   </html>
