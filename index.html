@@ -949,7 +949,43 @@ margin-top:4px;
 
 <div class="authBox">
 
-<div class="logo">İNFAZ</div>
+.profileGrid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:3px;
+  margin-top:12px;
+}
+
+.profilePost{
+  aspect-ratio:1/1;
+  background:#12080d;
+  overflow:hidden;
+  cursor:pointer;
+  position:relative;
+}
+
+.profilePost img,
+.profilePost video{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+
+.profileTextPost{
+  width:100%;
+  height:100%;
+  padding:12px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  color:#c7b0b8;
+  font-size:12px;
+  overflow:hidden;
+  background:#180b11;
+}
+  <div class="logo">İNFAZ</div>
 
 <div class="tag">#İzra(cc)HerYerde</div>
 
