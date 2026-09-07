@@ -427,70 +427,191 @@ color:#fff;
 padding:0 15px;
 }
 
+
 /* PROFILE */
 
-.profileHead{
-padding:20px 8px;
-display:flex;
-align-items:center;
-gap:18px;
+let lastProfileUser = null;
+
+async function getUserPosts(uid){
+  const q = query(
+    collection(db,"posts"),
+    where("uid","==",uid),
+    limit(40)
+  );
+
+  const snap = await getDocs(q);
+
+  const posts = snap.docs.map(d => ({
+    id:d.id,
+    ...d.data()
+  }));
+
+  posts.sort((a,b)=>{
+    const ta = a.createdAt?.toMillis?.() || 0;
+    const tb = b.createdAt?.toMillis?.() || 0;
+    return tb - ta;
+  });
+
+  return posts;
 }
 
-.profileAvatar{
-width:90px;
-height:90px;
-border-radius:50%;
-background:linear-gradient(135deg,#8e2143,#260914);
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:32px;
-font-weight:900;
-border:2px solid #8d2947;
-overflow:hidden;
+function profilePostHTML(p){
+  if(p.mediaType === "video" && p.mediaUrl){
+    return `
+      <div class="profilePost" onclick="openPostFromProfile('${p.id}')">
+        <video src="${p.mediaUrl}" muted></video>
+      </div>
+    `;
+  }
+
+  if(p.mediaUrl){
+    return `
+      <div class="profilePost" onclick="openPostFromProfile('${p.id}')">
+        <img src="${p.mediaUrl}">
+      </div>
+    `;
+  }
+
+  return `
+    <div class="profilePost" onclick="openPostFromProfile('${p.id}')">
+      <div class="profileTextPost">${escapeHTML(p.text || "")}</div>
+    </div>
+  `;
 }
 
-.profileAvatar img{
-width:100%;
-height:100%;
-object-fit:cover;
+async function openPostFromProfile(postId){
+  const snap = await getDoc(doc(db,"posts",postId));
+
+  if(!snap.exists()){
+    alert("Gönderi bulunamadı.");
+    return;
+  }
+
+  const p = {
+    id:snap.id,
+    ...snap.data()
+  };
+
+  document.getElementById("content").innerHTML = `
+    <button class="btn secondary" onclick="goBackProfile()">← Profile dön</button>
+    <div style="height:10px"></div>
+    ${postHTML(p)}
+  `;
 }
 
-.profileInfo{
-flex:1;
+function goBackProfile(){
+  if(lastProfileUser){
+    openUserProfile(lastProfileUser);
+  }else{
+    profile();
+  }
 }
 
-.profileName{
-font-size:20px;
-font-weight:900;
-}
+async function openUserProfile(uid){
 
-.profileUsername{
-color:#9c838c;
-margin-top:5px;
-}
+  if(!uid) return;
 
-.stats{
-display:flex;
-justify-content:space-around;
-border-top:1px solid #2b111a;
-border-bottom:1px solid #2b111a;
-padding:14px;
-}
+  lastProfileUser = uid;
 
-.stat{
-text-align:center;
-}
+  const userSnap = await getDoc(doc(db,"users",uid));
 
-.stat b{
-display:block;
-font-size:18px;
-}
+  if(!userSnap.exists()){
+    alert("Kullanıcı bulunamadı.");
+    return;
+  }
 
-.stat small{
-color:#8e7881;
-}
+  const u = userSnap.data();
 
+  const posts = await getUserPosts(uid);
+
+  const following =
+    (myProfile.following || []).includes(uid);
+
+  const name =
+    u.displayName || "kul";
+
+  const username =
+    u.username || "kul";
+
+  const photo =
+    u.photoURL ||
+    "https://via.placeholder.com/120";
+
+  document.getElementById("content").innerHTML = `
+    <div class="card">
+
+      <div class="profileHead">
+
+        <img
+          class="avatar big"
+          src="${photo}"
+        >
+
+        <div style="flex:1">
+
+          <h2 style="margin:0">
+            ${escapeHTML(name)}
+            ${u.isFounder || u.verified ? " ✓" : ""}
+          </h2>
+
+          <div class="muted">
+            @${escapeHTML(username)}
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="profileStats">
+
+        <div>
+          <b>${posts.length}</b>
+          <span>Gönderi</span>
+        </div>
+
+        <div>
+          <b>${(u.followers || []).length}</b>
+          <span>Takipçi</span>
+        </div>
+
+        <div>
+          <b>${(u.following || []).length}</b>
+          <span>Takip</span>
+        </div>
+
+      </div>
+
+      ${
+        uid !== me.uid
+        ? `
+          <div class="row">
+
+            <button
+              class="btn"
+              onclick="followUserFromProfile('${uid}',${following})"
+            >
+              ${following ? "Takibi bırak" : "Takip et"}
+            </button>
+
+            <button
+              class="btn secondary"
+              onclick="openPrivate('${uid}','${escapeHTML(username)}')"
+            >
+              Mesaj
+            </button>
+
+          </div>
+        `
+        : ""
+      }
+
+    </div>
+
+    <div class="profileGrid">
+      ${
+        posts.length
+        ? posts.map(profilePostHTML).join("")
+        : `<div class="muted" style="grid-column:
 /* LEAGUE */
 
 .leagueTitle{
